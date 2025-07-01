@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Achievements - SRIC Senior Secondary School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sricblue: '#002366',
+                        sricgold: '#FFD700',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .achievement-card {
+            transition: all 0.3s ease;
+        }
+        .achievement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .topper-badge {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+        /* Mobile menu styles */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .mobile-menu.open {
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <header class="sticky top-0 z-50 shadow-md">
+        <nav class="bg-sricblue p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="h-10 w-10 rounded-full">
+                    <a href="#" class="text-white text-lg sm:text-xl font-bold">SITARAM INTER COLLEGE</a>
+                    <span class="hidden sm:inline text-sricgold text-xs sm:text-sm">Empowering Minds, Shaping Futures</span>
+                </div>
+                <nav class="hidden md:flex space-x-4 lg:space-x-8">
+                    <a href="main.html" class="text-gray-300 hover:text-white text-sm lg:text-base">Home</a>
+                    <a href="#" class="text-gray-300 hover:text-white text-sm lg:text-base">About Us</a>
+                    <a href="#" class="text-gray-300 hover:text-white text-sm lg:text-base">Academics</a>
+                    <a href="#" class="text-blue-300 font-medium text-sm lg:text-base">Achievements</a>
+                    <a href="admission_form.html" class="text-gray-300 hover:text-white text-sm lg:text-base">Admissions</a>
+                    <a href="#" class="text-gray-300 hover:text-white text-sm lg:text-base">Contact</a>
+                </nav>
+                <button id="mobile-menu-button" class="md:hidden text-white">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu md:hidden bg-sricblue px-4">
+                <div class="flex flex-col space-y-3 py-4">
+                    <a href="main.html" class="text-gray-300 hover:text-white">Home</a>
+                    <a href="#" class="text-gray-300 hover:text-white">About Us</a>
+                    <a href="#" class="text-gray-300 hover:text-white">Academics</a>
+                    <a href="#" class="text-blue-300 font-medium">Achievements</a>
+                    <a href="admission_form.html" class="text-gray-300 hover:text-white">Admissions</a>
+                    <a href="#" class="text-gray-300 hover:text-white">Contact</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-sricblue to-blue-900 text-white py-12 md:py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">Academic Achievements</h1>
+            <p class="text-base sm:text-lg md:text-xl max-w-3xl mx-auto">Celebrating our students' excellence in board examinations and beyond</p>
+        </div>
+    </section>
+
+    <!-- Toppers Section -->
+    <section class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-8 md:mb-12">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-2 md:mb-4">Our Board Exam Toppers</h2>
+                <p class="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto">Recognizing the outstanding academic performance of our students</p>
+            </div>
+            
+            <!-- Year Selection -->
+            <div class="flex justify-center mb-6 md:mb-8">
+                <div class="inline-flex rounded-md shadow-sm">
+                    <button id="year2025" class="px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium rounded-l-lg bg-sricblue text-white" onclick="showYear('2025')">
+                        2024-25
+                    </button>
+                    <button id="year2024" class="px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium bg-gray-200 text-gray-700 hover:bg-gray-300" onclick="showYear('2024')">
+                        2023-24
+                    </button>
+                    <button id="year2023" class="px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium rounded-r-lg bg-gray-200 text-gray-700 hover:bg-gray-300" onclick="showYear('2023')">
+                        2022-23
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 2024-25 Toppers (Default Visible) -->
+            <div id="toppers2025" class="toppers-year">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
+                    <!-- 12th Toppers -->
+                    <div class="achievement-card bg-white p-4 sm:p-6 rounded-xl shadow-md border-t-4 border-sricblue relative">
+                        <div class="topper-badge bg-sricblue text-white">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-sricblue">Class 12 Toppers</h3>
+                        
+                        <div class="space-y-3 sm:space-y-4">
+                            <!-- Topper 1 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-blue-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricblue rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    1
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">ANUSHKA</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">Science (PCM) - 86.8%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">90+ in Maths and Chemistry</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Topper 2 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-blue-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricblue rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    2
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">NITIKA SAINI</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">Science (PCM) - 85.8%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">95 in Maths</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Topper 3 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-blue-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricblue rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    3
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">DIVESH SAINI</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">Science (PCB) - 83%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">90+ in English</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 10th Toppers -->
+                    <div class="achievement-card bg-white p-4 sm:p-6 rounded-xl shadow-md border-t-4 border-sricgold relative">
+                        <div class="topper-badge bg-sricgold text-sricblue">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-sricblue">Class 10 Toppers</h3>
+                        
+                        <div class="space-y-3 sm:space-y-4">
+                            <!-- Topper 1 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-yellow-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricgold rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    1
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">MOHANE SAINI</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">85.11%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">School Topper</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Topper 2 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-yellow-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricgold rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    2
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">SHIVANSHI</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">83.83%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">90+ marks in Hindi and English</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Topper 3 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-yellow-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricgold rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    3
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">PINKI</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">83.66%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">80+ marks in Every Subject</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 2023-24 Toppers (Hidden by Default) -->
+            <div id="toppers2024" class="toppers-year hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
+                    <!-- 12th Toppers -->
+                    <div class="achievement-card bg-white p-4 sm:p-6 rounded-xl shadow-md border-t-4 border-sricblue relative">
+                        <div class="topper-badge bg-sricblue text-white">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-sricblue">Class 12 Toppers</h3>
+                        
+                        <div class="space-y-3 sm:space-y-4">
+                            <!-- Topper 1 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-blue-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricblue rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    1
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">Sharika Sharma</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">Science (PCB) - 88%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">Perfect 100 in Biology</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Topper 2 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-blue-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricblue rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    2
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">Sejal Saini</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">Science (PCB) - 87%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">98 in Physics</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Topper 3 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-blue-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricblue rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    3
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">Yusuf Saifi</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">Science (PCB) - 87%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">90+ in Chemistry</p>
+                                </div>
+                                
+                            </div>
+                            <div class="flex items-center p-3 sm:p-4 bg-blue-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricblue rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    4
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">Najuk Choudhary</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">Arts (HGH)- 87%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">90+ in Geography</p>
+                                </div>
+                                
+                            </div>
+                            <div class="flex items-center p-3 sm:p-4 bg-blue-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricblue rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    5
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">Roshni Saini</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">Science (PCM)- 84%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">95+ in Physics</p>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 10th Toppers -->
+                    <div class="achievement-card bg-white p-4 sm:p-6 rounded-xl shadow-md border-t-4 border-sricgold relative">
+                        <div class="topper-badge bg-sricgold text-sricblue">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-sricblue">Class 10 Toppers</h3>
+                        
+                        <div class="space-y-3 sm:space-y-4">
+                            <!-- Topper 1 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-yellow-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricgold rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    1
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">Deepanshi</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">91%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">School Topper</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Topper 2 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-yellow-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricgold rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    2
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">Payal</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">89%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">95+ in Maths and Science</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Topper 3 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-yellow-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricgold rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    3
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">Nonahial</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">86%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">90 in Social Science</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-3 sm:p-4 bg-yellow-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricgold rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    4
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">Himanshi Saini</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">85%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">90 in  Science</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-3 sm:p-4 bg-yellow-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricgold rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    5
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">Tarana</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">85%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">90 in English</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 2022-23 Toppers (Hidden by Default) -->
+            <div id="toppers2023" class="toppers-year hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
+                    <!-- 12th Toppers -->
+                    <div class="achievement-card bg-white p-4 sm:p-6 rounded-xl shadow-md border-t-4 border-sricblue relative">
+                        <div class="topper-badge bg-sricblue text-white">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-sricblue">Class 12 Toppers</h3>
+                        
+                        <div class="space-y-3 sm:space-y-4">
+                            <!-- Topper 1 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-blue-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricblue rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    1
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">ANJALI GUPTA</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">Science (PCB) - 91.6%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">Perfect 100 in Biology</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Topper 2 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-blue-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricblue rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    2
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">ROHIT MALIK</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">Science (PCM) - 90.2%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">98 in Maths</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Topper 3 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-blue-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricblue rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    3
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">DEEPAK CHAUDHARY</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">Commerce - 89.8%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">95 in Accountancy</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 10th Toppers -->
+                    <div class="achievement-card bg-white p-4 sm:p-6 rounded-xl shadow-md border-t-4 border-sricgold relative">
+                        <div class="topper-badge bg-sricgold text-sricblue">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-sricblue">Class 10 Toppers</h3>
+                        
+                        <div class="space-y-3 sm:space-y-4">
+                            <!-- Topper 1 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-yellow-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricgold rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    1
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">KAVITA SHARMA</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">92.4%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">School Topper</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Topper 2 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-yellow-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricgold rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    2
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">RAJAT SINGH</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">90.8%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">Perfect 100 in Maths</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Topper 3 -->
+                            <div class="flex items-center p-3 sm:p-4 bg-yellow-50 rounded-lg">
+                                <div class="bg-white border-2 border-sricgold rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-xl font-bold text-sricblue">
+                                    3
+                                </div>
+                                <div class="ml-3 sm:ml-4">
+                                    <h4 class="font-bold text-base sm:text-lg">POOJA YADAV</h4>
+                                    <p class="text-sm sm:text-base text-gray-600">89.6%</p>
+                                    <p class="text-xs sm:text-sm text-gray-500">95+ in All Subjects</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8 md:mt-12">
+                <a href="#" class="inline-flex items-center text-sricblue font-semibold hover:underline text-sm sm:text-base">
+                    View All Toppers
+                    <svg class="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subject Toppers -->
+    <section class="py-12 md:py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-8 md:mb-12">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-2 md:mb-4">Subject Excellence</h2>
+                <p class="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto">Students who achieved perfection in individual subjects</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-6xl mx-auto">
+                <!-- Subject 1 -->
+                <div class="achievement-card bg-white p-4 sm:p-6 rounded-lg shadow-md text-center">
+                    <div class="bg-sricblue text-white w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-xl sm:text-2xl mx-auto mb-3 sm:mb-4">
+                        <i class="fas fa-square-root-alt"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold mb-1 sm:mb-2">Mathematics</h3>
+                    <p class="text-sm sm:text-base text-gray-600 mb-2 sm:mb-4">95/100</p>
+                    <div class="space-y-1 sm:space-y-2">
+                        <p class="font-medium text-sm sm:text-base">Mohane Saini (10th)</p>
+                        <p class="font-medium text-sm sm:text-base">Nitika Saini (12th)</p>
+                    </div>
+                </div>
+                
+                <!-- Subject 2 -->
+                <div class="achievement-card bg-white p-4 sm:p-6 rounded-lg shadow-md text-center">
+                    <div class="bg-sricblue text-white w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-xl sm:text-2xl mx-auto mb-3 sm:mb-4">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold mb-1 sm:mb-2">Science</h3>
+                    <p class="text-sm sm:text-base text-gray-600 mb-2 sm:mb-4">Perfect 100/100</p>
+                    <div class="space-y-1 sm:space-y-2">
+                        <p class="font-medium text-sm sm:text-base">Neha Verma (10th)</p>
+                        <p class="font-medium text-sm sm:text-base">Priya Singh (12th PCB)</p>
+                    </div>
+                </div>
+                
+                <!-- Subject 3 -->
+                <div class="achievement-card bg-white p-4 sm:p-6 rounded-lg shadow-md text-center">
+                    <div class="bg-sricblue text-white w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-xl sm:text-2xl mx-auto mb-3 sm:mb-4">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold mb-1 sm:mb-2">Social Science</h3>
+                    <p class="text-sm sm:text-base text-gray-600 mb-2 sm:mb-4">99/100</p>
+                    <div class="space-y-1 sm:space-y-2">
+                        <p class="font-medium text-sm sm:text-base">Vikram Patel (10th)</p>
+                        <p class="font-medium text-sm sm:text-base">Amit Kumar (12th)</p>
+                    </div>
+                </div>
+                
+                <!-- Subject 4 -->
+                <div class="achievement-card bg-white p-4 sm:p-6 rounded-lg shadow-md text-center">
+                    <div class="bg-sricblue text-white w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-xl sm:text-2xl mx-auto mb-3 sm:mb-4">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold mb-1 sm:mb-2">English</h3>
+                    <p class="text-sm sm:text-base text-gray-600 mb-2 sm:mb-4">90+/100</p>
+                    <div class="space-y-1 sm:space-y-2">
+                        <p class="font-medium text-sm sm:text-base">Shivanshi (10th)</p>
+                        <p class="font-medium text-sm sm:text-base">Divesh (12th)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Gallery -->
+    <section class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-8 md:mb-12">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-2 md:mb-4">Celebrating Success</h2>
+                <p class="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto">Moments from our annual prize distribution ceremonies</p>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
+                <div class="bg-gray-200 border-2 border-dashed rounded-lg aspect-square"></div>
+                <div class="bg-gray-200 border-2 border-dashed rounded-lg aspect-square"></div>
+                <div class="bg-gray-200 border-2 border-dashed rounded-lg aspect-square"></div>
+                <div class="bg-gray-200 border-2 border-dashed rounded-lg aspect-square"></div>
+                <div class="bg-gray-200 border-2 border-dashed rounded-lg aspect-square"></div>
+                <div class="bg-gray-200 border-2 border-dashed rounded-lg aspect-square"></div>
+                <div class="bg-gray-200 border-2 border-dashed rounded-lg aspect-square"></div>
+                <div class="bg-gray-200 border-2 border-dashed rounded-lg aspect-square"></div>
+            </div>
+            
+            <div class="text-center mt-6 md:mt-8">
+                <a href="#" class="inline-flex items-center text-sricblue font-semibold hover:underline text-sm sm:text-base">
+                    View Full Gallery
+                    <svg class="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-12 md:py-16 bg-sricgold text-sricblue">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6">Be Our Next Success Story</h2>
+            <p class="text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-6 md:mb-8">Join SRIC and achieve your academic potential</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+                <a href="admission_form.html" class="bg-sricblue hover:bg-blue-900 text-white font-bold py-2 sm:py-3 px-6 sm:px-8 rounded-lg transition duration-300 text-sm sm:text-base">
+                    Apply Now
+                </a>
+                <a href="#" class="bg-transparent border-2 border-sricblue hover:bg-sricblue hover:text-white font-bold py-2 sm:py-3 px-6 sm:px-8 rounded-lg transition duration-300 text-sm sm:text-base">
+                    Contact Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 md:py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+                <div>
+                    <div class="flex items-center mb-3 md:mb-4">
+                        <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="h-10 sm:h-14 w-10 sm:w-14 rounded-full">
+                        <h3 class="text-lg sm:text-xl font-bold ml-2 sm:ml-3">SRIC</h3>
+                    </div>
+                    <p class="text-xs sm:text-sm text-gray-400 mb-3 md:mb-4">Preparing students for board success since 2002.</p>
+                    <div class="flex space-x-3 sm:space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f text-sm sm:text-base"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter text-sm sm:text-base"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram text-sm sm:text-base"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in text-sm sm:text-base"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-base sm:text-lg font-bold mb-2 md:mb-4">Quick Links</h4>
+                    <ul class="space-y-1 sm:space-y-2">
+                        <li><a href="main.html" class="text-xs sm:text-sm text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="#" class="text-xs sm:text-sm text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-xs sm:text-sm text-gray-400 hover:text-white">Academics</a></li>
+                        <li><a href="#" class="text-xs sm:text-sm text-gray-400 hover:text-white">Achievements</a></li>
+                        <li><a href="admission_form.html" class="text-xs sm:text-sm text-gray-400 hover:text-white">Admissions</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-base sm:text-lg font-bold mb-2 md:mb-4">Academic Streams</h4>
+                    <ul class="space-y-1 sm:space-y-2">
+                        <li><a href="#" class="text-xs sm:text-sm text-gray-400 hover:text-white">Science (PCMB)</a></li>
+                        <li><a href="#" class="text-xs sm:text-sm text-gray-400 hover:text-white">Humanities</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-base sm:text-lg font-bold mb-2 md:mb-4">Contact Us</h4>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-0.5 sm:mt-1 mr-2 sm:mr-3 text-gray-400 text-xs sm:text-sm"></i>
+                            <span class="text-xs sm:text-sm text-gray-400">Sabdalpur Sharki, Mathana Road Hasanpur, Amroha 244242</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-2 sm:mr-3 text-gray-400 text-xs sm:text-sm"></i>
+                            <span class="text-xs sm:text-sm text-gray-400">+91 9756517750</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 sm:mr-3 text-gray-400 text-xs sm:text-sm"></i>
+                            <span class="text-xs sm:text-sm text-gray-400">achievements@sricschool.edu.in</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 md:mt-10 pt-4 md:pt-6 text-center text-xs sm:text-sm text-gray-400">
+                <p>© 2025 SRIC Senior Secondary School. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Function to show selected year's toppers
+        function showYear(year) {
+            // Hide all topper sections
+            document.querySelectorAll('.toppers-year').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected year's toppers
+            document.getElementById(`toppers${year}`).classList.remove('hidden');
+            
+            // Update button styles
+            document.getElementById('year2025').classList.remove('bg-sricblue', 'text-white');
+            document.getElementById('year2024').classList.remove('bg-sricblue', 'text-white');
+            document.getElementById('year2023').classList.remove('bg-sricblue', 'text-white');
+            
+            document.getElementById('year2025').classList.add('bg-gray-200', 'text-gray-700');
+            document.getElementById('year2024').classList.add('bg-gray-200', 'text-gray-700');
+            document.getElementById('year2023').classList.add('bg-gray-200', 'text-gray-700');
+            
+            // Highlight selected button
+            document.getElementById(`year${year}`).classList.remove('bg-gray-200', 'text-gray-700');
+            document.getElementById(`year${year}`).classList.add('bg-sricblue', 'text-white');
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('open');
+        });
+    </script>
+</body>
+</html>
