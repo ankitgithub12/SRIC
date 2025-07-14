@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Mission - SRIC Senior Secondary School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sricblue: '#002366',
+                        sricgold: '#FFD700',
+                    },
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'poppins': ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #333;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0, 35, 102, 0.85), rgba(0, 35, 102, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .mission-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .mission-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #f59e0b;
+            border-radius: 2px;
+        }
+        
+        .value-icon {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0, 35, 102, 0.1);
+            margin: 0 auto 20px;
+            color: #002366;
+            font-size: 28px;
+        }
+        
+        .quote {
+            position: relative;
+        }
+        
+        .quote:before {
+            content: """;
+            position: absolute;
+            top: -30px;
+            left: -20px;
+            font-size: 120px;
+            color: rgba(0, 35, 102, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #f59e0b;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #f59e0b;
+        }
+        
+        .timeline-item:after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 30px;
+            height: calc(100% - 14px);
+            width: 2px;
+            background: #f59e0b;
+        }
+        
+        .timeline-item:last-child:after {
+            display: none;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #002366 0%, #0e2a53 100%);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px -5px rgba(0, 35, 102, 0.3);
+        }
+        
+        /* Mobile menu styles */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .mobile-menu.open {
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body class="font-poppins min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 shadow-md">
+        <nav class="bg-sricblue p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <!-- Logo + School Name -->
+                <div class="flex items-center space-x-2">
+                    <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="h-10 w-10 rounded-full">
+                    <a href="index.html" class="text-white text-xl font-bold">SITARAM INTER COLLEGE</a>
+                    <span class="hidden sm:inline text-sricgold text-sm">Empowering Minds, Shaping Futures</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <ul class="hidden md:flex space-x-6 items-center">
+                    <li><a href="index.html" class="text-gray-300 hover:text-white hover:underline">Home</a></li>
+                    
+                    <!-- About Us Dropdown -->
+                    <li class="relative group">
+                        <button class="text-white focus:outline-none flex items-center">
+                            About Us <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="mission.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Mission</a></li>
+                            <li><a href="History.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">History</a></li>
+                            <li><a href="faculty.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Academics <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="curriculum.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Curriculum</a></li>
+                            <li><a href="programs.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Admissions <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="process.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Process</a></li>
+                            <li><a href="fees.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Fees</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="contact.html" class="text-gray-300 hover:text-white hover:underline">Contact</a></li>
+                </ul>
+
+                <!-- CTA Button (Desktop) -->
+                <a href="admission_form.html" class="hidden md:block bg-sricgold text-sricblue px-4 py-2 rounded-md font-semibold hover:bg-yellow-600 transition">Apply Now</a>
+
+                <!-- Mobile Hamburger Menu -->
+                <button id="menu-toggle" class="md:hidden text-white focus:outline-none" aria-expanded="false" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu (Hidden by default) -->
+            <div id="mobile-menu" class="md:hidden hidden bg-sricblue pb-4 px-4">
+                <ul class="flex flex-col space-y-2">
+                    <li><a href="index.html" class="block text-gray-300 hover:text-white py-2">Home</a></li>
+                    
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            About Us <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="mission.html" class="block text-gray-400 hover:text-white py-1 text-sm">Mission</a></li>
+                            <li><a href="History.html" class="block text-gray-400 hover:text-white py-1 text-sm">History</a></li>
+                            <li><a href="faculty.html" class="block text-gray-400 hover:text-white py-1 text-sm">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Academics <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="curriculum.html" class="block text-gray-400 hover:text-white py-1 text-sm">Curriculum</a></li>
+                            <li><a href="programs.html" class="block text-gray-400 hover:text-white py-1 text-sm">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Admissions <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="process.html" class="block text-gray-400 hover:text-white py-1 text-sm">Process</a></li>
+                            <li><a href="fees.html" class="block text-gray-400 hover:text-white py-1 text-sm">Fees</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="contact.html" class="block text-gray-300 hover:text-white py-2">Contact</a></li>
+                    <li><a href="admission_form.html" class="block bg-sricgold text-sricblue px-4 py-2 rounded-md text-center font-semibold mt-2">Apply Now</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Rest of your mission.html content remains the same -->
+    <!-- Hero Section -->
+    <section class="hero text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 font-playfair">Our School Mission & Values</h1>
+            <p class="text-xl max-w-3xl mx-auto mb-8">Preparing students for board exams and life through academic excellence and character development</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#mission" class="bg-sricgold hover:bg-yellow-600 text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300">Our Mission</a>
+                <a href="#values" class="bg-transparent border-2 border-white hover:bg-white hover:text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300">Core Values</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section id="mission" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="section-title text-3xl md:text-4xl font-bold text-gray-800 font-playfair">Our School Mission</h2>
+                <p class="mt-12 max-w-3xl mx-auto text-xl text-gray-600">At SRIC Senior Secondary, we empower students to excel in board examinations while developing critical thinking skills, ethical values, and leadership qualities essential for future success.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="mission-card bg-white p-8 rounded-xl shadow-lg border-t-4 border-sricblue">
+                    <div class="text-sricblue text-5xl mb-6">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Academic Excellence</h3>
+                    <p class="text-gray-600">We provide rigorous State Board preparation with specialized coaching for 10th and 12th standard examinations.</p>
+                </div>
+                
+                <div class="mission-card bg-white p-8 rounded-xl shadow-lg border-t-4 border-sricgold">
+                    <div class="text-sricgold text-5xl mb-6">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Holistic Development</h3>
+                    <p class="text-gray-600">Our balanced approach develops both academic prowess and essential life skills for students' all-round growth.</p>
+                </div>
+                
+                <div class="mission-card bg-white p-8 rounded-xl shadow-lg border-t-4 border-green-500">
+                    <div class="text-green-500 text-5xl mb-6">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Career Preparation</h3>
+                    <p class="text-gray-600">We guide students in making informed choices about higher education and career paths after 12th standard.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="section-title text-3xl md:text-4xl font-bold text-gray-800 font-playfair">Our Vision for Students</h2>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <p class="quote text-2xl text-gray-700 italic mb-8 font-playfair">"To be Amroha's premier senior secondary school that transforms students into academically excellent, ethically grounded individuals ready for university and beyond."</p>
+                    
+                    <div class="flex items-center">
+                        <div class="w-16 h-16 rounded-full overflow-hidden bg-gradient-to-br from-sricblue to-blue-900 flex items-center justify-center">
+                            <span class="text-white text-xl font-bold">KS</span>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-lg">Mr. Khempal Singh</h4>
+                            <p class="text-gray-600">Principal, SRIC Senior Secondary School</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8 mt-16">
+                    <div class="stat-card text-white text-center p-8">
+                        <div class="text-5xl font-bold mb-2">96%</div>
+                        <p class="text-lg">12th Board Pass Rate</p>
+                    </div>
+                    <div class="stat-card text-white text-center p-8">
+                        <div class="text-5xl font-bold mb-2">98%</div>
+                        <p class="text-lg">10th Board Pass Rate</p>
+                    </div>
+                    <div class="stat-card text-white text-center p-8">
+                        <div class="text-5xl font-bold mb-2">1+</div>
+                        <p class="text-lg">Students top 1% every year</p>
+                    </div>
+                    <div class="stat-card text-white text-center p-8">
+                        <div class="text-5xl font-bold mb-2">50+</div>
+                        <p class="text-lg">Students Selected in government/private jobs every year</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Values -->
+    <section id="values" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="section-title text-3xl md:text-4xl font-bold text-gray-800 font-playfair">Our School Values</h2>
+                <p class="mt-6 max-w-2xl mx-auto text-gray-600">Principles that guide our educational approach for 11th and 12th standard students</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+                <div class="text-center">
+                    <div class="value-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Academic Integrity</h3>
+                    <p class="text-gray-600">Maintaining highest standards of honesty in examinations and assignments.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="value-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Peer Collaboration</h3>
+                    <p class="text-gray-600">Encouraging study groups and peer learning for board exam preparation.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="value-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Teacher Guidance</h3>
+                    <p class="text-gray-600">Personalized mentorship for academic improvement and career guidance.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="value-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Time Management</h3>
+                    <p class="text-gray-600">Developing crucial skills for balancing studies and extracurriculars.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="value-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Critical Thinking</h3>
+                    <p class="text-gray-600">Encouraging analysis and evaluation beyond textbook knowledge.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="value-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Responsibility</h3>
+                    <p class="text-gray-600">Taking ownership of academic performance and personal growth.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="value-icon">
+                        <i class="fas fa-globe-asia"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Global Awareness</h3>
+                    <p class="text-gray-600">Understanding world perspectives while preparing for local boards.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="value-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Lifelong Learning</h3>
+                    <p class="text-gray-600">Fostering curiosity that extends beyond board examinations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- History Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="section-title text-3xl md:text-4xl font-bold text-gray-800 font-playfair">Our School's Journey</h2>
+                    <p class="mt-6 max-w-2xl mx-auto text-gray-600">From humble beginnings to senior secondary excellence</p>
+                </div>
+                
+                <div class="relative">
+                    <div class="timeline-item">
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <h3 class="text-xl font-bold mb-2">2002 - Founding</h3>
+                            <p>Established as a primary school with 280 students and 7 teachers.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <h3 class="text-xl font-bold mb-2">2005 - Secondary Expansion</h3>
+                            <p>Introduced classes 6th-8th, transforming the institution into a full-fledged high school.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <h3 class="text-xl font-bold mb-2">2010 - Higher Secondary</h3>
+                            <p>Launched classes 9th-10th with a focus on Science, marking the beginning of the Higher Secondary section.</p>
+                        </div>
+                    </div>
+                     <div class="timeline-item">
+    <div class="bg-white p-6 rounded-lg shadow">
+        <h3 class="text-xl font-bold mb-2">2013 – Introduction of Senior Secondary (Humanities)</h3>
+        <p>Commenced senior secondary education by offering Classes 11 and 12 with a dedicated focus on Humanities, providing students with a strong foundation in arts and social sciences.</p>
+    </div>
+</div>
+<div class="timeline-item">
+    <div class="bg-white p-6 rounded-lg shadow">
+        <h3 class="text-xl font-bold mb-2">2015 – Expansion to Senior Secondary (Science Stream)</h3>
+        <p>Expanded academic offerings by introducing the Science stream for Classes 11 and 12, equipping students with advanced knowledge in Physics, Chemistry, Biology, and Mathematics.</p>
+    </div>
+</div>
+
+                    
+                    <div class="timeline-item">
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <h3 class="text-xl font-bold mb-2">2018 - Academic Excellence</h3>
+                            <p>Achieved a remarkable milestone with a 98% pass rate in the Class 12 board examinations, reflecting our unwavering commitment to quality education and student success</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <h3 class="text-xl font-bold mb-2">2020 - Solidified Institutional Standing</h3>
+                            <p>Building on the strong foundation established in 2010 and the proven academic excellence demonstrated in 2015, the institution solidified its reputation as a leading provider of quality Higher Secondary education.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <h3 class="text-xl font-bold mb-2">Today - Premier Institution</h3>
+                            <p>Recognized as a leading educational institution, we offer a comprehensive and inclusive learning environment across all major streams—Humanities, Science, and Commerce. With a strong commitment to academic excellence, holistic development, and innovation, we continue to empower students to excel in academics and beyond.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-16 bg-sricblue text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 font-playfair">Join Our Senior Secondary School</h2>
+            <p class="text-xl max-w-2xl mx-auto mb-8">Discover how SRIC prepares students for 12th board exams and beyond</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#" class="bg-sricgold hover:bg-yellow-600 text-sricblue font-bold py-3 px-8 rounded-lg transition duration-300">
+                    Schedule School Visit
+                </a>
+                <a href="#" class="bg-transparent border-2 border-white hover:bg-white hover:text-sricblue font-bold py-3 px-8 rounded-lg transition duration-300">
+                    Download Prospectus
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-br from-sricblue to-blue-900 w-12 h-12 rounded-xl flex items-center justify-center">
+                            <span class="text-white text-xl font-bold">SRIC</span>
+                        </div>
+                        <h3 class="text-xl font-bold ml-3">SRIC</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">Preparing students for board success since 2002.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="mission.html" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="curriculum.html" class="text-gray-400 hover:text-white">Academics</a></li>
+                        <li><a href="admission_form.html" class="text-gray-400 hover:text-white">Admissions</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Academic Streams</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Science (PCMB)</a></li>
+                       
+                        <li><a href="#" class="text-gray-400 hover:text-white">Humanities</a></li>
+                       
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">Sabdalpur Sharki, Mathana Road Hasanpur,Amroha 244242</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">+91 9756517750</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">info@sricschool.edu.in</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-400">
+                <p>© 2025 SRIC Senior Secondary School. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', function() {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Mobile dropdown functionality
+        document.querySelectorAll('.dropdown-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const dropdown = button.nextElementSibling;
+                const icon = button.querySelector('.dropdown-icon');
+                
+                // Toggle dropdown
+                if (dropdown.style.maxHeight) {
+                    dropdown.style.maxHeight = null;
+                    icon.classList.remove('rotate-180');
+                } else {
+                    dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
+
+        // Simple animation for when elements come into view
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            const animatedElements = document.querySelectorAll('.mission-card, .stat-card, .timeline-item, .value-icon');
+            animatedElements.forEach(el => {
+                el.style.opacity = 0;
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

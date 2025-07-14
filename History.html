@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our History - SRIC Senior Secondary School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sricblue: '#002366',
+                        sricgold: '#FFD700',
+                    },
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'poppins': ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #333;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0, 35, 102, 0.85), rgba(0, 35, 102, 0.9)), url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #f59e0b;
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #f59e0b;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #f59e0b;
+        }
+        
+        .timeline-item:after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 30px;
+            height: calc(100% - 14px);
+            width: 2px;
+            background: #f59e0b;
+        }
+        
+        .timeline-item:last-child:after {
+            display: none;
+        }
+        
+        .founder-card, .alumni-card {
+            transition: all 0.3s ease;
+        }
+        
+        .founder-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .alumni-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .campus-image {
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .campus-image:hover {
+            transform: scale(1.03);
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Mobile menu styles */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .mobile-menu.open {
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body class="font-poppins min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 shadow-md">
+        <nav class="bg-sricblue p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <!-- Logo + School Name -->
+                <div class="flex items-center space-x-2">
+                    <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="h-10 w-10 rounded-full">
+                    <a href="index.html" class="text-white text-xl font-bold">SITARAM INTER COLLEGE</a>
+                    <span class="hidden sm:inline text-sricgold text-sm">Empowering Minds, Shaping Futures</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <ul class="hidden md:flex space-x-6 items-center">
+                    <li><a href="index.html" class="text-gray-300 hover:text-white hover:underline">Home</a></li>
+                    
+                    <!-- About Us Dropdown -->
+                    <li class="relative group">
+                        <button class="text-white focus:outline-none flex items-center">
+                            About Us <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="mission.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Mission</a></li>
+                            <li><a href="History.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">History</a></li>
+                            <li><a href="faculty.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Academics <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="curriculum.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Curriculum</a></li>
+                            <li><a href="programs.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Admissions <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="process.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Process</a></li>
+                            <li><a href="fees.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Fees</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="contact.html" class="text-gray-300 hover:text-white hover:underline">Contact</a></li>
+                </ul>
+
+                <!-- CTA Button (Desktop) -->
+                <a href="admission_form.html" class="hidden md:block bg-sricgold text-sricblue px-4 py-2 rounded-md font-semibold hover:bg-yellow-600 transition">Apply Now</a>
+
+                <!-- Mobile Hamburger Menu -->
+                <button id="menu-toggle" class="md:hidden text-white focus:outline-none" aria-expanded="false" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu (Hidden by default) -->
+            <div id="mobile-menu" class="md:hidden hidden bg-sricblue pb-4 px-4">
+                <ul class="flex flex-col space-y-2">
+                    <li><a href="index.html" class="block text-gray-300 hover:text-white py-2">Home</a></li>
+                    
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            About Us <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="mission.html" class="block text-gray-400 hover:text-white py-1 text-sm">Mission</a></li>
+                            <li><a href="History.html" class="block text-gray-400 hover:text-white py-1 text-sm">History</a></li>
+                            <li><a href="faculty.html" class="block text-gray-400 hover:text-white py-1 text-sm">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Academics <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="curriculum.html" class="block text-gray-400 hover:text-white py-1 text-sm">Curriculum</a></li>
+                            <li><a href="programs.html" class="block text-gray-400 hover:text-white py-1 text-sm">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Admissions <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="process.html" class="block text-gray-400 hover:text-white py-1 text-sm">Process</a></li>
+                            <li><a href="fees.html" class="block text-gray-400 hover:text-white py-1 text-sm">Fees</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="contact.html" class="block text-gray-300 hover:text-white py-2">Contact</a></li>
+                    <li><a href="admission_form.html" class="block bg-sricgold text-sricblue px-4 py-2 rounded-md text-center font-semibold mt-2">Apply Now</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 font-playfair">Our School History</h1>
+            <p class="text-xl max-w-3xl mx-auto mb-8">Celebrating over two decades of academic excellence and community impact</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#timeline" class="bg-sricgold hover:bg-yellow-600 text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300">
+                    Explore Our Journey
+                </a>
+                <a href="#founders" class="bg-transparent border-2 border-white hover:bg-white hover:text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300">
+                    Meet Our Founders
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="section-title text-3xl md:text-4xl font-bold text-gray-800 font-playfair">Our Humble Beginnings</h2>
+                <div class="flex flex-col md:flex-row items-center mt-12">
+                    <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                        <img src="assets/2002image.jpeg" alt="SRIC School in 2002" class="w-full h-auto rounded-lg shadow-lg">
+                    </div>
+                    <div class="md:w-1/2 text-left">
+                        <p class="text-lg text-gray-700 mb-6">
+                            Founded in 2002 by visionary educators, SRIC began as a small neighborhood school with just 280 students and 7 dedicated teachers. Our founders believed in creating an institution that would provide quality education accessible to all sections of society.
+                        </p>
+                        <p class="text-lg text-gray-700">
+                            From our modest single-building campus, we have grown into one of Amroha's most respected senior secondary schools, serving over 1,200 students today while maintaining our commitment to academic excellence and character development.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Founders Section -->
+<section id="founders" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-gray-800 font-playfair">Our Founding Visionaries</h2>
+            <p class="mt-6 max-w-2xl mx-auto text-gray-600">The pioneers who laid the foundation for our institution</p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-10">
+            <div class="founder-card bg-white p-8 rounded-xl shadow-lg border-t-4 border-sricblue">
+                <div class="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-sricblue">
+                    <img src="assets/founder-horam-singh.jpg" alt="Mr. Horam Singh" class="w-full h-full object-cover">
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-center">Mr. Horam Singh</h3>
+                <p class="text-sricblue font-semibold text-center mb-4">Founder (2002-2015)</p>
+                <p class="text-gray-600 text-center">A visionary educator who established SRIC with the philosophy that "Education should empower students to think critically and serve society." He laid the foundation for our academic excellence.</p>
+            </div>
+            
+            <div class="founder-card bg-white p-8 rounded-xl shadow-lg border-t-4 border-sricgold">
+                <div class="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-sricgold">
+                    <img src="assets/founder-yespal-singh.jpg" alt="Mr. Yespal Singh" class="w-full h-full object-cover">
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-center">Mr. Yespal Singh</h3>
+                <p class="text-sricgold font-semibold text-center mb-4">Co-Founder & Educator (2002-2018)</p>
+                <p class="text-gray-600 text-center">Instrumental in developing our science programs and laboratories. His dedication to practical learning shaped our hands-on approach to science education.</p>
+            </div>
+            
+            <div class="founder-card bg-white p-8 rounded-xl shadow-lg border-t-4 border-green-500">
+                <div class="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-green-500">
+                    <img src="assets/principal-khempal-singh.jpg" alt="Mr. Khempal Singh" class="w-full h-full object-cover">
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-center">Mr. Khempal Singh</h3>
+                <p class="text-green-500 font-semibold text-center mb-4">Principal (2005-Present)</p>
+                <p class="text-gray-600 text-center">Led the expansion to senior secondary education and established our scholarship program to make quality education accessible to all deserving students.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="timeline" class="py-20 bg-gradient-to-b from-gray-50 to-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <span class="inline-block px-4 py-1 bg-blue-100 text-blue-600 rounded-full text-sm font-semibold mb-3">Our Heritage</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-serif">The SRIC Story</h2>
+            <div class="w-24 h-1.5 bg-gradient-to-r from-blue-400 to-blue-600 mx-auto mb-6 rounded-full"></div>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Milestones in our journey as a premier UP Board affiliated school</p>
+        </div>
+        
+        <div class="relative max-w-5xl mx-auto">
+            <!-- Timeline line -->
+            <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1.5 bg-gradient-to-b from-blue-400 to-blue-600 transform -translate-x-1/2"></div>
+            
+            <!-- Timeline items -->
+            <div class="space-y-24">
+                <!-- Timeline item 1 -->
+                <div class="relative group">
+                    <div class="md:flex justify-center items-stretch">
+                        <!-- Year marker -->
+                        <div class="hidden md:flex md:w-1/2 pr-12 justify-end">
+                            <div class="relative h-full">
+                                <div class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 w-8 h-8 bg-blue-600 rounded-full border-4 border-white shadow-xl z-10 group-hover:scale-110 transition-transform duration-300"></div>
+                                <div class="text-right pr-12 pt-1">
+                                    <span class="inline-block px-4 py-1.5 bg-blue-600 text-white text-sm font-bold rounded-full shadow-lg transform group-hover:scale-110 transition-transform duration-300">2002</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="md:w-1/2 pl-0 md:pl-12">
+                            <div class="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border-l-4 border-blue-600 relative group-hover:-translate-y-1">
+                                <!-- Full width image -->
+                                <div class="w-full h-64 overflow-hidden">
+                                    <img src="assets/2002image.jpeg" alt="School founding" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-2 font-serif">School Establishment</h3>
+                                    <p class="text-gray-700">Founded as a primary school with UP Board affiliation, starting with classes 1-5 in a modest building.</p>
+                                    <span class="inline-block md:hidden mt-3 px-3 py-1 bg-blue-100 text-blue-600 text-xs font-semibold rounded-full shadow-sm">2002</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline item 2 -->
+                <div class="relative group">
+                    <div class="md:flex justify-center items-stretch flex-row-reverse">
+                        <!-- Year marker -->
+                        <div class="hidden md:flex md:w-1/2 pl-12 justify-start">
+                            <div class="relative h-full">
+                                <div class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-8 h-8 bg-blue-600 rounded-full border-4 border-white shadow-xl z-10 group-hover:scale-110 transition-transform duration-300"></div>
+                                <div class="text-left pl-12 pt-1">
+                                    <span class="inline-block px-4 py-1.5 bg-blue-600 text-white text-sm font-bold rounded-full shadow-lg transform group-hover:scale-110 transition-transform duration-300">2005</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="md:w-1/2 pr-0 md:pr-12">
+                            <div class="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border-r-4 border-blue-600 relative group-hover:-translate-y-1">
+                                <!-- Full width image -->
+                                <div class="w-full h-64 overflow-hidden">
+                                    <img src="assets/2005image.jpeg" alt="First school building" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-2 font-serif">New School Building</h3>
+                                    <p class="text-gray-700">Moved to our permanent campus with proper classrooms and UP Board approved facilities.</p>
+                                    <span class="inline-block md:hidden mt-3 px-3 py-1 bg-blue-100 text-blue-600 text-xs font-semibold rounded-full shadow-sm">2005</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline item 3 -->
+                <div class="relative group">
+                    <div class="md:flex justify-center items-stretch">
+                        <!-- Year marker -->
+                        <div class="hidden md:flex md:w-1/2 pr-12 justify-end">
+                            <div class="relative h-full">
+                                <div class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 w-8 h-8 bg-blue-600 rounded-full border-4 border-white shadow-xl z-10 group-hover:scale-110 transition-transform duration-300"></div>
+                                <div class="text-right pr-12 pt-1">
+                                    <span class="inline-block px-4 py-1.5 bg-blue-600 text-white text-sm font-bold rounded-full shadow-lg transform group-hover:scale-110 transition-transform duration-300">2008</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="md:w-1/2 pl-0 md:pl-12">
+                            <div class="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border-l-4 border-blue-600 relative group-hover:-translate-y-1">
+                                <!-- Full width image -->
+                                <div class="w-full h-64 overflow-hidden">
+                                    <img src="assets/2002image1.jpeg" alt="High school section" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-2 font-serif">High School Recognition</h3>
+                                    <p class="text-gray-700">Received UP Board recognition for classes 6-8, expanding our academic offerings.</p>
+                                    <span class="inline-block md:hidden mt-3 px-3 py-1 bg-blue-100 text-blue-600 text-xs font-semibold rounded-full shadow-sm">2008</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline item 4 -->
+                <div class="relative group">
+                    <div class="md:flex justify-center items-stretch flex-row-reverse">
+                        <!-- Year marker -->
+                        <div class="hidden md:flex md:w-1/2 pl-12 justify-start">
+                            <div class="relative h-full">
+                                <div class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-8 h-8 bg-blue-600 rounded-full border-4 border-white shadow-xl z-10 group-hover:scale-110 transition-transform duration-300"></div>
+                                <div class="text-left pl-12 pt-1">
+                                    <span class="inline-block px-4 py-1.5 bg-blue-600 text-white text-sm font-bold rounded-full shadow-lg transform group-hover:scale-110 transition-transform duration-300">2012</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="md:w-1/2 pr-0 md:pr-12">
+                            <div class="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border-r-4 border-blue-600 relative group-hover:-translate-y-1">
+                                <!-- Full width image -->
+                                <div class="w-full h-64 overflow-hidden">
+                                    <img src="assets/class10.jpg" alt="First class 10 batch" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-2 font-serif">First High School Batch</h3>
+                                    <p class="text-gray-700">Our first class 10 students appeared for UP Board examinations with excellent results.</p>
+                                    <span class="inline-block md:hidden mt-3 px-3 py-1 bg-blue-100 text-blue-600 text-xs font-semibold rounded-full shadow-sm">2012</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline item 5 -->
+                <div class="relative group">
+                    <div class="md:flex justify-center items-stretch">
+                        <!-- Year marker -->
+                        <div class="hidden md:flex md:w-1/2 pr-12 justify-end">
+                            <div class="relative h-full">
+                                <div class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 w-8 h-8 bg-blue-600 rounded-full border-4 border-white shadow-xl z-10 group-hover:scale-110 transition-transform duration-300"></div>
+                                <div class="text-right pr-12 pt-1">
+                                    <span class="inline-block px-4 py-1.5 bg-blue-600 text-white text-sm font-bold rounded-full shadow-lg transform group-hover:scale-110 transition-transform duration-300">2015</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="md:w-1/2 pl-0 md:pl-12">
+                            <div class="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border-l-4 border-blue-600 relative group-hover:-translate-y-1">
+                                <!-- Full width image -->
+                                <div class="w-full h-64 overflow-hidden">
+                                    <img src="assets/intermediate.jpg" alt="Intermediate classes" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-2 font-serif">Intermediate Classes Added</h3>
+                                    <p class="text-gray-700">Started classes 11-12 with Arts and Science(PCB) streams under UP Board.</p>
+                                    <span class="inline-block md:hidden mt-3 px-3 py-1 bg-blue-100 text-blue-600 text-xs font-semibold rounded-full shadow-sm">2015</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline item 6 -->
+                <div class="relative group">
+                    <div class="md:flex justify-center items-stretch flex-row-reverse">
+                        <!-- Year marker -->
+                        <div class="hidden md:flex md:w-1/2 pl-12 justify-start">
+                            <div class="relative h-full">
+                                <div class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-8 h-8 bg-blue-600 rounded-full border-4 border-white shadow-xl z-10 group-hover:scale-110 transition-transform duration-300"></div>
+                                <div class="text-left pl-12 pt-1">
+                                    <span class="inline-block px-4 py-1.5 bg-blue-600 text-white text-sm font-bold rounded-full shadow-lg transform group-hover:scale-110 transition-transform duration-300">2018</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="md:w-1/2 pr-0 md:pr-12">
+                            <div class="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border-r-4 border-blue-600 relative group-hover:-translate-y-1">
+                                <!-- Full width image -->
+                                <div class="w-full h-64 overflow-hidden">
+                                    <img src="assets/science-stream.jpg" alt="Science stream" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-2 font-serif">Science Stream Introduced</h3>
+                                    <p class="text-gray-700">Added Science stream with well-equipped labs meeting UP Board standards.</p>
+                                    <span class="inline-block md:hidden mt-3 px-3 py-1 bg-blue-100 text-blue-600 text-xs font-semibold rounded-full shadow-sm">2018</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline item 7 -->
+                <div class="relative group">
+                    <div class="md:flex justify-center items-stretch">
+                        <!-- Year marker -->
+                        <div class="hidden md:flex md:w-1/2 pr-12 justify-end">
+                            <div class="relative h-full">
+                                <div class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 w-8 h-8 bg-blue-600 rounded-full border-4 border-white shadow-xl z-10 group-hover:scale-110 transition-transform duration-300"></div>
+                                <div class="text-right pr-12 pt-1">
+                                    <span class="inline-block px-4 py-1.5 bg-blue-600 text-white text-sm font-bold rounded-full shadow-lg transform group-hover:scale-110 transition-transform duration-300">Today</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="md:w-1/2 pl-0 md:pl-12">
+                            <div class="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border-l-4 border-blue-600 relative group-hover:-translate-y-1">
+                                <!-- Full width image -->
+                                <div class="w-full h-64 overflow-hidden">
+                                    <img src="assets/school-today.jpg" alt="School today" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-2 font-serif">Premier UP Board Institution</h3>
+                                    <p class="text-gray-700">Now a well-established UP Board school with 800+ students and consistent academic excellence.</p>
+                                    <span class="inline-block md:hidden mt-3 px-3 py-1 bg-blue-100 text-blue-600 text-xs font-semibold rounded-full shadow-sm">Today</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</section>
+   <!-- Alumni Achievements -->
+<section class="py-20 bg-gradient-to-b from-gray-50 to-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-playfair">Notable Alumni Achievements</h2>
+            <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Our former students making a difference in the world</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Alumni 1 -->
+            <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="flex items-center mb-6">
+                    <div class="relative">
+                        <img src="assets/bittu.jpeg" alt="Bittu Saini" class="rounded-xl w-16 h-16 object-cover border-2 border-white shadow-md">
+                        <div class="absolute -bottom-1 -right-1 bg-blue-600 rounded-full p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-5">
+                        <h3 class="text-xl font-bold text-gray-900">Bittu Saini</h3>
+                        <p class="text-blue-600 text-sm font-medium">Class of 2016</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 font-semibold">Chief Health Officer (CHO)</p>
+                <p class="text-gray-600 text-sm mt-1">Public Health Specialist | 5+ years experience</p>
+                <p class="text-gray-500 text-xs italic mt-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Led multiple community health initiatives
+                </p>
+            </div>
+
+            <!-- Alumni 2 -->
+            <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="flex items-center mb-6">
+                    <div class="relative">
+                        <img src="assets/virendra.jpeg" alt="Virendra Saini" class="rounded-xl w-16 h-16 object-cover border-2 border-white shadow-md">
+                        <div class="absolute -bottom-1 -right-1 bg-blue-600 rounded-full p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-5">
+                        <h3 class="text-xl font-bold text-gray-900">Virendra Saini</h3>
+                        <p class="text-blue-600 text-sm font-medium">Class of 2018</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 font-semibold">Lekhpal (Revenue Official)</p>
+                <p class="text-gray-600 text-sm mt-1">Former Railway Employee | Land Records Specialist</p>
+                <p class="text-gray-500 text-xs italic mt-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Known for efficient public service delivery
+                </p>
+            </div>
+
+            <!-- Alumni 3 -->
+            <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="flex items-center mb-6">
+                    <div class="relative">
+                        <img src="assets/kapil.jpeg" alt="Kapil Kumar" class="rounded-xl w-16 h-16 object-cover border-2 border-white shadow-md">
+                        <div class="absolute -bottom-1 -right-1 bg-blue-600 rounded-full p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-5">
+                        <h3 class="text-xl font-bold text-gray-900">Kapil Kumar</h3>
+                        <p class="text-blue-600 text-sm font-medium">Class of 2010</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 font-semibold">Junior Engineer (JEE)</p>
+                <p class="text-gray-600 text-sm mt-1">Power Grid Corporation | Electrical Engineering</p>
+                <p class="text-gray-500 text-xs italic mt-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Specializes in power transmission systems
+                </p>
+            </div>
+
+            <!-- Alumni 4 - Ajay Kumar -->
+            <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="flex items-center mb-6">
+                    <div class="relative">
+                        <img src="assets/ajay.jpeg" alt="Ajay Kumar" class="rounded-xl w-16 h-16 object-cover border-2 border-white shadow-md">
+                        <div class="absolute -bottom-1 -right-1 bg-blue-600 rounded-full p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-5">
+                        <h3 class="text-xl font-bold text-gray-900">Ajay Kumar</h3>
+                        <p class="text-blue-600 text-sm font-medium">Class of 2019</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 font-semibold">SSF (State Security Force)</p>
+                <p class="text-gray-600 text-sm mt-1">Security Specialist</p>
+                <p class="text-gray-500 text-xs italic mt-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Recognized for exceptional service in state security
+                </p>
+            </div>
+
+            <!-- Alumni 5 - Additional Alumni -->
+            <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="flex items-center mb-6">
+                    <div class="relative">
+                        <img src="assets/priya.jpeg" alt="Priya Sharma" class="rounded-xl w-16 h-16 object-cover border-2 border-white shadow-md">
+                        <div class="absolute -bottom-1 -right-1 bg-blue-600 rounded-full p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-5">
+                        <h3 class="text-xl font-bold text-gray-900">Sachin Kumar</h3>
+                        <p class="text-blue-600 text-sm font-medium">Class of 2017</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 font-semibold">Uttar Pardesh Police</p>
+                <p class="text-gray-600 text-sm mt-1">Government Hospital | MBBS, MD</p>
+                <p class="text-gray-500 text-xs italic mt-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Served in rural healthcare during pandemic
+                </p>
+            </div>
+
+            <!-- Alumni 6 - Additional Alumni -->
+            <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="flex items-center mb-6">
+                    <div class="relative">
+                        <img src="assets/rahul.jpeg" alt="Rahul Verma" class="rounded-xl w-16 h-16 object-cover border-2 border-white shadow-md">
+                        <div class="absolute -bottom-1 -right-1 bg-blue-600 rounded-full p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-5">
+                        <h3 class="text-xl font-bold text-gray-900">Anil Kumar</h3>
+                        <p class="text-blue-600 text-sm font-medium">Class of 2018</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 font-semibold">Uttar Pardesh Police</p>
+                <p class="text-gray-600 text-sm mt-1">Tech Mahindra | Full Stack Developer</p>
+                <p class="text-gray-500 text-xs italic mt-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Developed award-winning educational apps
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- Call to Action -->
+    <section class="py-16 bg-sricblue text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 font-playfair">Become Part of Our History</h2>
+            <p class="text-xl max-w-2xl mx-auto mb-8">Join our tradition of excellence and create your own legacy at SRIC</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="admission_form.html" class="bg-sricgold hover:bg-yellow-600 text-sricblue font-bold py-3 px-8 rounded-lg transition duration-300">
+                    Apply for Admission
+                </a>
+                <a href="#" class="bg-transparent border-2 border-white hover:bg-white hover:text-sricblue font-bold py-3 px-8 rounded-lg transition duration-300">
+                    Schedule a School Tour
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-br from-sricblue to-blue-900 w-12 h-12 rounded-xl flex items-center justify-center">
+                            <span class="text-white text-xl font-bold">SRIC</span>
+                        </div>
+                        <h3 class="text-xl font-bold ml-3">SRIC</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">Preparing students for board success since 2002.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="mission.html" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="curriculum.html" class="text-gray-400 hover:text-white">Academics</a></li>
+                        <li><a href="admission_form.html" class="text-gray-400 hover:text-white">Admissions</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Academic Streams</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Science (PCMB)</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Humanities</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">Sabdalpur Sharki, Mathana Road Hasanpur,Amroha 244242</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">+91 9756517750</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">info@sricschool.edu.in</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-400">
+                <p>© 2025 SRIC Senior Secondary School. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', function() {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Mobile dropdown functionality
+        document.querySelectorAll('.dropdown-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const dropdown = button.nextElementSibling;
+                const icon = button.querySelector('.dropdown-icon');
+                
+                // Toggle dropdown
+                if (dropdown.style.maxHeight) {
+                    dropdown.style.maxHeight = null;
+                    icon.classList.remove('rotate-180');
+                } else {
+                    dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
+
+        // Simple animation for when elements come into view
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            const animatedElements = document.querySelectorAll('.fade-in, .timeline-item, .founder-card, .alumni-card');
+            animatedElements.forEach(el => {
+                el.classList.add('fade-in');
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html> 

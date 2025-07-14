@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Process | SRIC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sricblue: '#002366',
+                        sricgold: '#FFD700',
+                    },
+                    transitionProperty: {
+                        'height': 'height',
+                        'opacity': 'opacity',
+                        'transform': 'transform'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .process-hero {
+            background: linear-gradient(rgba(0, 35, 102, 0.8), rgba(0, 35, 102, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 1.5rem;
+            top: 3.5rem;
+            height: calc(100% - 3.5rem);
+            width: 2px;
+            background-color: #FFD700;
+        }
+        
+        .document-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header (Same as index.html) -->
+    <header class="sticky top-0 z-50 shadow-md">
+        <nav class="bg-sricblue p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <!-- Logo + School Name -->
+                <div class="flex items-center space-x-2">
+                    <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="h-10 w-10 rounded-full">
+                    <a href="index.html" class="text-white text-xl font-bold">SITARAM INTER COLLEGE</a>
+                    <span class="hidden sm:inline text-sricgold text-sm">UP Board Hindi Medium School</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <ul class="hidden md:flex space-x-6 items-center">
+                    <li><a href="index.html" class="text-gray-300 hover:text-white hover:underline">Home</a></li>
+                    
+                    <!-- About Us Dropdown -->
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            About Us <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="mission.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Mission</a></li>
+                            <li><a href="History.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">History</a></li>
+                            <li><a href="faculty.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Academics Dropdown -->
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Academics <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="curriculum.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Curriculum</a></li>
+                            <li><a href="programs.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Admissions Dropdown -->
+                    <li class="relative group">
+                        <button class="text-white hover:text-white focus:outline-none flex items-center">
+                            Admissions <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="process.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Process</a></li>
+                            <li><a href="fees.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Fees</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- News & Events Dropdown -->
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            News & Events <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="calendar.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Calendar</a></li>
+                            <li><a href="announcements.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Announcements</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Gallery Dropdown -->
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Gallery <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="photos_videos.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Photos/Videos</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="contact.html" class="text-gray-300 hover:text-white hover:underline">Contact</a></li>
+                </ul>
+
+                <!-- CTA Button (Desktop) -->
+                <a href="admission_form.html" alt="" class="hidden md:block bg-sricgold text-sricblue px-4 py-2 rounded-md font-semibold hover:bg-yellow-600 transition">Apply Now</a>
+
+                <!-- Mobile Hamburger Menu -->
+                <button id="menu-toggle" class="md:hidden text-white focus:outline-none" aria-expanded="false" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu (Hidden by default) -->
+            <div id="mobile-menu" class="md:hidden hidden bg-sricblue pb-4 px-4">
+                <ul class="flex flex-col space-y-2">
+                    <li><a href="index.html" class="block text-gray-300 hover:text-white py-2">Home</a></li>
+                    
+                    <!-- About Us Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            About Us <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="mission.html" class="block text-gray-400 hover:text-white py-1 text-sm">Mission</a></li>
+                            <li><a href="History.html" class="block text-gray-400 hover:text-white py-1 text-sm">History</a></li>
+                            <li><a href="faculty.html" class="block text-gray-400 hover:text-white py-1 text-sm">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Academics Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Academics <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="curriculum.html" class="block text-gray-400 hover:text-white py-1 text-sm">Curriculum</a></li>
+                            <li><a href="programs.html" class="block text-gray-400 hover:text-white py-1 text-sm">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Admissions Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Admissions <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="process.html" class="block text-gray-400 hover:text-white py-1 text-sm">Process</a></li>
+                            <li><a href="fees.html" class="block text-gray-400 hover:text-white py-1 text-sm">Fees</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- News & Events Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            News & Events <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="calendar.html" class="block text-gray-400 hover:text-white py-1 text-sm">Calendar</a></li>
+                            <li><a href="announcements.html" class="block text-gray-400 hover:text-white py-1 text-sm">Announcements</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Gallery Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Gallery <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="photos_videos.html" class="block text-gray-400 hover:text-white py-1 text-sm">Photos/Videos</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="contact.html" class="block text-gray-300 hover:text-white py-2">Contact</a></li>
+                    <li><a href="admission_form.html" class="block bg-sricgold text-sricblue px-4 py-2 rounded-md text-center font-semibold mt-2">Apply Now</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="process-hero text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Admission Process</h1>
+            <p class="text-xl max-w-3xl mx-auto mb-8">Join Sitaram Inter College through our simple and transparent UP Board admission procedure</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="admission_form.html" class="bg-sricgold hover:bg-yellow-600 text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300">
+                    Apply Now
+                </a>
+                <a href="fees.html" class="bg-transparent border-2 border-white hover:bg-white hover:text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300">
+                    View Fee Structure
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Timeline -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12 text-center">Our UP Board Admission Journey</h2>
+                
+                <div class="space-y-8 relative">
+                    <!-- Timeline Item 1 -->
+                    <div class="timeline-item relative pl-16">
+                        <div class="absolute left-0 top-0 w-8 h-8 rounded-full bg-sricblue border-4 border-sricgold flex items-center justify-center text-white font-bold">1</div>
+                        <h3 class="text-xl font-bold text-sricblue mb-2">Inquiry & Registration</h3>
+                        <p class="text-gray-600">Begin by submitting an inquiry form online or visiting our campus. Our UP Board admission counselors will guide you through the process and help you register.</p>
+                    </div>
+                    
+                    <!-- Timeline Item 2 -->
+                    <div class="timeline-item relative pl-16">
+                        <div class="absolute left-0 top-0 w-8 h-8 rounded-full bg-sricblue border-4 border-sricgold flex items-center justify-center text-white font-bold">2</div>
+                        <h3 class="text-xl font-bold text-sricblue mb-2">Submission of Documents</h3>
+                        <p class="text-gray-600">Submit required documents including previous academic records (marksheets), transfer certificate (if applicable), and identity proof as per UP Board requirements.</p>
+                    </div>
+                    
+                    <!-- Timeline Item 3 -->
+                    <div class="timeline-item relative pl-16">
+                        <div class="absolute left-0 top-0 w-8 h-8 rounded-full bg-sricblue border-4 border-sricgold flex items-center justify-center text-white font-bold">3</div>
+                        <h3 class="text-xl font-bold text-sricblue mb-2">Interaction Session</h3>
+                        <p class="text-gray-600">Students and parents meet with our academic team to discuss educational goals and assess the student's readiness for our UP Board curriculum.</p>
+                    </div>
+                    
+                    <!-- Timeline Item 4 -->
+                    <div class="timeline-item relative pl-16">
+                        <div class="absolute left-0 top-0 w-8 h-8 rounded-full bg-sricblue border-4 border-sricgold flex items-center justify-center text-white font-bold">4</div>
+                        <h3 class="text-xl font-bold text-sricblue mb-2">Admission Decision</h3>
+                        <p class="text-gray-600">Within 7 working days of document submission and interaction, you'll receive an admission decision via email and phone.</p>
+                    </div>
+                    
+                    <!-- Timeline Item 5 -->
+                    <div class="timeline-item relative pl-16">
+                        <div class="absolute left-0 top-0 w-8 h-8 rounded-full bg-sricblue border-4 border-sricgold flex items-center justify-center text-white font-bold">5</div>
+                        <h3 class="text-xl font-bold text-sricblue mb-2">Fee Payment</h3>
+                        <p class="text-gray-600">Upon acceptance, complete the admission by paying the required UP Board fees within the stipulated time to secure your seat.</p>
+                    </div>
+                    
+                    <!-- Timeline Item 6 -->
+                    <div class="timeline-item relative pl-16">
+                        <div class="absolute left-0 top-0 w-8 h-8 rounded-full bg-sricblue border-4 border-sricgold flex items-center justify-center text-white font-bold">6</div>
+                        <h3 class="text-xl font-bold text-sricblue mb-2">Orientation</h3>
+                        <p class="text-gray-600">Attend the orientation program before the academic session begins to familiarize yourself with school policies, faculty, and UP Board requirements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Important Dates -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12 text-center">UP Board Admission Dates</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-sricblue">
+                        <h3 class="text-xl font-bold text-sricblue mb-3">Regular Admissions</h3>
+                        <ul class="space-y-3">
+                            <li class="flex justify-between">
+                                <span class="text-gray-600">Application Opens</span>
+                                <span class="font-semibold">January 15, 2025</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span class="text-gray-600">Priority Deadline</span>
+                                <span class="font-semibold">March 31, 2025</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span class="text-gray-600">Final Deadline</span>
+                                <span class="font-semibold">May 15, 2025</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-sricgold">
+                        <h3 class="text-xl font-bold text-sricblue mb-3">Late Admissions</h3>
+                        <ul class="space-y-3">
+                            <li class="flex justify-between">
+                                <span class="text-gray-600">Late Application Period</span>
+                                <span class="font-semibold">May 16 - June 10, 2025</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span class="text-gray-600">Seat Availability Basis</span>
+                                <span class="font-semibold">Limited Seats</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span class="text-gray-600">Academic Session Begins</span>
+                                <span class="font-semibold">July 1, 2025</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-8 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-yellow-700">
+                                <span class="font-semibold">Note:</span> Late applications may incur additional charges and are subject to seat availability. Early applications receive priority consideration for UP Board registration.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Required Documents -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12 text-center">Required Documents for UP Board</h2>
+                
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <!-- Document Card 1 -->
+                    <div class="document-card bg-gray-50 p-6 rounded-lg transition duration-300">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-sricblue text-white p-3 rounded-full mr-4">
+                                <i class="fas fa-file-alt text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-sricblue">Academic Records</h3>
+                        </div>
+                        <ul class="text-gray-600 space-y-2 pl-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Original marksheet of previous class</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>UP Board marksheet (for class 11/12)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Transfer Certificate (TC) from previous school</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Document Card 2 -->
+                    <div class="document-card bg-gray-50 p-6 rounded-lg transition duration-300">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-sricblue text-white p-3 rounded-full mr-4">
+                                <i class="fas fa-id-card text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-sricblue">Identity Proof</h3>
+                        </div>
+                        <ul class="text-gray-600 space-y-2 pl-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Birth Certificate (issued by Municipal Corporation)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Aadhaar Card (Student & Parents)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Passport size photos (4 copies, white background)</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Document Card 3 -->
+                    <div class="document-card bg-gray-50 p-6 rounded-lg transition duration-300">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-sricblue text-white p-3 rounded-full mr-4">
+                                <i class="fas fa-file-signature text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-sricblue">Application Forms</h3>
+                        </div>
+                        <ul class="text-gray-600 space-y-2 pl-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Completed UP Board admission form</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Medical history form</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Transportation request (if needed)</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Document Card 4 -->
+                    <div class="document-card bg-gray-50 p-6 rounded-lg transition duration-300">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-sricblue text-white p-3 rounded-full mr-4">
+                                <i class="fas fa-file-invoice-dollar text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-sricblue">Financial Documents</h3>
+                        </div>
+                        <ul class="text-gray-600 space-y-2 pl-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Fee payment receipt (UP Board registration fee included)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Concession form (if applicable)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Scholarship documents (if applicable)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <a href="admission_form.html" class="inline-flex items-center bg-sricblue text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-900 transition duration-300">
+                        Begin Your Application
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12 text-center">Frequently Asked Questions</h2>
+                
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="faq-question w-full text-left p-4 bg-white hover:bg-gray-50 focus:outline-none flex justify-between items-center">
+                            <span class="font-semibold text-sricblue">What is the age criteria for admission to different classes?</span>
+                            <svg class="faq-icon w-5 h-5 text-sricblue transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-answer bg-gray-50 px-4 overflow-hidden max-h-0 transition-all duration-300">
+                            <div class="py-4 text-gray-600">
+                                <p>The age criteria for our UP Board classes are as follows:</p>
+                                <ul class="list-disc pl-5 mt-2 space-y-1">
+                                    <li>Class 9: Minimum 13 years as of March 31, 2025</li>
+                                    <li>Class 11: Minimum 15 years as of March 31, 2025</li>
+                                    <li>For other classes, the age should be appropriate for the grade level based on previous schooling</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="faq-question w-full text-left p-4 bg-white hover:bg-gray-50 focus:outline-none flex justify-between items-center">
+                            <span class="font-semibold text-sricblue">Is there an entrance test for admission?</span>
+                            <svg class="faq-icon w-5 h-5 text-sricblue transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-answer bg-gray-50 px-4 overflow-hidden max-h-0 transition-all duration-300">
+                            <div class="py-4 text-gray-600">
+                                <p>For classes 9 and 11, we conduct a basic aptitude test in Hindi, English, and Mathematics to assess the student's foundational knowledge. The test is designed to ensure students can successfully follow our UP Board curriculum.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 -->
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="faq-question w-full text-left p-4 bg-white hover:bg-gray-50 focus:outline-none flex justify-between items-center">
+                            <span class="font-semibold text-sricblue">What is the medium of instruction at SRIC?</span>
+                            <svg class="faq-icon w-5 h-5 text-sricblue transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-answer bg-gray-50 px-4 overflow-hidden max-h-0 transition-all duration-300">
+                            <div class="py-4 text-gray-600">
+                                <p>We are a Hindi medium school following the UP Board curriculum. However, we place special emphasis on English language skills to prepare students for competitive exams and higher education.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 4 -->
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="faq-question w-full text-left p-4 bg-white hover:bg-gray-50 focus:outline-none flex justify-between items-center">
+                            <span class="font-semibold text-sricblue">Can I apply for a scholarship or fee concession?</span>
+                            <svg class="faq-icon w-5 h-5 text-sricblue transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-answer bg-gray-50 px-4 overflow-hidden max-h-0 transition-all duration-300">
+                            <div class="py-4 text-gray-600">
+                                <p>Yes, we offer merit-based scholarships and need-based fee concessions. Merit scholarships are awarded based on previous academic performance (85%+ in board exams) and performance in our scholarship test. Need-based concessions require submission of income proof and are evaluated on a case-by-case basis.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <p class="text-gray-600 mb-4">Have more questions?</p>
+                    <a href="contact.html" class="inline-flex items-center text-sricblue font-semibold hover:underline">
+                        Contact Our Admission Team
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Same as index.html) -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-br from-sricblue to-blue-900 w-12 h-12 rounded-xl flex items-center justify-center">
+                            <span class="text-white text-xl font-bold">SRIC</span>
+                        </div>
+                        <h3 class="text-xl font-bold ml-3">SRIC</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">UP Board Hindi Medium School preparing students for board success since 2002.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="mission.html" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="curriculum.html" class="text-gray-400 hover:text-white">Academics</a></li>
+                        <li><a href="process.html" class="text-white hover:text-gray-300">Admissions</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Academic Streams</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Science (PCMB)</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Humanities</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">Sabdalpur Sharki, Mathana Road Hasanpur, Amroha 244242</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">+91 9756517750</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">info@sricschool.edu.in</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-400">
+                <p>© 2025 Sitaram Inter College (UP Board). All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', function() {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = button.nextElementSibling;
+                const icon = button.querySelector('.faq-icon');
+                
+                // Toggle answer
+                if (answer.style.maxHeight) {
+                    answer.style.maxHeight = null;
+                    icon.classList.remove('rotate-180');
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
+
+        // Mobile dropdown functionality
+        document.querySelectorAll('.dropdown-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const dropdown = button.nextElementSibling;
+                const icon = button.querySelector('.dropdown-icon');
+                
+                // Toggle dropdown
+                if (dropdown.style.maxHeight) {
+                    dropdown.style.maxHeight = null;
+                    icon.classList.remove('rotate-180');
+                } else {
+                    dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRIC Gallery | Photos & Videos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lightgallery-bundle.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sricblue: '#002366',
+                        sricgold: '#FFD700',
+                        sriclightblue: '#E6F0FF',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .gallery-item {
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 25px rgba(0, 35, 102, 0.15);
+        }
+        
+        .gallery-item img {
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+        
+        .category-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn.active {
+            background-color: #002366;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 35, 102, 0.2);
+        }
+        
+        .video-thumbnail::after {
+            content: '\f04b';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 3rem;
+            opacity: 0.8;
+            text-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+            transition: all 0.3s ease;
+        }
+        
+        .video-thumbnail:hover::after {
+            opacity: 0.9;
+            font-size: 3.5rem;
+        }
+        
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 35, 102, 0.9), transparent);
+            color: white;
+            padding: 1.5rem 1rem 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .event-section {
+            background: linear-gradient(135deg, rgba(0,35,102,0.03) 0%, rgba(255,215,0,0.03) 100%);
+            border-radius: 1.25rem;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(0, 35, 102, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .event-header {
+            border-left: 5px solid #002366;
+            padding-left: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        
+        .album-cover {
+            transition: all 0.4s ease;
+        }
+        
+        .album-cover:hover {
+            transform: scale(1.03);
+        }
+        
+        .album-overlay {
+            background: linear-gradient(to top, rgba(0, 35, 102, 0.8), transparent);
+        }
+        
+        .load-more-btn {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 35, 102, 0.1);
+        }
+        
+        .load-more-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 35, 102, 0.2);
+        }
+        
+        .video-card {
+            transition: all 0.3s ease;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 35, 102, 0.15);
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            margin-top: 5vh;
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        
+        .close:hover {
+            color: #FFD700;
+            cursor: pointer;
+        }
+        
+        /* Polaroid effect for album covers */
+        .polaroid {
+            background: white;
+            padding: 1rem 1rem 2rem 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: rotate(-2deg);
+            transition: all 0.3s ease;
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        .polaroid:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .polaroid:nth-child(even):hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 shadow-lg">
+        <nav class="bg-sricblue p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="h-10 w-10 rounded-full">
+                    <a href="index.html" class="text-white text-xl font-bold">SITARAM INTER COLLEGE</a>
+                    <span class="hidden sm:inline text-sricgold text-sm">Empowering Minds, Shaping Futures</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <ul class="hidden md:flex space-x-6 items-center">
+                    <li><a href="index.html" class="text-gray-300 hover:text-white hover:underline">Home</a></li>
+                    
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            About Us <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="mission.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Mission</a></li>
+                            <li><a href="History.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">History</a></li>
+                            <li><a href="faculty.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Academics <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="curriculum.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Curriculum</a></li>
+                            <li><a href="programs.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Programs</a></li>
+                        </ul>
+                    </li>
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Admissions <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="process.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Process</a></li>
+                            <li><a href="fees.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Fees</a></li>
+                        </ul>
+                    </li>
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            News & Events <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="calendar.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Calendar</a></li>
+                            <li><a href="announcements.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Announcements</a></li>
+                        </ul>
+                    </li>
+                    <li class="relative group">
+                        <button class="text-white font-medium focus:outline-none flex items-center">
+                            Gallery <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
+                            <li><a href="photos_videos.html" class="block px-4 py-2 text-gray-800 bg-sricblue text-white">Photos/Videos</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="contact.html" class="text-gray-300 hover:text-white hover:underline">Contact</a></li>
+                </ul>
+
+                <!-- CTA Button (Desktop) -->
+                <a href="admission_form.html" alt="" class="hidden md:block bg-sricgold text-sricblue px-4 py-2 rounded-md font-semibold hover:bg-yellow-600 transition">Apply Now</a>
+
+                <!-- Mobile Hamburger Menu -->
+                <button id="menu-toggle" class="md:hidden text-white focus:outline-none" aria-expanded="false" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu (Hidden by default) -->
+            <div id="mobile-menu" class="md:hidden hidden bg-sricblue pb-4 px-4">
+                <ul class="flex flex-col space-y-2">
+                    <li><a href="index.html" class="block text-gray-300 hover:text-white py-2">Home</a></li>
+                    
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            About Us <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="mission.html" class="block text-gray-400 hover:text-white py-1 text-sm">Mission</a></li>
+                            <li><a href="History.html" class="block text-gray-400 hover:text-white py-1 text-sm">History</a></li>
+                            <li><a href="faculty.html" class="block text-gray-400 hover:text-white py-1 text-sm">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Academics <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="curriculum.html" class="block text-gray-400 hover:text-white py-1 text-sm">Curriculum</a></li>
+                            <li><a href="programs.html" class="block text-gray-400 hover:text-white py-1 text-sm">Programs</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Admissions <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="process.html" class="block text-gray-400 hover:text-white py-1 text-sm">Process</a></li>
+                            <li><a href="fees.html" class="block text-gray-400 hover:text-white py-1 text-sm">Fees</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            News & Events <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="calendar.html" class="block text-gray-400 hover:text-white py-1 text-sm">Calendar</a></li>
+                            <li><a href="announcements.html" class="block text-gray-400 hover:text-white py-1 text-sm">Announcements</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-white py-2 flex justify-between items-center">
+                            Gallery <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="photos_videos.html" class="block text-white py-1 text-sm bg-sricblue">Photos/Videos</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="contact.html" class="block text-gray-300 hover:text-white py-2">Contact</a></li>
+                    <li><a href="admission_form.html" class="block bg-sricgold text-sricblue px-4 py-2 rounded-md text-center font-semibold mt-2">Apply Now</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-sricblue to-blue-900 text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">SRIC Memories Gallery</h1>
+            <div class="w-24 h-1.5 bg-sricgold mx-auto mb-6 rounded-full"></div>
+            <p class="text-xl max-w-3xl mx-auto">Relive the memorable moments, achievements, and celebrations that make SRIC special</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <!-- Featured Events Section -->
+        <div class="event-section">
+            <div class="event-header">
+                <h2 class="text-2xl md:text-3xl font-bold text-sricblue">Featured Events</h2>
+                <p class="text-gray-600">Highlights from our most memorable school events</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <!-- Farewell Event -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="assets/farewell2.jpeg" alt="Farewell Event" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="w-2 h-8 bg-sricgold mr-3 rounded-full"></div>
+                            <h3 class="text-xl font-bold text-sricblue">Annual Farewell 2025</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">An emotional farewell ceremony for our graduating students, celebrating their journey at SRIC with speeches, awards, and performances.</p>
+                        <div class="flex justify-between items-center text-sm text-gray-500">
+                            <span><i class="far fa-calendar mr-1 text-sricblue"></i> May 15, 2025</span>
+                            <a href="#farewell-album" class="text-sricblue hover:text-blue-900 font-medium transition duration-300 flex items-center">
+                                View More <i class="fas fa-arrow-right ml-1 text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Prize Distribution Event -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="assets/prize4.jpeg" alt="Prize Distribution" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="w-2 h-8 bg-sricgold mr-3 rounded-full"></div>
+                            <h3 class="text-xl font-bold text-sricblue">Prize Distribution 2025</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Celebrating academic excellence and special achievements of our students with certificate distribution and honors.</p>
+                        <div class="flex justify-between items-center text-sm text-gray-500">
+                            <span><i class="far fa-calendar mr-1 text-sricblue"></i> April 10, 2025</span>
+                            <a href="#prize-album" class="text-sricblue hover:text-blue-900 font-medium transition duration-300 flex items-center">
+                                View More <i class="fas fa-arrow-right ml-1 text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Gallery Filters -->
+        <div class="mb-16">
+            <div class="flex flex-wrap justify-center gap-3 mb-8">
+                <button class="category-btn px-5 py-2.5 bg-sricblue text-white rounded-full font-medium active" data-category="all">
+                    <i class="fas fa-layer-group mr-2"></i> All
+                </button>
+                <button class="category-btn px-5 py-2.5 bg-gray-100 hover:bg-gray-200 rounded-full font-medium" data-category="events">
+                    <i class="fas fa-calendar-alt mr-2"></i> Events
+                </button>
+                <button class="category-btn px-5 py-2.5 bg-gray-100 hover:bg-gray-200 rounded-full font-medium" data-category="achievements">
+                    <i class="fas fa-trophy mr-2"></i> Achievements
+                </button>
+                <button class="category-btn px-5 py-2.5 bg-gray-100 hover:bg-gray-200 rounded-full font-medium" data-category="cultural">
+                    <i class="fas fa-music mr-2"></i> Cultural
+                </button>
+                <button class="category-btn px-5 py-2.5 bg-gray-100 hover:bg-gray-200 rounded-full font-medium" data-category="videos">
+                    <i class="fas fa-video mr-2"></i> Videos
+                </button>
+            </div>
+            
+            <!-- Search Box -->
+            <div class="max-w-xl mx-auto mb-8">
+                <div class="relative">
+                    <input type="text" placeholder="Search gallery by event name, date or keyword..." 
+                           class="w-full px-5 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-sricblue focus:border-transparent shadow-sm pl-12">
+                    <button class="absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-sricblue">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Photo Gallery -->
+        <div id="photo-gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-16">
+            <!-- Farewell Photos -->
+            <a href="assets/farewell1.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="events" data-sub-html="<h4>Farewell Event 2025</h4><p>Students celebrating during the annual farewell ceremony</p>">
+                <img src="assets/farewell1.jpeg" alt="Farewell Event" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Farewell 2025</h3>
+                    <p class="text-sm">Graduating Students</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
+            <a href="assets/farewell2.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="events" data-sub-html="<h4>Farewell Event 2025</h4><p>Students receiving farewell gifts from teachers</p>">
+                <img src="assets/farewell2.jpeg" alt="Farewell Event" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Farewell 2025</h3>
+                    <p class="text-sm">Gift Distribution</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
+            <a href="assets/farewell3.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="events" data-sub-html="<h4>Farewell Event 2025</h4><p>Students posing for group photos at farewell</p>">
+                <img src="assets/farewell3.jpeg" alt="Farewell Event" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Farewell 2025</h3>
+                    <p class="text-sm">Group Photos</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
+            <a href="assets/farewell4.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="events" data-sub-html="<h4>Farewell Event 2025</h4><p>Students enjoying cultural performances</p>">
+                <img src="assets/farewell4.jpeg" alt="Farewell Event" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Farewell 2025</h3>
+                    <p class="text-sm">Cultural Performances</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
+            <!-- Prize Distribution Photos -->
+            <a href="assets/prize1.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="achievements" data-sub-html="<h4>Prize Distribution 2025</h4><p>Chief guest awarding top performing students</p>">
+                <img src="assets/prize1.jpeg" alt="Prize Distribution" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Prize Day 2025</h3>
+                    <p class="text-sm">Top Performers</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
+            <a href="assets/competition1.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="achievements" data-sub-html="<h4>Inter-School GK Quiz 2024</h4><p>Students competing in the annual General Knowledge championship</p>">
+    <img src="assets/competition1.jpeg" alt="GK Quiz Competition" class="w-full h-full object-cover">
+    <div class="overlay">
+        <h3 class="font-bold text-lg">GK Quiz Championship</h3>
+        <p class="text-sm">Battle of Wits</p>
+        <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+            <i class="fas fa-image mr-1"></i> Photo
+        </div>
+    </div>
+</a>
+<a href="assets/competition2.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="competitions" data-sub-html="<h4>Inter-House GK Quiz 2024</h4><p>Final round of the General Knowledge championship with intense buzzer rounds</p>">
+    <img src="assets/competition2.jpeg" alt="GK Quiz Finals" class="w-full h-full object-cover">
+    <div class="overlay">
+        <h3 class="font-bold text-lg">Quiz Masters</h3>
+        <p class="text-sm">Battle of Brilliance</p>
+        <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+            <i class="fas fa-image mr-1"></i> Photo
+        </div>
+    </div>
+</a>
+            
+            <a href="assets/prize3.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="achievements" data-sub-html="<h4>Prize Distribution 2025</h4><p>Group photo of all award winners</p>">
+                <img src="assets/prize3.jpeg" alt="Prize Distribution" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Prize Day 2025</h3>
+                    <p class="text-sm">Award Winners</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
+            <a href="assets/prize4.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="achievements" data-sub-html="<h4>Prize Distribution 2025</h4><p>Students receiving certificates from principal</p>">
+                <img src="assets/prize4.jpeg" alt="Prize Distribution" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Prize Day 2025</h3>
+                    <p class="text-sm">Certificate Distribution</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
+            <!-- More Prize Distribution Photos -->
+            <a href="assets/prize5.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="achievements" data-sub-html="<h4>Prize Distribution 2025</h4><p>Students receiving sports achievement awards</p>">
+                <img src="assets/prize5.jpeg" alt="Prize Distribution" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Prize Day 2025</h3>
+                    <p class="text-sm">Sports Achievements</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
+            <a href="assets/prize6.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="achievements" data-sub-html="<h4>Prize Distribution 2025</h4><p>Teachers honoring students for special achievements</p>">
+                <img src="assets/prize6.jpeg" alt="Prize Distribution" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Prize Day 2025</h3>
+                    <p class="text-sm">Special Achievements</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
+            <a href="assets/prize7.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="achievements" data-sub-html="<h4>Prize Distribution 2025</h4><p>Students receiving awards for perfect attendance</p>">
+                <img src="assets/prize7.jpeg" alt="Prize Distribution" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Prize Day 2025</h3>
+                    <p class="text-sm">Perfect Attendance</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
+            <a href="assets/prize9.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="achievements" data-sub-html="<h4>Prize Distribution 2025</h4><p>Group photo of all prize winners with teachers</p>">
+                <img src="assets/prize9.jpeg" alt="Prize Distribution" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Prize Day 2025</h3>
+                    <p class="text-sm">Winners with Teachers</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            <a href="assets/prize8.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="achievements" data-sub-html="<h4>Annual Prize Day 2025</h4><p>Principal awarding trophies to top performers in academics and extracurriculars</p>">
+    <img src="assets/prize8.jpeg" alt="Prize Distribution" class="w-full h-full object-cover">
+    <div class="overlay">
+        <h3 class="font-bold text-lg">Glory Moment</h3>
+        <p class="text-sm">Recognition Day</p>
+        <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+            <i class="fas fa-image mr-1"></i> Photo
+        </div>
+    </div>
+</a>
+            <!-- More Farewell Photos -->
+            <a href="assets/farewell5.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="events" data-sub-html="<h4>Farewell Event 2025</h4><p>Students enjoying cultural performances</p>">
+                <img src="assets/farewell5.jpeg" alt="Farewell Event" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Farewell 2025</h3>
+                    <p class="text-sm">Cultural Performances</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
+            <a href="assets/farewell6.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="events" data-sub-html="<h4>Farewell Event 2025</h4><p>Students receiving farewell certificates</p>">
+                <img src="assets/farewell6.jpeg" alt="Farewell Event" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Farewell 2025</h3>
+                    <p class="text-sm">Certificate Distribution</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
+            <a href="assets/farewell7.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="events" data-sub-html="<h4>Farewell Event 2025</h4><p>Students enjoying the farewell party</p>">
+                <img src="assets/farewell7.jpeg" alt="Farewell Event" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Farewell 2025</h3>
+                    <p class="text-sm">Farewell Party</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
+            <a href="assets/farewell8.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="events" data-sub-html="<h4>Farewell Event 2024</h4><p>Students posing for final group photo</p>">
+                <img src="assets/farewell8.jpeg" alt="Farewell Event" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Farewell 2024</h3>
+                    <p class="text-sm">Final Memories</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Photo Albums -->
+        <div class="event-section" id="albums-section">
+            <div class="event-header">
+                <h2 class="text-2xl md:text-3xl font-bold text-sricblue">Photo Albums</h2>
+                <p class="text-gray-600">Browse our curated collections of memorable moments</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Album 1 - Farewell -->
+                <div class="polaroid cursor-pointer" onclick="openAlbumModal('farewell-album')">
+                    <div class="relative overflow-hidden rounded-xl h-52 mb-4">
+                        <img src="assets/farewell2.jpeg" alt="Farewell Album" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
+                            <h3 class="text-white font-bold">View Album</h3>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="font-semibold text-sricblue">Farewell 2025</h3>
+                        <p class="text-sm text-gray-600">Graduation ceremony</p>
+                        <div class="text-xs text-sricgold mt-1"><i class="fas fa-images mr-1"></i> 24 photos</div>
+                    </div>
+                </div>
+                
+                <!-- Album 2 - Prize Distribution -->
+                <div class="polaroid cursor-pointer" onclick="openAlbumModal('prize-album')">
+                    <div class="relative overflow-hidden rounded-xl h-52 mb-4">
+                        <img src="assets/prize4.jpeg" alt="Prize Distribution Album" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
+                            <h3 class="text-white font-bold">View Album</h3>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="font-semibold text-sricblue">Prize Day 2025</h3>
+                        <p class="text-sm text-gray-600">Academic excellence</p>
+                        <div class="text-xs text-sricgold mt-1"><i class="fas fa-images mr-1"></i> 32 photos</div>
+                    </div>
+                </div>
+                
+                <!-- Album 3 - Independence Day -->
+                <div class="polaroid cursor-pointer" onclick="openAlbumModal('independence-album')">
+                    <div class="relative overflow-hidden rounded-xl h-52 mb-4">
+                        <img src="assets/independence_day.jpeg" alt="Independence Day Album" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
+                            <h3 class="text-white font-bold">View Album</h3>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="font-semibold text-sricblue">Independence Day</h3>
+                        <p class="text-sm text-gray-600">Patriotic celebrations</p>
+                        <div class="text-xs text-sricgold mt-1"><i class="fas fa-images mr-1"></i> 15 photos</div>
+                    </div>
+                </div>
+                
+                <!-- Album 4 - Teacher Recognition -->
+                <div class="polaroid cursor-pointer" onclick="openAlbumModal('teacher-album')">
+                    <div class="relative overflow-hidden rounded-xl h-52 mb-4">
+                        <img src="assets/teachers1.jpeg" alt="Teacher Award Album" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
+                            <h3 class="text-white font-bold">View Album</h3>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="font-semibold text-sricblue">Teacher Recognition</h3>
+                        <p class="text-sm text-gray-600">Honoring our educators</p>
+                        <div class="text-xs text-sricgold mt-1"><i class="fas fa-images mr-1"></i> 12 photos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Video Gallery Section -->
+        <div class="event-section mt-16">
+            <div class="event-header">
+                <h2 class="text-2xl md:text-3xl font-bold text-sricblue">Featured Videos</h2>
+                <p class="text-gray-600">Relive the excitement through our video collection</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Video Card 1 -->
+                <div class="video-card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="video-container">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/Yq_Edmb3hi8?si=2ILz-0DpKzXzCG9g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg md:text-xl mb-3 text-sricblue">Prize Distribution 2025</h3>
+                        <p class="text-gray-600 text-sm mb-4">Highlights from our prize distribution event celebrating student achievements</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="far fa-calendar-alt mr-2 text-sricblue"></i>
+                            <span>July 15, 2025</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video Card 2 -->
+                <div class="video-card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="video-container">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/ZcQkTWSuDC0?si=N5wHstDOPkGXyXyW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg md:text-xl mb-3 text-sricblue">Patriotic Drama</h3>
+                        <p class="text-gray-600 text-sm mb-4">Student performance of a patriotic drama on Republic Day</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="far fa-calendar-alt mr-2 text-sricblue"></i>
+                            <span>January 26, 2025</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video Card 3 -->
+                <div class="video-card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="video-container">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/lNukl6lkgcg?si=2cekM6p2yBYOruS4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg md:text-xl mb-3 text-sricblue">Mehandi Competition</h3>
+                        <p class="text-gray-600 text-sm mb-4">Creative showcase from our annual Mehandi competition</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="far fa-calendar-alt mr-2 text-sricblue"></i>
+                            <span>August 20, 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Album Modal -->
+    <div id="albumModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <div id="farewell-album" class="album-content hidden">
+                <h3 class="text-2xl font-bold text-sricblue mb-6 text-center">Farewell 2025 Album</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
+                    <img src="assets/farewell1.jpeg" alt="Farewell 2025" class="w-full h-64 object-cover rounded-lg">
+                    <img src="assets/farewell2.jpeg" alt="Farewell 2025" class="w-full h-64 object-cover rounded-lg">
+                    <img src="assets/farewell3.jpeg" alt="Farewell 2025" class="w-full h-64 object-cover rounded-lg">
+                    <img src="assets/farewell4.jpeg" alt="Farewell 2025" class="w-full h-64 object-cover rounded-lg">
+                    <img src="assets/farewell5.jpeg" alt="Farewell 2025" class="w-full h-64 object-cover rounded-lg">
+                    <img src="assets/farewell6.jpeg" alt="Farewell 2025" class="w-full h-64 object-cover rounded-lg">
+                </div>
+            </div>
+            
+            <div id="prize-album" class="album-content hidden">
+                <h3 class="text-2xl font-bold text-sricblue mb-6 text-center">Prize Distribution 2025 Album</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
+                    <img src="assets/prize1.jpeg" alt="Prize Distribution 2025" class="w-full h-64 object-cover rounded-lg">
+                    <img src="assets/prize2.jpeg" alt="Prize Distribution 2025" class="w-full h-64 object-cover rounded-lg">
+                    <img src="assets/prize3.jpeg" alt="Prize Distribution 2025" class="w-full h-64 object-cover rounded-lg">
+                    <img src="assets/prize4.jpeg" alt="Prize Distribution 2025" class="w-full h-64 object-cover rounded-lg">
+                    <img src="assets/prize5.jpeg" alt="Prize Distribution 2025" class="w-full h-64 object-cover rounded-lg">
+                    <img src="assets/prize6.jpeg" alt="Prize Distribution 2025" class="w-full h-64 object-cover rounded-lg">
+                </div>
+            </div>
+            
+            <div id="independence-album" class="album-content hidden">
+                <h3 class="text-2xl font-bold text-sricblue mb-6 text-center">Independence Day Album</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
+                    <img src="assets/independence_day.jpeg" alt="Independence Day" class="w-full h-64 object-cover rounded-lg">
+                    <!-- Add more independence day photos here -->
+                </div>
+            </div>
+            
+            <div id="teacher-album" class="album-content hidden">
+                <h3 class="text-2xl font-bold text-sricblue mb-6 text-center">Teacher Recognition Album</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
+                    <img src="assets/teachers1.jpeg" alt="Teacher Recognition" class="w-full h-64 object-cover rounded-lg">
+                    <!-- Add more teacher recognition photos here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-br from-sricblue to-blue-900 w-12 h-12 rounded-xl flex items-center justify-center">
+                            <span class="text-white text-xl font-bold">SRIC</span>
+                        </div>
+                        <h3 class="text-xl font-bold ml-3">SRIC</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">Preparing students for board success since 2002.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Academics</a></li>
+                        <li><a href="admission_form.html" class="text-gray-400 hover:text-white">Admissions</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Gallery</h4>
+                    <ul class="space-y-2">
+                        <li><a href="photos_videos.html" class="text-gray-400 hover:text-white">Photos</a></li>
+                        <li><a href="photos_videos.html" class="text-gray-400 hover:text-white">Videos</a></li>
+                        <li><a href="photos_videos.html" class="text-gray-400 hover:text-white">Events</a></li>
+                        <li><a href="photos_videos.html" class="text-gray-400 hover:text-white">Achievements</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">Sabdalpur Sharki, Mathana Road Hasanpur, Amroha 244242</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">+91 9756517750</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">info@sricschool.edu.in</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-400">
+                <p>© 2025-26 SRIC Senior Secondary School. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightgallery JS -->
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/lightgallery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/video/lg-video.min.js"></script>
+    
+    <script>
+        // Initialize lightGallery
+        lightGallery(document.getElementById('photo-gallery'), {
+            plugins: [lgVideo],
+            selector: '.gallery-item',
+            download: false,
+            youtubePlayerParams: {
+                modestbranding: 1,
+                showinfo: 0,
+                rel: 0
+            },
+            thumbnail: true
+        });
+        
+        // Filter gallery items
+        document.querySelectorAll('.category-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    btn.classList.remove('active', 'bg-sricblue', 'text-white');
+                    btn.classList.add('bg-gray-100', 'hover:bg-gray-200', 'text-gray-800');
+                });
+                button.classList.add('active', 'bg-sricblue', 'text-white');
+                button.classList.remove('bg-gray-100', 'hover:bg-gray-200', 'text-gray-800');
+                
+                const category = button.dataset.category;
+                const items = document.querySelectorAll('.gallery-item');
+                
+                items.forEach(item => {
+                    if (category === 'all' || item.dataset.category === category) {
+                        item.style.display = 'block';
+                        item.classList.add('animate-fade-in');
+                    } else {
+                        item.style.display = 'none';
+                        item.classList.remove('animate-fade-in');
+                    }
+                });
+            });
+        });
+        
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', function() {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Mobile dropdown functionality
+        document.querySelectorAll('.dropdown-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const dropdown = button.nextElementSibling;
+                const icon = button.querySelector('.dropdown-icon');
+                
+                // Toggle dropdown
+                if (dropdown.style.maxHeight) {
+                    dropdown.style.maxHeight = null;
+                    icon.classList.remove('rotate-180');
+                } else {
+                    dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
+        
+        // Album Modal functionality
+        function openAlbumModal(albumId) {
+            const modal = document.getElementById('albumModal');
+            const albumContents = document.querySelectorAll('.album-content');
+            
+            // Hide all album contents
+            albumContents.forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Show the selected album
+            document.getElementById(albumId).classList.remove('hidden');
+            
+            // Display the modal
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            document.getElementById('albumModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal when clicking outside the content
+        window.onclick = function(event) {
+            const modal = document.getElementById('albumModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
