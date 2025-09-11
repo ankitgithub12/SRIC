@@ -13,12 +13,23 @@
                     colors: {
                         sricblue: '#002366',
                         sricgold: '#FFD700',
+                    },
+                    transitionProperty: {
+                        'height': 'height',
+                        'opacity': 'opacity',
+                        'transform': 'transform'
                     }
                 }
             }
         }
     </script>
     <style>
+        .hero {
+            background: linear-gradient(rgba(0, 35, 102, 0.8), rgba(0, 35, 102, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
         .contact-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
@@ -40,28 +51,199 @@
                 height: 300px;
             }
         }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stats-card {
+            transition: all 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Custom spacing for navbar items */
+        .nav-spacing {
+            margin-right: 1.5rem; /* 24px spacing between nav items */
+        }
+        
+        /* Special spacing for the Apply Now button */
+        .apply-now-btn {
+            margin-left: 1.5rem;
+            padding: 0.5rem 1.5rem;
+        }
+        
+        /* Active link styling */
+        .active-nav-link {
+            color: white;
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .active-nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #FFD700; /* sricgold */
+        }
     </style>
 </head>
 <body class="min-h-screen bg-gray-50">
-    <!-- Header -->
+    <!-- Header with improved spacing -->
     <header class="sticky top-0 z-50 shadow-md">
         <nav class="bg-sricblue p-4">
             <div class="container mx-auto flex justify-between items-center">
+                <!-- Logo + School Name -->
                 <div class="flex items-center space-x-2">
                     <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="h-10 w-10 rounded-full">
                     <a href="index.html" class="text-white text-xl font-bold">SITARAM INTER COLLEGE</a>
+                    <span class="hidden sm:inline text-sricgold text-sm">Empowering Minds, Shaping Futures</span>
                 </div>
+
+                <!-- Desktop Menu with proper spacing -->
                 <ul class="hidden md:flex space-x-6 items-center">
-                    <li><a href="index.html" class="text-gray-300 hover:text-white hover:underline">Home</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white hover:underline">About Us</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white hover:underline">Academics</a></li>
-                    <li><a href="contact.html" class="text-white font-semibold underline">Contact</a></li>
+                    <li class="nav-spacing"><a href="index.html" class="text-gray-300 hover:text-white hover:underline">Home</a></li>
+                    
+                    <!-- About Us Dropdown -->
+                    <li class="relative group nav-spacing">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            About Us <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="mission.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Mission</a></li>
+                            <li><a href="History.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">History</a></li>
+                            <li><a href="faculty.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Academics Dropdown -->
+                    <li class="relative group nav-spacing">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Academics <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="curriculum.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Curriculum</a></li>
+                            <li><a href="programs.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Admissions Dropdown -->
+                    <li class="relative group nav-spacing">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Admissions <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="process.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Process</a></li>
+                            <li><a href="fees.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Fees</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- News & Events Dropdown -->
+                    <li class="relative group nav-spacing">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            News & Events <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="calendar.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Calendar</a></li>
+                            <li><a href="announcements.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Announcements</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Gallery Dropdown -->
+                    <li class="relative group nav-spacing">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Gallery <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="photos_videos.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Photos/Videos</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-spacing"><a href="contact.html" class="active-nav-link">Contact</a></li>
                 </ul>
-                <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+
+                <!-- CTA Button (Desktop) with proper spacing -->
+                <a href="admission_form.html" class="hidden md:block bg-sricgold text-sricblue px-4 py-2 rounded-md font-semibold hover:bg-yellow-600 transition apply-now-btn">
+                    Apply Now
+                </a>
+
+                <!-- Mobile Hamburger Menu -->
+                <button id="menu-toggle" class="md:hidden text-white focus:outline-none" aria-expanded="false" aria-label="Toggle menu">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                 </button>
+            </div>
+
+            <!-- Mobile Menu (Hidden by default) -->
+            <div id="mobile-menu" class="md:hidden hidden bg-sricblue pb-4 px-4">
+                <ul class="flex flex-col space-y-2">
+                    <li><a href="index.html" class="block text-gray-300 hover:text-white py-2">Home</a></li>
+                    
+                    <!-- About Us Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            About Us <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="mission.html" class="block text-gray-400 hover:text-white py-1 text-sm">Mission</a></li>
+                            <li><a href="History.html" class="block text-gray-400 hover:text-white py-1 text-sm">History</a></li>
+                            <li><a href="faculty.html" class="block text-gray-400 hover:text-white py-1 text-sm">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Academics Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Academics <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="curriculum.html" class="block text-gray-400 hover:text-white py-1 text-sm">Curriculum</a></li>
+                            <li><a href="programs.html" class="block text-gray-400 hover:text-white py-1 text-sm">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Admissions Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Admissions <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="process.html" class="block text-gray-400 hover:text-white py-1 text-sm">Process</a></li>
+                            <li><a href="fees.html" class="block text-gray-400 hover:text-white py-1 text-sm">Fees</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- News & Events Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            News & Events <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="calendar.html" class="block text-gray-400 hover:text-white py-1 text-sm">Calendar</a></li>
+                            <li><a href="announcements.html" class="block text-gray-400 hover:text-white py-1 text-sm">Announcements</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Gallery Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Gallery <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="photos_videos.html" class="block text-gray-400 hover:text-white py-1 text-sm">Photos/Videos</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="contact.html" class="block text-white font-semibold py-2">Contact</a></li>
+                    <li><a href="admission_form.html" class="block bg-sricgold text-sricblue px-4 py-2 rounded-md text-center font-semibold mt-2">Apply Now</a></li>
+                </ul>
             </div>
         </nav>
     </header>
@@ -69,11 +251,18 @@
     <!-- Main Content -->
     <main>
         <!-- Hero Section -->
-        <section class="relative bg-sricblue text-white py-20 md:py-28">
-            <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80');"></div>
-            <div class="container mx-auto px-4 relative z-10 text-center">
-                <h1 class="text-4xl md:text-5xl font-bold mb-6">Contact SRIC</h1>
+        <section class="hero text-white py-20 md:py-28">
+            <div class="container mx-auto px-4 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">Get In Touch With SRIC</h1>
                 <p class="text-xl max-w-2xl mx-auto">We'd love to hear from you! Reach out for inquiries, admissions, or any questions about our school.</p>
+                <div class="mt-8 flex justify-center">
+                    <a href="#contact-form" class="bg-sricgold hover:bg-yellow-600 text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300 mr-4">
+                        Send Message
+                    </a>
+                    <a href="#map" class="bg-transparent border-2 border-white hover:bg-white hover:text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300">
+                        Visit Us
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -82,36 +271,36 @@
             <div class="container mx-auto px-4">
                 <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                     <!-- Address Card -->
-                    <div class="contact-card bg-white p-8 rounded-xl shadow-md border-t-4 border-sricblue transition duration-300 text-center">
-                        <div class="bg-sricblue text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div class="contact-card bg-gradient-to-br from-sricblue to-blue-900 text-white p-8 rounded-xl shadow-lg transition duration-300 text-center">
+                        <div class="bg-white text-sricblue w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                             <i class="fas fa-map-marker-alt text-2xl"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-4">Our Location</h3>
-                        <p class="text-gray-600 mb-2">Sabdalpur Sharki, Mathana Road</p>
-                        <p class="text-gray-600">Hasanpur, Amroha 244242</p>
-                        <a href="#map" class="mt-4 inline-block text-sricblue font-medium hover:underline">View on Map</a>
+                        <p class="mb-2">Sabdalpur Sharki, Mathana Road</p>
+                        <p>Hasanpur, Amroha 244242</p>
+                        <a href="#map" class="mt-4 inline-block text-sricgold font-medium hover:underline">View on Map</a>
                     </div>
                     
                     <!-- Contact Card -->
-                    <div class="contact-card bg-white p-8 rounded-xl shadow-md border-t-4 border-sricgold transition duration-300 text-center">
-                        <div class="bg-sricgold text-sricblue w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div class="contact-card bg-gradient-to-br from-sricgold to-yellow-600 text-sricblue p-8 rounded-xl shadow-lg transition duration-300 text-center">
+                        <div class="bg-sricblue text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                             <i class="fas fa-phone-alt text-2xl"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-4">Contact Us</h3>
-                        <p class="text-gray-600 mb-2">+91 9756517750</p>
-                        <p class="text-gray-600">+91 9876543210</p>
+                        <p class="mb-2">+91 9756517750</p>
+                        <p>+91 9639800912</p>
                         <a href="tel:+919756517750" class="mt-4 inline-block text-sricblue font-medium hover:underline">Call Now</a>
                     </div>
                     
                     <!-- Email Card -->
-                    <div class="contact-card bg-white p-8 rounded-xl shadow-md border-t-4 border-sricblue transition duration-300 text-center">
-                        <div class="bg-sricblue text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div class="contact-card bg-gradient-to-br from-sricblue to-blue-900 text-white p-8 rounded-xl shadow-lg transition duration-300 text-center">
+                        <div class="bg-white text-sricblue w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                             <i class="fas fa-envelope text-2xl"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-4">Email Us</h3>
-                        <p class="text-gray-600 mb-2">info@sricschool.edu.in</p>
-                        <p class="text-gray-600">admissions@sricschool.edu.in</p>
-                        <a href="mailto:info@sricschool.edu.in" class="mt-4 inline-block text-sricblue font-medium hover:underline">Send Email</a>
+                        <p class="mb-2">Yespalsinghsaini@gmail.com</p>
+                        <p>Yespalji523@gmail.com</p>
+                        <a href="mailto:Yespalsinghsaini@gmail.com" class="mt-4 inline-block text-sricgold font-medium hover:underline">Send Email</a>
                     </div>
                 </div>
             </div>
@@ -127,7 +316,7 @@
                 
                 <div class="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
                     <!-- Contact Form -->
-                    <div class="bg-white p-8 rounded-xl shadow-md">
+                    <div id="contact-form" class="bg-white p-8 rounded-xl shadow-lg">
                         <h3 class="text-2xl font-bold text-sricblue mb-6">Send Us a Message</h3>
                         <form>
                             <div class="mb-6">
@@ -165,12 +354,12 @@
                     <!-- Map and Hours -->
                     <div>
                         <!-- Map -->
-                        <div id="map" class="map-container mb-8 shadow-lg">
+                        <div id="map" class="map-container mb-8 shadow-lg rounded-xl overflow-hidden">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3499.876234371526!2d78.2845573150836!3d28.72225998238389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390b9f8e6a1e1b0d%3A0x9a9b9b9b9b9b9b9b!2sSitaram%20Inter%20College!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                         </div>
                         
                         <!-- Office Hours -->
-                        <div class="bg-white p-6 rounded-xl shadow-md">
+                        <div class="bg-white p-6 rounded-xl shadow-lg">
                             <h3 class="text-xl font-bold text-sricblue mb-4">Office Hours</h3>
                             <ul class="space-y-3">
                                 <li class="flex justify-between border-b border-gray-100 pb-2">
@@ -279,6 +468,38 @@
                 </div>
             </div>
         </section>
+
+        <!-- Stats Section -->
+        <section class="py-16 bg-sricblue text-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Why Contact SRIC?</h2>
+                    <p class="text-xl max-w-2xl mx-auto">Our responsive team is ready to assist you</p>
+                </div>
+                
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div class="stats-card bg-white text-sricblue p-6 rounded-lg text-center">
+                        <div class="text-4xl font-bold mb-2"><i class="fas fa-clock"></i></div>
+                        <p class="font-semibold">24h Response Time</p>
+                    </div>
+                    
+                    <div class="stats-card bg-white text-sricblue p-6 rounded-lg text-center">
+                        <div class="text-4xl font-bold mb-2"><i class="fas fa-user-check"></i></div>
+                        <p class="font-semibold">Personalized Guidance</p>
+                    </div>
+                    
+                    <div class="stats-card bg-white text-sricblue p-6 rounded-lg text-center">
+                        <div class="text-4xl font-bold mb-2"><i class="fas fa-calendar-check"></i></div>
+                        <p class="font-semibold">Flexible Appointment Times</p>
+                    </div>
+                    
+                    <div class="stats-card bg-white text-sricblue p-6 rounded-lg text-center">
+                        <div class="text-4xl font-bold mb-2"><i class="fas fa-headset"></i></div>
+                        <p class="font-semibold">Dedicated Support</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -305,8 +526,8 @@
                     <h4 class="text-lg font-bold mb-4">Quick Links</h4>
                     <ul class="space-y-2">
                         <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Academics</a></li>
+                        <li><a href="History.html" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="Achievements.html" class="text-gray-400 hover:text-white">Academics</a></li>
                         <li><a href="admission_form.html" class="text-gray-400 hover:text-white">Admissions</a></li>
                         <li><a href="contact.html" class="text-gray-400 hover:text-white">Contact</a></li>
                     </ul>
@@ -315,10 +536,10 @@
                 <div>
                     <h4 class="text-lg font-bold mb-4">Academics</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">Science Stream</a></li>
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Science Stream</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-white">Humanities Stream</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Curriculum</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Faculty</a></li>
+                        <li><a href="curriculum.html" class="text-gray-400 hover:text-white">Curriculum</a></li>
+                        <li><a href="faculty.html" class="text-gray-400 hover:text-white">Faculty</a></li>
                     </ul>
                 </div>
                 
@@ -356,6 +577,23 @@
             const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
             menuToggle.setAttribute('aria-expanded', !isExpanded);
             mobileMenu.classList.toggle('hidden');
+        });
+
+        // Mobile dropdown functionality
+        document.querySelectorAll('.dropdown-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const dropdown = button.nextElementSibling;
+                const icon = button.querySelector('.dropdown-icon');
+                
+                // Toggle dropdown
+                if (dropdown.style.maxHeight) {
+                    dropdown.style.maxHeight = null;
+                    icon.classList.remove('rotate-180');
+                } else {
+                    dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
+                    icon.classList.add('rotate-180');
+                }
+            });
         });
 
         // FAQ Accordion

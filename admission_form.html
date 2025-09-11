@@ -3,56 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admission Form 2025-2026</title>
+    <title>Admission Form 2025-2026 | SRIC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        }
+        
         .signature-box {
-            border: 1px dashed #666;
+            border: 1px dashed #4a6baf;
             height: 100px;
             margin-top: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+        }
+        
+        .form-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .form-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: -1rem -1rem 1.5rem -1rem;
+            border-radius: 12px 12px 0 0;
+        }
+        
+        .form-input {
+            transition: all 0.3s ease;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-input:focus {
+            border-color: #3a7bd5;
+            box-shadow: 0 0 0 3px rgba(58, 123, 213, 0.2);
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+            background-size: 200% auto;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(58, 123, 213, 0.3);
+        }
+        
+        .reset-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .school-logo {
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+            transition: transform 0.3s ease;
+        }
+        
+        .school-logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .required-field::after {
+            content: '*';
+            color: #ef4444;
+            margin-left: 4px;
         }
     </style>
 </head>
-<body class="bg-gray-100">
-    <div class="max-w-5xl mx-auto p-6 my-8 shadow-lg rounded-lg bg-white">
-        <div class="flex flex-col items-center mb-6">
-            <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="h-24 w-24 rounded-full mb-4">
-            <h1 class="text-3xl md:text-4xl font-bold text-blue-800">Admission Form</h1>
-            <p class="text-lg md:text-xl mt-2 text-gray-600">For the Academic Year 2025-2026</p>
+<body class="min-h-screen py-8">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header with School Info -->
+        <div class="text-center mb-10">
+            <div class="inline-block bg-white p-4 rounded-full shadow-lg mb-6">
+                <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="h-28 w-28 rounded-full school-logo">
+            </div>
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">SRIC Admission Form</h1>
+            <div class="text-xl text-gray-600 mb-4">Academic Year 2025-2026</div>
+            <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-teal-400 mx-auto rounded-full"></div>
         </div>
         
-        <form action="#" method="POST" class="space-y-6">
+        <!-- Progress Indicator -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between mb-2">
+                <div class="text-sm font-medium text-blue-600">Application Progress</div>
+                <div class="text-sm font-medium text-gray-500">Step 1 of 3</div>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="bg-gradient-to-r from-blue-500 to-teal-400 h-2.5 rounded-full" style="width: 33%"></div>
+            </div>
+        </div>
+        
+        <form action="#" method="POST" class="space-y-8">
             <!-- Student Information Section -->
-            <div class="bg-blue-50 p-4 rounded-lg">
-                <h2 class="text-xl font-semibold text-blue-800 mb-4 border-b pb-2">
-                    <i class="fas fa-user-graduate mr-2"></i>Student Information
-                </h2>
+            <div class="form-section p-6">
+                <div class="section-header">
+                    <h2 class="text-xl font-semibold flex items-center">
+                        <i class="fas fa-user-graduate mr-3"></i>Student Information
+                    </h2>
+                </div>
                 
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
-                        <label for="name" class="block text-lg font-medium mb-2">Full Name<span class="text-red-500">*</span></label>
-                        <input type="text" id="name" name="name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <label for="name" class="block font-medium mb-2 required-field">Full Name</label>
+                        <input type="text" id="name" name="name" class="w-full form-input focus:ring-2 focus:ring-blue-300" required>
                     </div>
                     
                     <div>
-                        <label for="dob" class="block text-lg font-medium mb-2">Date of Birth<span class="text-red-500">*</span></label>
-                        <input type="date" id="dob" name="dob" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                        <label for="dob" class="block font-medium mb-2 required-field">Date of Birth</label>
+                        <input type="date" id="dob" name="dob" class="w-full form-input focus:ring-2 focus:ring-blue-300" required>
                     </div>
                     
                     <div>
-                        <label for="mother-tongue" class="block text-lg font-medium mb-2">Mother Tongue<span class="text-red-500">*</span></label>
-                        <input type="text" id="mother-tongue" name="mother-tongue" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                        <label for="mother-tongue" class="block font-medium mb-2 required-field">Mother Tongue</label>
+                        <input type="text" id="mother-tongue" name="mother-tongue" class="w-full form-input focus:ring-2 focus:ring-blue-300" required>
                     </div>
                     
                     <div>
-                        <label for="caste" class="block text-lg font-medium mb-2">Caste<span class="text-red-500">*</span></label>
-                        <input type="text" id="caste" name="caste" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                        <label for="caste" class="block font-medium mb-2 required-field">Caste</label>
+                        <input type="text" id="caste" name="caste" class="w-full form-input focus:ring-2 focus:ring-blue-300" required>
                     </div>
                     
                     <div>
-                        <label for="religion" class="block text-lg font-medium mb-2">Religion<span class="text-red-500">*</span></label>
-                        <select id="religion" name="religion" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                        <label for="religion" class="block font-medium mb-2 required-field">Religion</label>
+                        <select id="religion" name="religion" class="w-full form-input focus:ring-2 focus:ring-blue-300" required>
                             <option value="" disabled selected>Select Religion</option>
                             <option value="Hindu">Hindu</option>
                             <option value="Muslim">Muslim</option>
@@ -65,8 +160,8 @@
                     </div>
                     
                     <div>
-                        <label for="previous-class" class="block text-lg font-medium mb-2">Previous Class<span class="text-red-500">*</span></label>
-                        <select id="previous-class" name="previous-class" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                        <label for="previous-class" class="block font-medium mb-2 required-field">Previous Class</label>
+                        <select id="previous-class" name="previous-class" class="w-full form-input focus:ring-2 focus:ring-blue-300" required>
                             <option value="" disabled selected>Select Previous Class</option>
                             <option value="L.K.G">L.K.G</option>
                             <option value="U.K.G">U.K.G</option>
@@ -88,8 +183,8 @@
                     </div>
                     
                     <div>
-                        <label for="admission-class" class="block text-lg font-medium mb-2">Class Seeking Admission<span class="text-red-500">*</span></label>
-                        <select id="admission-class" name="admission-class" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                        <label for="admission-class" class="block font-medium mb-2 required-field">Class Seeking Admission</label>
+                        <select id="admission-class" name="admission-class" class="w-full form-input focus:ring-2 focus:ring-blue-300" required>
                             <option value="" disabled selected>Select Admission Class</option>
                             <option value="L.K.G">L.K.G</option>
                             <option value="U.K.G">U.K.G</option>
@@ -111,83 +206,89 @@
                     </div>
                     
                     <div>
-                        <label for="previous-school" class="block text-lg font-medium mb-2">Previous School Name<span class="text-red-500">*</span></label>
-                        <input type="text" id="previous-school" name="previous-school" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                        <label for="previous-school" class="block font-medium mb-2 required-field">Previous School Name</label>
+                        <input type="text" id="previous-school" name="previous-school" class="w-full form-input focus:ring-2 focus:ring-blue-300" required>
                     </div>
                     
                     <div>
-                        <label for="admission-date" class="block text-lg font-medium mb-2">Date of Admission<span class="text-red-500">*</span></label>
-                        <input type="date" id="admission-date" name="admission-date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                        <label for="admission-date" class="block font-medium mb-2 required-field">Date of Admission</label>
+                        <input type="date" id="admission-date" name="admission-date" class="w-full form-input focus:ring-2 focus:ring-blue-300" required>
                     </div>
                 </div>
             </div>
             
             <!-- Parent/Guardian Information Section -->
-            <div class="bg-blue-50 p-4 rounded-lg">
-                <h2 class="text-xl font-semibold text-blue-800 mb-4 border-b pb-2">
-                    <i class="fas fa-user-friends mr-2"></i>Parent/Guardian Information
-                </h2>
+            <div class="form-section p-6">
+                <div class="section-header">
+                    <h2 class="text-xl font-semibold flex items-center">
+                        <i class="fas fa-user-friends mr-3"></i>Parent/Guardian Information
+                    </h2>
+                </div>
                 
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
-                        <label for="father-name" class="block text-lg font-medium mb-2">Father's Name<span class="text-red-500">*</span></label>
-                        <input type="text" id="father-name" name="father-name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                        <label for="father-name" class="block font-medium mb-2 required-field">Father's Name</label>
+                        <input type="text" id="father-name" name="father-name" class="w-full form-input focus:ring-2 focus:ring-blue-300" required>
                     </div>
                     
                     <div>
-                        <label for="mother-name" class="block text-lg font-medium mb-2">Mother's Name<span class="text-red-500">*</span></label>
-                        <input type="text" id="mother-name" name="mother-name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                        <label for="mother-name" class="block font-medium mb-2 required-field">Mother's Name</label>
+                        <input type="text" id="mother-name" name="mother-name" class="w-full form-input focus:ring-2 focus:ring-blue-300" required>
                     </div>
                     
                     <div>
-                        <label for="father-contact" class="block text-lg font-medium mb-2">Father's Contact Number<span class="text-red-500">*</span></label>
-                        <input type="tel" id="father-contact" name="father-contact" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                        <label for="father-contact" class="block font-medium mb-2 required-field">Father's Contact Number</label>
+                        <input type="tel" id="father-contact" name="father-contact" class="w-full form-input focus:ring-2 focus:ring-blue-300" required>
                     </div>
                     
                     <div>
-                        <label for="mother-contact" class="block text-lg font-medium mb-2">Mother's Contact Number</label>
-                        <input type="tel" id="mother-contact" name="mother-contact" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <label for="mother-contact" class="block font-medium mb-2">Mother's Contact Number</label>
+                        <input type="tel" id="mother-contact" name="mother-contact" class="w-full form-input focus:ring-2 focus:ring-blue-300">
                     </div>
                     
                     <div>
-                        <label for="email" class="block text-lg font-medium mb-2">Email Address<span class="text-red-500">*</span></label>
-                        <input type="email" id="email" name="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                        <label for="email" class="block font-medium mb-2 required-field">Email Address</label>
+                        <input type="email" id="email" name="email" class="w-full form-input focus:ring-2 focus:ring-blue-300" required>
                     </div>
                     
                     <div>
-                        <label for="occupation" class="block text-lg font-medium mb-2">Father's Occupation<span class="text-red-500">*</span></label>
-                        <input type="text" id="occupation" name="occupation" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                        <label for="occupation" class="block font-medium mb-2 required-field">Father's Occupation</label>
+                        <input type="text" id="occupation" name="occupation" class="w-full form-input focus:ring-2 focus:ring-blue-300" required>
                     </div>
                     
                     <div>
-                        <label for="mother-occupation" class="block text-lg font-medium mb-2">Mother's Occupation</label>
-                        <input type="text" id="mother-occupation" name="mother-occupation" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <label for="mother-occupation" class="block font-medium mb-2">Mother's Occupation</label>
+                        <input type="text" id="mother-occupation" name="mother-occupation" class="w-full form-input focus:ring-2 focus:ring-blue-300">
                     </div>
                 </div>
             </div>
             
             <!-- Address Section -->
-            <div class="bg-blue-50 p-4 rounded-lg">
-                <h2 class="text-xl font-semibold text-blue-800 mb-4 border-b pb-2">
-                    <i class="fas fa-home mr-2"></i>Address Information
-                </h2>
+            <div class="form-section p-6">
+                <div class="section-header">
+                    <h2 class="text-xl font-semibold flex items-center">
+                        <i class="fas fa-home mr-3"></i>Address Information
+                    </h2>
+                </div>
                 
                 <div>
-                    <label for="address" class="block text-lg font-medium mb-2">Complete Address<span class="text-red-500">*</span></label>
-                    <textarea id="address" name="address" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required></textarea>
+                    <label for="address" class="block font-medium mb-2 required-field">Complete Address</label>
+                    <textarea id="address" name="address" rows="3" class="w-full form-input focus:ring-2 focus:ring-blue-300" required></textarea>
                 </div>
             </div>
             
             <!-- Signature Section -->
             <div class="grid md:grid-cols-2 gap-6">
                 <!-- Declaration Section -->
-                <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-                    <h2 class="text-xl font-semibold text-yellow-800 mb-4 border-b pb-2">
-                        <i class="fas fa-file-signature mr-2"></i>Declaration
-                    </h2>
+                <div class="form-section p-6">
+                    <div class="section-header bg-gradient-to-r from-yellow-500 to-yellow-400">
+                        <h2 class="text-xl font-semibold flex items-center">
+                            <i class="fas fa-file-signature mr-3"></i>Declaration
+                        </h2>
+                    </div>
                     
                     <div class="flex items-start">
-                        <input type="checkbox" id="declaration" name="declaration" class="mt-1 mr-2" required>
+                        <input type="checkbox" id="declaration" name="declaration" class="mt-1 mr-3 h-5 w-5 text-blue-600 rounded focus:ring-blue-500" required>
                         <label for="declaration" class="text-gray-700">
                             I hereby declare that all the information provided in this form is true and correct to the best of my knowledge. 
                             I understand that providing false information may result in cancellation of admission.
@@ -196,36 +297,61 @@
                 </div>
                 
                 <!-- Parent Signature Section -->
-                <div class="bg-green-50 p-4 rounded-lg border border-green-200">
-                    <h2 class="text-xl font-semibold text-green-800 mb-4 border-b pb-2">
-                        <i class="fas fa-signature mr-2"></i>Parent's Signature
-                    </h2>
+                <div class="form-section p-6">
+                    <div class="section-header bg-gradient-to-r from-green-500 to-green-400">
+                        <h2 class="text-xl font-semibold flex items-center">
+                            <i class="fas fa-signature mr-3"></i>Parent's Signature
+                        </h2>
+                    </div>
                     
                     <div>
                         <p class="mb-2">Parent/Guardian Name: <span class="font-medium" id="signature-name-display"></span></p>
                         <div class="signature-box"></div>
                         <p class="text-sm text-gray-500 mt-2">(Signature above this line)</p>
-                        <p class="text-sm text-gray-500 mt-4">Date: ___________________</p>
+                        <p class="text-sm text-gray-500 mt-4">Date: <span class="inline-block border-b border-gray-300 w-32"></span></p>
                     </div>
                 </div>
             </div>
             
             <!-- Submit Button -->
-            <div class="flex justify-center gap-4">
-                <button type="reset" class="bg-gray-500 text-white px-8 py-3 rounded-lg hover:bg-gray-600 transition duration-200 font-medium">
+            <div class="flex flex-col sm:flex-row justify-center gap-4 pt-4">
+                <button type="reset" class="reset-btn bg-gray-100 text-gray-700 px-8 py-3 rounded-lg hover:bg-gray-200 font-medium flex items-center justify-center">
                     <i class="fas fa-redo mr-2"></i>Reset Form
                 </button>
-                <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition duration-200 font-medium">
+                <button type="submit" class="submit-btn text-white px-8 py-3 rounded-lg font-medium flex items-center justify-center">
                     <i class="fas fa-paper-plane mr-2"></i>Submit Application
                 </button>
             </div>
         </form>
+        
+        <!-- Footer -->
+        <div class="mt-12 text-center text-gray-500 text-sm">
+            <p>© 2025 SRIC. All rights reserved.</p>
+            <p class="mt-1">For any queries, please contact: admissions@sric.edu | +91 9876543210</p>
+        </div>
     </div>
 
     <script>
         // Display parent name in signature section when entered
         document.getElementById('father-name').addEventListener('input', function() {
             document.getElementById('signature-name-display').textContent = this.value;
+        });
+        
+        // Add animation to form sections when they come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.form-section').forEach((section, index) => {
+            section.style.opacity = 0;
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
+            observer.observe(section);
         });
     </script>
 </body>

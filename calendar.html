@@ -52,10 +52,23 @@
         .exam-day {
             background-color: rgba(0, 128, 0, 0.1);
         }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .month-transition {
+            transition: all 0.3s ease;
+        }
     </style>
 </head>
 <body class="min-h-screen bg-gray-50">
-    <!-- Header (same as index.html) -->
+    <!-- Header -->
     <header class="sticky top-0 z-50 shadow-md">
         <nav class="bg-sricblue p-4">
             <div class="container mx-auto flex justify-between items-center">
@@ -189,33 +202,38 @@
         <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
             <div class="p-4 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="flex items-center gap-4">
-                    <button class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition">
+                    <button id="prev-month" class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-                    <h3 class="text-xl font-bold text-sricblue">July 2025</h3>
-                    <button class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition">
+                    <h3 id="current-month" class="text-xl font-bold text-sricblue">July 2025</h3>
+                    <button id="next-month" class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition">
                         <i class="fas fa-chevron-right"></i>
                     </button>
-                    <button class="px-4 py-2 bg-sricblue text-white rounded-lg hover:bg-blue-900 transition">
+                    <button id="today-btn" class="px-4 py-2 bg-sricblue text-white rounded-lg hover:bg-blue-900 transition">
                         Today
                     </button>
                 </div>
                 
                 <div class="relative">
-                    <select class="appearance-none bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-sricblue focus:border-transparent">
-                        <option>Jump to Month</option>
-                        <option>July 2025</option>
-                        <option>August 2025</option>
-                        <option>September 2025</option>
-                        <option>October 2025</option>
-                        <option>November 2025</option>
-                        <option>December 2025</option>
-                        <option>January 2026</option>
-                        <option>February 2026</option>
-                        <option>March 2026</option>
-                        <option>April 2026</option>
-                        <option>May 2026</option>
-                        <option>June 2026</option>
+                    <select id="month-selector" class="appearance-none bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-sricblue focus:border-transparent">
+                        <option value="0">January 2025</option>
+                        <option value="1">February 2025</option>
+                        <option value="2">March 2025</option>
+                        <option value="3">April 2025</option>
+                        <option value="4">May 2025</option>
+                        <option value="5">June 2025</option>
+                        <option value="6" selected>July 2025</option>
+                        <option value="7">August 2025</option>
+                        <option value="8">September 2025</option>
+                        <option value="9">October 2025</option>
+                        <option value="10">November 2025</option>
+                        <option value="11">December 2025</option>
+                        <option value="12">January 2026</option>
+                        <option value="13">February 2026</option>
+                        <option value="14">March 2026</option>
+                        <option value="15">April 2026</option>
+                        <option value="16">May 2026</option>
+                        <option value="17">June 2026</option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                         <i class="fas fa-chevron-down"></i>
@@ -225,147 +243,8 @@
         </div>
         
         <!-- Calendar Grid -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-12">
-            <!-- Weekday Headers -->
-            <div class="grid grid-cols-7 bg-gradient-to-r from-sricblue to-blue-800 text-white text-center font-semibold">
-                <div class="py-3">Sun</div>
-                <div class="py-3">Mon</div>
-                <div class="py-3">Tue</div>
-                <div class="py-3">Wed</div>
-                <div class="py-3">Thu</div>
-                <div class="py-3">Fri</div>
-                <div class="py-3">Sat</div>
-            </div>
-            
-            <!-- Calendar Days -->
-            <div class="grid grid-cols-7 border-b border-l border-gray-200">
-                <!-- Previous Month Days -->
-                <div class="h-32 p-2 border-t border-r border-gray-200 bg-gray-100 text-gray-400">29</div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 bg-gray-100 text-gray-400">30</div>
-                
-                <!-- Current Month Days -->
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">1</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">2</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">3</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">4</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day event-day">
-                    <div class="font-semibold">5</div>
-                    <div class="text-xs mt-1 space-y-1 overflow-y-auto max-h-24">
-                        <div class="bg-blue-100 text-blue-800 p-1 rounded">Staff Meeting</div>
-                    </div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">6</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">7</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">8</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">9</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">10</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day event-day">
-                    <div class="font-semibold">11</div>
-                    <div class="text-xs mt-1 space-y-1 overflow-y-auto max-h-24">
-                        <div class="bg-yellow-100 text-yellow-800 p-1 rounded">Admissions Begin</div>
-                    </div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">12</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">13</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">14</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">15</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">16</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day event-day">
-                    <div class="font-semibold">17</div>
-                    <div class="text-xs mt-1 space-y-1 overflow-y-auto max-h-24">
-                        <div class="bg-green-100 text-green-800 p-1 rounded">New Session Prep</div>
-                    </div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">18</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">19</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day today">
-                    <div class="font-semibold">20</div>
-                    <div class="text-xs mt-1 space-y-1 overflow-y-auto max-h-24">
-                        <div class="bg-purple-100 text-purple-800 p-1 rounded">Open House</div>
-                    </div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">21</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day event-day">
-                    <div class="font-semibold">22</div>
-                    <div class="text-xs mt-1 space-y-1 overflow-y-auto max-h-24">
-                        <div class="bg-red-100 text-red-800 p-1 rounded">Parent Orientation</div>
-                    </div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">23</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">24</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day event-day">
-                    <div class="font-semibold">25</div>
-                    <div class="text-xs mt-1 space-y-1 overflow-y-auto max-h-24">
-                        <div class="bg-indigo-100 text-indigo-800 p-1 rounded">Teacher Training</div>
-                    </div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">26</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">27</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day event-day">
-                    <div class="font-semibold">28</div>
-                    <div class="text-xs mt-1 space-y-1 overflow-y-auto max-h-24">
-                        <div class="bg-pink-100 text-pink-800 p-1 rounded">School Reopens</div>
-                    </div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">29</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">30</div>
-                </div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 calendar-day">
-                    <div class="font-semibold">31</div>
-                </div>
-                
-                <!-- Next Month Days -->
-                <div class="h-32 p-2 border-t border-r border-gray-200 bg-gray-100 text-gray-400">1</div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 bg-gray-100 text-gray-400">2</div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 bg-gray-100 text-gray-400">3</div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 bg-gray-100 text-gray-400">4</div>
-                <div class="h-32 p-2 border-t border-r border-gray-200 bg-gray-100 text-gray-400">5</div>
-            </div>
+        <div id="calendar-container" class="bg-white rounded-xl shadow-md overflow-hidden mb-12 fade-in">
+            <!-- Calendar will be dynamically generated here -->
         </div>
         
         <!-- Legend -->
@@ -386,11 +265,11 @@
                 </div>
                 <div class="flex items-center">
                     <div class="w-4 h-4 rounded-full bg-green-100 border border-green-300 mr-2"></div>
-                    <span class="text-sm">Preparation</span>
+                    <span class="text-sm">Examinations</span>
                 </div>
                 <div class="flex items-center">
                     <div class="w-4 h-4 rounded-full bg-purple-100 border border-purple-300 mr-2"></div>
-                    <span class="text-sm">Open House</span>
+                    <span class="text-sm">Holidays</span>
                 </div>
                 <div class="flex items-center">
                     <div class="w-4 h-4 rounded-full bg-pink-100 border border-pink-300 mr-2"></div>
@@ -546,7 +425,7 @@
         </div>
     </main>
 
-    <!-- Footer (same as index.html) -->
+    <!-- Footer -->
     <footer class="bg-gray-900 text-white py-12">
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-4 gap-8">
@@ -612,7 +491,7 @@
     </footer>
 
     <script>
-        // Mobile menu toggle (same as index.html)
+        // Mobile menu toggle
         const menuToggle = document.getElementById('menu-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
 
@@ -637,6 +516,189 @@
                     icon.classList.add('rotate-180');
                 }
             });
+        });
+
+        // Calendar functionality
+        let currentMonth = 6; // July (0-indexed)
+        let currentYear = 2025;
+        
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        
+        // Academic calendar events data
+        const academicEvents = {
+            "2025-07-28": { title: "School Reopens", type: "school", color: "pink" },
+            "2025-07-22": { title: "Parent Orientation", type: "parent", color: "red" },
+            "2025-07-05": { title: "Staff Meeting", type: "staff", color: "blue" },
+            "2025-07-11": { title: "Admissions Begin", type: "admission", color: "yellow" },
+            "2025-07-17": { title: "New Session Prep", type: "prep", color: "green" },
+            "2025-07-20": { title: "Open House", type: "school", color: "purple" },
+            "2025-07-25": { title: "Teacher Training", type: "staff", color: "blue" },
+            "2025-08-15": { title: "Independence Day", type: "holiday", color: "purple" },
+            "2025-09-15": { title: "Mid-Term Exams Start", type: "exam", color: "green" },
+            "2025-09-25": { title: "Mid-Term Exams End", type: "exam", color: "green" },
+            "2025-11-01": { title: "Diwali Break Starts", type: "holiday", color: "purple" },
+            "2025-11-10": { title: "Diwali Break Ends", type: "holiday", color: "purple" },
+            "2025-12-15": { title: "Annual Day", type: "school", color: "pink" },
+            "2025-12-25": { title: "Winter Break Starts", type: "holiday", color: "purple" },
+            "2026-01-05": { title: "Winter Break Ends", type: "holiday", color: "purple" },
+            "2026-01-26": { title: "Republic Day", type: "holiday", color: "purple" },
+            "2026-02-01": { title: "Pre-Board Exams Start", type: "exam", color: "green" },
+            "2026-02-15": { title: "Pre-Board Exams End", type: "exam", color: "green" },
+            "2026-02-15": { title: "Board Practicals Start", type: "exam", color: "green" },
+            "2026-02-25": { title: "Board Practicals End", type: "exam", color: "green" },
+            "2026-03-01": { title: "Board Exams Start", type: "exam", color: "green" },
+            "2026-04-15": { title: "Board Exams End", type: "exam", color: "green" },
+            "2026-04-30": { title: "Session Ends", type: "school", color: "pink" }
+        };
+        
+        // Function to generate calendar
+        function generateCalendar(month, year) {
+            const calendarContainer = document.getElementById('calendar-container');
+            const currentMonthElement = document.getElementById('current-month');
+            
+            // Update current month display
+            currentMonthElement.textContent = `${monthNames[month]} ${year}`;
+            
+            // Set the month selector to current month
+            document.getElementById('month-selector').value = month + (year === 2026 ? 12 : 0);
+            
+            // Get first day of month and number of days
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            // Get today's date for highlighting
+            const today = new Date();
+            const isCurrentMonth = today.getMonth() === month && today.getFullYear() === year;
+            
+            // Create calendar HTML
+            let calendarHTML = `
+                <!-- Weekday Headers -->
+                <div class="grid grid-cols-7 bg-gradient-to-r from-sricblue to-blue-800 text-white text-center font-semibold">
+                    <div class="py-3">Sun</div>
+                    <div class="py-3">Mon</div>
+                    <div class="py-3">Tue</div>
+                    <div class="py-3">Wed</div>
+                    <div class="py-3">Thu</div>
+                    <div class="py-3">Fri</div>
+                    <div class="py-3">Sat</div>
+                </div>
+                
+                <!-- Calendar Days -->
+                <div class="grid grid-cols-7 border-b border-l border-gray-200">
+            `;
+            
+            // Add empty cells for days before the first day of the month
+            for (let i = 0; i < firstDay; i++) {
+                const prevMonth = month === 0 ? 11 : month - 1;
+                const prevYear = month === 0 ? year - 1 : year;
+                const daysInPrevMonth = new Date(prevYear, prevMonth + 1, 0).getDate();
+                const dayNum = daysInPrevMonth - firstDay + i + 1;
+                
+                calendarHTML += `
+                    <div class="h-32 p-2 border-t border-r border-gray-200 bg-gray-100 text-gray-400">
+                        ${dayNum}
+                    </div>
+                `;
+            }
+            
+            // Add cells for each day of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const eventsForDay = academicEvents[dateStr] || null;
+                const isToday = isCurrentMonth && day === today.getDate();
+                
+                let dayClasses = "h-32 p-2 border-t border-r border-gray-200 calendar-day";
+                if (eventsForDay) dayClasses += " event-day";
+                if (isToday) dayClasses += " today";
+                
+                calendarHTML += `
+                    <div class="${dayClasses}">
+                        <div class="font-semibold">${day}</div>
+                `;
+                
+                // Add events if they exist for this day
+                if (eventsForDay) {
+                    calendarHTML += `
+                        <div class="text-xs mt-1 space-y-1 overflow-y-auto max-h-24">
+                            <div class="bg-${eventsForDay.color}-100 text-${eventsForDay.color}-800 p-1 rounded">
+                                ${eventsForDay.title}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                calendarHTML += `</div>`;
+                
+                // Start new row after Saturday
+                if ((firstDay + day) % 7 === 0 && day !== daysInMonth) {
+                    calendarHTML += `</div><div class="grid grid-cols-7 border-b border-l border-gray-200">`;
+                }
+            }
+            
+            // Add empty cells for days after the last day of the month
+            const lastDay = new Date(year, month, daysInMonth).getDay();
+            if (lastDay < 6) {
+                for (let i = 1; i <= 6 - lastDay; i++) {
+                    calendarHTML += `
+                        <div class="h-32 p-2 border-t border-r border-gray-200 bg-gray-100 text-gray-400">
+                            ${i}
+                        </div>
+                    `;
+                }
+            }
+            
+            calendarHTML += `</div></div>`;
+            
+            // Apply fade-in animation
+            calendarContainer.classList.remove('fade-in');
+            setTimeout(() => {
+                calendarContainer.innerHTML = calendarHTML;
+                calendarContainer.classList.add('fade-in');
+            }, 10);
+        }
+        
+        // Initialize calendar
+        generateCalendar(currentMonth, currentYear);
+        
+        // Event listeners for navigation
+        document.getElementById('prev-month').addEventListener('click', () => {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            generateCalendar(currentMonth, currentYear);
+        });
+        
+        document.getElementById('next-month').addEventListener('click', () => {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            generateCalendar(currentMonth, currentYear);
+        });
+        
+        document.getElementById('today-btn').addEventListener('click', () => {
+            const today = new Date();
+            currentMonth = today.getMonth();
+            currentYear = today.getFullYear();
+            generateCalendar(currentMonth, currentYear);
+        });
+        
+        document.getElementById('month-selector').addEventListener('change', (e) => {
+            const selectedValue = parseInt(e.target.value);
+            if (selectedValue < 12) {
+                currentMonth = selectedValue;
+                currentYear = 2025;
+            } else {
+                currentMonth = selectedValue - 12;
+                currentYear = 2026;
+            }
+            generateCalendar(currentMonth, currentYear);
         });
     </script>
 </body>

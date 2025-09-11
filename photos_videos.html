@@ -199,6 +199,7 @@
             font-size: 40px;
             font-weight: bold;
             transition: 0.3s;
+            z-index: 101;
         }
         
         .close:hover {
@@ -213,6 +214,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             transform: rotate(-2deg);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .polaroid:hover {
@@ -225,6 +227,64 @@
 
         .polaroid:nth-child(even):hover {
             transform: rotate(0deg) scale(1.05);
+        }
+        
+        /* Album modal styles */
+        .album-modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 1200px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .album-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .album-img:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .event-section {
+                padding: 1.5rem;
+            }
+            
+            .album-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .album-img {
+                height: 150px;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .category-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .gallery-item {
+                height: 200px;
+            }
         }
     </style>
 </head>
@@ -516,25 +576,26 @@
             </a>
             
             <a href="assets/competition1.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="achievements" data-sub-html="<h4>Inter-School GK Quiz 2024</h4><p>Students competing in the annual General Knowledge championship</p>">
-    <img src="assets/competition1.jpeg" alt="GK Quiz Competition" class="w-full h-full object-cover">
-    <div class="overlay">
-        <h3 class="font-bold text-lg">GK Quiz Championship</h3>
-        <p class="text-sm">Battle of Wits</p>
-        <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
-            <i class="fas fa-image mr-1"></i> Photo
-        </div>
-    </div>
-</a>
-<a href="assets/competition2.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="competitions" data-sub-html="<h4>Inter-House GK Quiz 2024</h4><p>Final round of the General Knowledge championship with intense buzzer rounds</p>">
-    <img src="assets/competition2.jpeg" alt="GK Quiz Finals" class="w-full h-full object-cover">
-    <div class="overlay">
-        <h3 class="font-bold text-lg">Quiz Masters</h3>
-        <p class="text-sm">Battle of Brilliance</p>
-        <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
-            <i class="fas fa-image mr-1"></i> Photo
-        </div>
-    </div>
-</a>
+                <img src="assets/competition1.jpeg" alt="GK Quiz Competition" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">GK Quiz Championship</h3>
+                    <p class="text-sm">Battle of Wits</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
+            <a href="assets/competition2.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="competitions" data-sub-html="<h4>Inter-House GK Quiz 2024</h4><p>Final round of the General Knowledge championship with intense buzzer rounds</p>">
+                <img src="assets/competition2.jpeg" alt="GK Quiz Finals" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Quiz Masters</h3>
+                    <p class="text-sm">Battle of Brilliance</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
             
             <a href="assets/prize3.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="achievements" data-sub-html="<h4>Prize Distribution 2025</h4><p>Group photo of all award winners</p>">
                 <img src="assets/prize3.jpeg" alt="Prize Distribution" class="w-full h-full object-cover">
@@ -602,16 +663,18 @@
                     </div>
                 </div>
             </a>
+            
             <a href="assets/prize8.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="achievements" data-sub-html="<h4>Annual Prize Day 2025</h4><p>Principal awarding trophies to top performers in academics and extracurriculars</p>">
-    <img src="assets/prize8.jpeg" alt="Prize Distribution" class="w-full h-full object-cover">
-    <div class="overlay">
-        <h3 class="font-bold text-lg">Glory Moment</h3>
-        <p class="text-sm">Recognition Day</p>
-        <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
-            <i class="fas fa-image mr-1"></i> Photo
-        </div>
-    </div>
-</a>
+                <img src="assets/prize8.jpeg" alt="Prize Distribution" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Glory Moment</h3>
+                    <p class="text-sm">Recognition Day</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
             <!-- More Farewell Photos -->
             <a href="assets/farewell5.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="events" data-sub-html="<h4>Farewell Event 2025</h4><p>Students enjoying cultural performances</p>">
                 <img src="assets/farewell5.jpeg" alt="Farewell Event" class="w-full h-full object-cover">
@@ -656,6 +719,68 @@
                     </div>
                 </div>
             </a>
+            
+            <a href="assets/rangoli.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="events" data-sub-html="<h4>Rangoli Competition 2024</h4><p>Students showcasing their artistic skills in rangoli competition</p>">
+                <img src="assets/rangoli.jpeg" alt="Rangoli Competition" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Rangoli Competition</h3>
+                    <p class="text-sm">Artistic Skills</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
+            <a href="assets/2018 farewell.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="events" data-sub-html="<h4>Farewell Event 2018</h4><p>Students posing for group photo at 2018 farewell</p>">
+                <img src="assets/2018 farewell.jpeg" alt="Farewell Event 2018" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Farewell 2018</h3>
+                    <p class="text-sm">Nostalgic Memories</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
+            <a href="assets/mehandi.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="events" data-sub-html="<h4>Mehandi Competition 2024</h4><p>Students displaying intricate mehandi designs</p>">
+                <img src="assets/mehandi.jpeg" alt="Mehandi Competition" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Mehandi Competition</h3>
+                    <p class="text-sm">Artistic Designs</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            
+            <a href="assets/Mehandi 2025.jpeg" class="gallery-item relative block h-72 overflow-hidden group" data-category="events" data-sub-html="<h4>Mehandi Competition 2025</h4><p>Students showcasing beautiful mehandi patterns</p>">
+                <img src="assets/Mehandi 2025.jpeg" alt="Mehandi Competition 2025" class="w-full h-full object-cover">
+                <div class="overlay">
+                    <h3 class="font-bold text-lg">Mehandi 2025</h3>
+                    <p class="text-sm">Creative Patterns</p>
+                    <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs">
+                        <i class="fas fa-image mr-1"></i> Photo
+                    </div>
+                </div>
+            </a>
+            <a href="assets/tour_photo.jpeg" 
+   class="gallery-item relative block h-72 overflow-hidden group" 
+   data-category="events" 
+   data-sub-html="<h4>School Excursion 2025</h4><p>Students enjoying an educational tour and exploring new places</p>">
+   
+    <img src="assets/tour_photo.jpeg" 
+         alt="School Excursion 2025" 
+         class="w-full h-full object-cover">
+         
+    <div class="overlay bg-black bg-opacity-40 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <h3 class="font-bold text-lg text-white">School Excursion</h3>
+        <p class="text-sm text-white">Learning Beyond Classroom</p>
+        <div class="absolute top-3 right-3 bg-sricblue bg-opacity-90 text-white px-2 py-1 rounded-full text-xs flex items-center">
+            <i class="fas fa-image mr-1"></i> Photo
+        </div>
+    </div>
+</a>
+
         </div>
         
         <!-- Photo Albums -->
@@ -667,7 +792,7 @@
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Album 1 - Farewell -->
-                <div class="polaroid cursor-pointer" onclick="openAlbumModal('farewell-album')">
+                <div class="polaroid" onclick="openAlbumModal('farewell-album')">
                     <div class="relative overflow-hidden rounded-xl h-52 mb-4">
                         <img src="assets/farewell2.jpeg" alt="Farewell Album" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
@@ -682,7 +807,7 @@
                 </div>
                 
                 <!-- Album 2 - Prize Distribution -->
-                <div class="polaroid cursor-pointer" onclick="openAlbumModal('prize-album')">
+                <div class="polaroid" onclick="openAlbumModal('prize-album')">
                     <div class="relative overflow-hidden rounded-xl h-52 mb-4">
                         <img src="assets/prize4.jpeg" alt="Prize Distribution Album" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
@@ -697,7 +822,7 @@
                 </div>
                 
                 <!-- Album 3 - Independence Day -->
-                <div class="polaroid cursor-pointer" onclick="openAlbumModal('independence-album')">
+                <div class="polaroid" onclick="openAlbumModal('independence-album')">
                     <div class="relative overflow-hidden rounded-xl h-52 mb-4">
                         <img src="assets/independence_day.jpeg" alt="Independence Day Album" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
@@ -712,7 +837,7 @@
                 </div>
                 
                 <!-- Album 4 - Teacher Recognition -->
-                <div class="polaroid cursor-pointer" onclick="openAlbumModal('teacher-album')">
+                <div class="polaroid" onclick="openAlbumModal('teacher-album')">
                     <div class="relative overflow-hidden rounded-xl h-52 mb-4">
                         <img src="assets/teachers1.jpeg" alt="Teacher Award Album" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
@@ -787,43 +912,48 @@
     <!-- Album Modal -->
     <div id="albumModal" class="modal">
         <span class="close" onclick="closeModal()">&times;</span>
-        <div class="modal-content">
+        <div class="album-modal-content">
             <div id="farewell-album" class="album-content hidden">
                 <h3 class="text-2xl font-bold text-sricblue mb-6 text-center">Farewell 2025 Album</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
-                    <img src="assets/farewell1.jpeg" alt="Farewell 2025" class="w-full h-64 object-cover rounded-lg">
-                    <img src="assets/farewell2.jpeg" alt="Farewell 2025" class="w-full h-64 object-cover rounded-lg">
-                    <img src="assets/farewell3.jpeg" alt="Farewell 2025" class="w-full h-64 object-cover rounded-lg">
-                    <img src="assets/farewell4.jpeg" alt="Farewell 2025" class="w-full h-64 object-cover rounded-lg">
-                    <img src="assets/farewell5.jpeg" alt="Farewell 2025" class="w-full h-64 object-cover rounded-lg">
-                    <img src="assets/farewell6.jpeg" alt="Farewell 2025" class="w-full h-64 object-cover rounded-lg">
+                <div class="album-grid">
+                    <img src="assets/farewell1.jpeg" alt="Farewell 2025" class="album-img">
+                    <img src="assets/farewell2.jpeg" alt="Farewell 2025" class="album-img">
+                    <img src="assets/farewell3.jpeg" alt="Farewell 2025" class="album-img">
+                    <img src="assets/farewell4.jpeg" alt="Farewell 2025" class="album-img">
+                    <img src="assets/farewell5.jpeg" alt="Farewell 2025" class="album-img">
+                    <img src="assets/farewell6.jpeg" alt="Farewell 2025" class="album-img">
+                    <img src="assets/farewell7.jpeg" alt="Farewell 2025" class="album-img">
+                    <img src="assets/farewell8.jpeg" alt="Farewell 2025" class="album-img">
                 </div>
             </div>
             
             <div id="prize-album" class="album-content hidden">
                 <h3 class="text-2xl font-bold text-sricblue mb-6 text-center">Prize Distribution 2025 Album</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
-                    <img src="assets/prize1.jpeg" alt="Prize Distribution 2025" class="w-full h-64 object-cover rounded-lg">
-                    <img src="assets/prize2.jpeg" alt="Prize Distribution 2025" class="w-full h-64 object-cover rounded-lg">
-                    <img src="assets/prize3.jpeg" alt="Prize Distribution 2025" class="w-full h-64 object-cover rounded-lg">
-                    <img src="assets/prize4.jpeg" alt="Prize Distribution 2025" class="w-full h-64 object-cover rounded-lg">
-                    <img src="assets/prize5.jpeg" alt="Prize Distribution 2025" class="w-full h-64 object-cover rounded-lg">
-                    <img src="assets/prize6.jpeg" alt="Prize Distribution 2025" class="w-full h-64 object-cover rounded-lg">
+                <div class="album-grid">
+                    <img src="assets/prize1.jpeg" alt="Prize Distribution 2025" class="album-img">
+                    <img src="assets/prize2.jpeg" alt="Prize Distribution 2025" class="album-img">
+                    <img src="assets/prize3.jpeg" alt="Prize Distribution 2025" class="album-img">
+                    <img src="assets/prize4.jpeg" alt="Prize Distribution 2025" class="album-img">
+                    <img src="assets/prize5.jpeg" alt="Prize Distribution 2025" class="album-img">
+                    <img src="assets/prize6.jpeg" alt="Prize Distribution 2025" class="album-img">
+                    <img src="assets/prize7.jpeg" alt="Prize Distribution 2025" class="album-img">
+                    <img src="assets/prize8.jpeg" alt="Prize Distribution 2025" class="album-img">
+                    <img src="assets/prize9.jpeg" alt="Prize Distribution 2025" class="album-img">
                 </div>
             </div>
             
             <div id="independence-album" class="album-content hidden">
                 <h3 class="text-2xl font-bold text-sricblue mb-6 text-center">Independence Day Album</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
-                    <img src="assets/independence_day.jpeg" alt="Independence Day" class="w-full h-64 object-cover rounded-lg">
+                <div class="album-grid">
+                    <img src="assets/independence_day.jpeg" alt="Independence Day" class="album-img">
                     <!-- Add more independence day photos here -->
                 </div>
             </div>
             
             <div id="teacher-album" class="album-content hidden">
                 <h3 class="text-2xl font-bold text-sricblue mb-6 text-center">Teacher Recognition Album</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
-                    <img src="assets/teachers1.jpeg" alt="Teacher Recognition" class="w-full h-64 object-cover rounded-lg">
+                <div class="album-grid">
+                    <img src="assets/teachers1.jpeg" alt="Teacher Recognition" class="album-img">
                     <!-- Add more teacher recognition photos here -->
                 </div>
             </div>
@@ -931,7 +1061,9 @@
                 items.forEach(item => {
                     if (category === 'all' || item.dataset.category === category) {
                         item.style.display = 'block';
-                        item.classList.add('animate-fade-in');
+                        setTimeout(() => {
+                            item.classList.add('animate-fade-in');
+                        }, 10);
                     } else {
                         item.style.display = 'none';
                         item.classList.remove('animate-fade-in');
@@ -997,6 +1129,25 @@
                 closeModal();
             }
         }
+        
+        // Search functionality
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('keyup', function() {
+            const searchTerm = this.value.toLowerCase();
+            const items = document.querySelectorAll('.gallery-item');
+            
+            items.forEach(item => {
+                const title = item.querySelector('h3').textContent.toLowerCase();
+                const description = item.querySelector('p').textContent.toLowerCase();
+                const category = item.dataset.category.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm) || category.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
     </script>
 </body>
 </html>

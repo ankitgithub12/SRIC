@@ -13,6 +13,7 @@
                     colors: {
                         sricblue: '#002366',
                         sricgold: '#FFD700',
+                        sriclightblue: '#003399',
                     },
                     transitionProperty: {
                         'height': 'height',
@@ -42,6 +43,62 @@
         .stats-card:hover {
             transform: scale(1.05);
         }
+        
+        /* Custom animations */
+        @keyframes pulse-gold {
+            0%, 100% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+        }
+        
+        .pulse-button {
+            animation: pulse-gold 2s infinite;
+        }
+        
+        /* Navbar enhancements */
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #FFD700;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Improved dropdown styling */
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-group:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        /* Mobile menu improvements */
+        @media (max-width: 768px) {
+            .mobile-menu-item {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .mobile-menu-item:last-child {
+                border-bottom: none;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -57,14 +114,14 @@
 
                 <!-- Desktop Menu -->
                 <ul class="hidden md:flex space-x-6 items-center">
-                    <li><a href="#" class="text-gray-300 hover:text-white hover:underline">Home</a></li>
+                    <li><a href="#" class="nav-link text-gray-300 hover:text-white">Home</a></li>
                     
                     <!-- About Us Dropdown -->
-                    <li class="relative group">
-                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                    <li class="relative dropdown-group">
+                        <button class="nav-link text-gray-300 hover:text-white focus:outline-none flex items-center">
                             About Us <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
-                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                        <ul class="dropdown-menu absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
                             <li><a href="mission.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Mission</a></li>
                             <li><a href="History.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">History</a></li>
                             <li><a href="faculty.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Faculty</a></li>
@@ -72,47 +129,50 @@
                     </li>
                     
                     <!-- Repeat similar structure for other dropdowns -->
-                    <li class="relative group">
-                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                    <li class="relative dropdown-group">
+                        <button class="nav-link text-gray-300 hover:text-white focus:outline-none flex items-center">
                             Academics <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
-                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                        <ul class="dropdown-menu absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
                             <li><a href="curriculum.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Curriculum</a></li>
                             <li><a href="programs.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Programs</a></li>
                         </ul>
                     </li>
-                    <li class="relative group">
-                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                    <li class="relative dropdown-group">
+                        <button class="nav-link text-gray-300 hover:text-white focus:outline-none flex items-center">
                             Admissions <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
-                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                        <ul class="dropdown-menu absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
                             <li><a href="process.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Process</a></li>
                             <li><a href="fees.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Fees</a></li>
                         </ul>
                     </li>
-                    <li class="relative group">
-                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                    <li class="relative dropdown-group">
+                        <button class="nav-link text-gray-300 hover:text-white focus:outline-none flex items-center">
                             News & Events <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
-                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                        <ul class="dropdown-menu absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
                             <li><a href="calendar.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Calendar</a></li>
                             <li><a href="announcements.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Announcements</a></li>
                         </ul>
                     </li>
-                    <li class="relative group">
-                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                    <li class="relative dropdown-group">
+                        <button class="nav-link text-gray-300 hover:text-white focus:outline-none flex items-center">
                             Gallery <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
-                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                        <ul class="dropdown-menu absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
                             <li><a href="photos_videos.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Photos/Videos</a></li>
                         </ul>
                     </li>
                     
-                    <li><a href="contact.html" class="text-gray-300 hover:text-white hover:underline">Contact</a></li>
+                    <!-- Added margin-right to create space before the CTA button -->
+                    <li class="mr-4"><a href="contact.html" class="nav-link text-gray-300 hover:text-white">Contact</a></li>
                 </ul>
 
-                <!-- CTA Button (Desktop) -->
-                <a href="admission_form.html" alt="" class="hidden md:block bg-sricgold text-sricblue px-4 py-2 rounded-md font-semibold hover:bg-yellow-600 transition">Apply Now</a>
+                <!-- CTA Button (Desktop) - Added pulse animation -->
+                <a href="admission_form.html" class="hidden md:block pulse-button bg-sricgold text-sricblue px-5 py-2.5 rounded-md font-bold hover:bg-yellow-500 transition transform hover:scale-105">
+                    Apply Now
+                </a>
 
                 <!-- Mobile Hamburger Menu -->
                 <button id="menu-toggle" class="md:hidden text-white focus:outline-none" aria-expanded="false" aria-label="Toggle menu">
@@ -123,61 +183,61 @@
             </div>
 
             <!-- Mobile Menu (Hidden by default) -->
-            <div id="mobile-menu" class="md:hidden hidden bg-sricblue pb-4 px-4">
+            <div id="mobile-menu" class="md:hidden hidden bg-sriclightblue pb-4 px-4">
                 <ul class="flex flex-col space-y-2">
-                    <li><a href="#" class="block text-gray-300 hover:text-white py-2">Home</a></li>
+                    <li class="mobile-menu-item"><a href="#" class="block text-gray-300 hover:text-white py-3 px-4 rounded-md hover:bg-sricblue transition">Home</a></li>
                     
                     <!-- About Us Dropdown -->
-                    <li class="dropdown-container">
-                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                    <li class="dropdown-container mobile-menu-item">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-3 px-4 rounded-md hover:bg-sricblue flex justify-between items-center transition">
                             About Us <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
-                            <li><a href="mission.html" class="block text-gray-400 hover:text-white py-1 text-sm">Mission</a></li>
-                            <li><a href="History.html" class="block text-gray-400 hover:text-white py-1 text-sm">History</a></li>
-                            <li><a href="faculty.html" class="block text-gray-400 hover:text-white py-1 text-sm">Faculty</a></li>
+                            <li><a href="mission.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Mission</a></li>
+                            <li><a href="History.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">History</a></li>
+                            <li><a href="faculty.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Faculty</a></li>
                         </ul>
                     </li>
                     
                     <!-- Repeat similar structure for other mobile dropdowns -->
-                    <li class="dropdown-container">
-                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                    <li class="dropdown-container mobile-menu-item">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-3 px-4 rounded-md hover:bg-sricblue flex justify-between items-center transition">
                             Academics <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
-                            <li><a href="curriculum.html" class="block text-gray-400 hover:text-white py-1 text-sm">Curriculum</a></li>
-                            <li><a href="programs.html" class="block text-gray-400 hover:text-white py-1 text-sm">Programs</a></li>
+                            <li><a href="curriculum.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Curriculum</a></li>
+                            <li><a href="programs.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Programs</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown-container">
-                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                    <li class="dropdown-container mobile-menu-item">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-3 px-4 rounded-md hover:bg-sricblue flex justify-between items-center transition">
                             Admissions <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
-                            <li><a href="process.html" class="block text-gray-400 hover:text-white py-1 text-sm">Process</a></li>
-                            <li><a href="fees.html" class="block text-gray-400 hover:text-white py-1 text-sm">Fees</a></li>
+                            <li><a href="process.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Process</a></li>
+                            <li><a href="fees.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Fees</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown-container">
-                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                    <li class="dropdown-container mobile-menu-item">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-3 px-4 rounded-md hover:bg-sricblue flex justify-between items-center transition">
                             News & Events <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
-                            <li><a href="calendar.html" class="block text-gray-400 hover:text-white py-1 text-sm">Calendar</a></li>
-                            <li><a href="announcements.html" class="block text-gray-400 hover:text-white py-1 text-sm">Announcements</a></li>
+                            <li><a href="calendar.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Calendar</a></li>
+                            <li><a href="announcements.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Announcements</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown-container">
-                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                    <li class="dropdown-container mobile-menu-item">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-3 px-4 rounded-md hover:bg-sricblue flex justify-between items-center transition">
                             Gallery <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
-                            <li><a href="photos_videos.html" class="block text-gray-400 hover:text-white py-1 text-sm">Photos/Videos</a></li>
+                            <li><a href="photos_videos.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Photos/Videos</a></li>
                         </ul>
                     </li>
                     
-                    <li><a href="contact.html" class="block text-gray-300 hover:text-white py-2">Contact</a></li>
-                    <li><a href="admission_form.html" class="block bg-sricgold text-sricblue px-4 py-2 rounded-md text-center font-semibold mt-2">Apply Now</a></li>
+                    <li class="mobile-menu-item"><a href="contact.html" class="block text-gray-300 hover:text-white py-3 px-4 rounded-md hover:bg-sricblue transition">Contact</a></li>
+                    <li class="mobile-menu-item mt-4"><a href="admission_form.html" class="block pulse-button bg-sricgold text-sricblue px-4 py-3 rounded-md text-center font-bold hover:bg-yellow-500 transition">Apply Now</a></li>
                 </ul>
             </div>
         </nav>
@@ -189,10 +249,10 @@
             <h1 class="text-4xl md:text-6xl font-bold mb-6">Empowering Minds, Shaping Futures</h1>
             <p class="text-xl max-w-3xl mx-auto mb-8">SRIC Senior Secondary School provides quality education with a focus on academic excellence and holistic development since 2002</p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="admission_form.html" class="bg-sricgold hover:bg-yellow-600 text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300">
+                <a href="admission_form.html" class="bg-sricgold hover:bg-yellow-600 text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
                     Apply Now
                 </a>
-                <a href="#" class="bg-transparent border-2 border-white hover:bg-white hover:text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300">
+                <a href="#" class="bg-transparent border-2 border-white hover:bg-white hover:text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
                     Learn More
                 </a>
             </div>
@@ -277,6 +337,31 @@
             <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Academic Toppers</h2>
             <p class="text-lg text-gray-600 max-w-2xl mx-auto">Celebrating the outstanding achievements of our students in board examinations</p>
         </div>
+
+        <!-- Special Recognition for Top 1% Achievers -->
+        <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl p-6 mb-10 shadow-xl">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="mb-4 md:mb-0 md:mr-6">
+                    <div class="bg-white bg-opacity-20 w-16 h-16 rounded-full flex items-center justify-center">
+                        <i class="fas fa-trophy text-3xl text-yellow-300"></i>
+                    </div>
+                </div>
+                <div class="text-center md:text-left">
+                    <h3 class="text-2xl font-bold mb-2">State-Level Excellence</h3>
+                    <p class="text-lg mb-3">Our Class 12 students have achieved remarkable success by ranking in the <span class="font-bold text-yellow-300">TOP 1%</span> of the entire Uttar Pradesh Board!</p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">Anushka - 86.8%</span>
+                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">Nitika Saini - 85.8%</span>
+                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">Divesh Saini - 83%</span>
+                    </div>
+                </div>
+                <div class="mt-4 md:mt-0 md:ml-auto">
+                    <a href="assets/top_performers_certificates.pdf" class="inline-flex items-center px-4 py-2 bg-white text-blue-600 font-bold rounded-lg hover:bg-gray-100 transition">
+                        <i class="fas fa-certificate mr-2"></i> View All Certificates
+                    </a>
+                </div>
+            </div>
+        </div>
         
         <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             <!-- 12th Toppers -->
@@ -295,6 +380,11 @@
                             <span class="bg-white text-sricblue px-3 py-1 rounded-full text-sm font-bold">86.8%</span>
                         </div>
                         <p class="text-sm opacity-90">Science Stream</p>
+                        <div class="mt-2">
+                            <a href="assets/Anushka Merit certificate.pdf" class="text-xs text-blue-200 hover:text-white underline flex items-center" target="_blank">
+                                <i class="fas fa-certificate mr-1"></i> View Certificate
+                            </a>
+                        </div>
                     </div>
                     
                     <div class="bg-white bg-opacity-20 p-4 rounded-lg backdrop-blur-sm">
@@ -303,6 +393,11 @@
                             <span class="bg-white text-sricblue px-3 py-1 rounded-full text-sm font-bold">85.8%</span>
                         </div>
                         <p class="text-sm opacity-90">Science Stream</p>
+                        <div class="mt-2">
+                            <a href="assets/NITIKA merit certificate.pdf" class="text-xs text-blue-200 hover:text-white underline flex items-center" target="_blank">
+                                <i class="fas fa-certificate mr-1"></i> View Certificate
+                            </a>
+                        </div>
                     </div>
                     
                     <div class="bg-white bg-opacity-20 p-4 rounded-lg backdrop-blur-sm">
@@ -311,9 +406,12 @@
                             <span class="bg-white text-sricblue px-3 py-1 rounded-full text-sm font-bold">83%</span>
                         </div>
                         <p class="text-sm opacity-90">Science Stream</p>
+                        <div class="mt-2">
+                            <a href="assets/Divesh Merit Certificate.pdf" class="text-xs text-blue-200 hover:text-white underline flex items-center" target="_blank">
+                                <i class="fas fa-certificate mr-1"></i> View Certificate
+                            </a>
+                        </div>
                     </div>
-                    
-                    
                 </div>
             </div>
             
@@ -345,13 +443,12 @@
                     
                     <div class="bg-white bg-opacity-30 p-4 rounded-lg backdrop-blur-sm">
                         <div class="flex justify-between items-center">
-                            <h4 class="font-bold">PINKI </h4>
+                            <h4 class="font-bold">PINKI</h4>
                             <span class="bg-white text-sricblue px-3 py-1 rounded-full text-sm font-bold">83.66%</span>
                         </div>
                         <p class="text-sm opacity-90">80+ marks in Every Subject</p>
                     </div>
-                    
-                    
+                </div>
             </div>
         </div>
         
@@ -469,7 +566,7 @@
             <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border-l-4 border-blue-600">
                 <div class="flex items-center mb-6">
                     <div class="relative">
-                        <img src="images/students/virendra-saini.jpg" alt="Virendra Saini" class="rounded-full w-16 h-16 object-cover border-4 border-white shadow-md">
+                        <img src="assets/virendra_saini.jpg" alt="Virendra Saini" class="rounded-full w-16 h-16 object-cover border-4 border-white shadow-md">
                         <div class="absolute -bottom-1 -right-1 bg-blue-600 rounded-full p-1">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
@@ -498,12 +595,12 @@
     <section class="py-16 bg-sricgold text-sricblue">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Join Our Community?</h2>
-            <p class="text-xl max-w-2xl mx-auto mb-8">Applications for the 2024-25 academic year are now open</p>
+            <p class="text-xl max-w-2xl mx-auto mb-8">Applications for the 2025-26 academic year are now open</p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="admission_form.html" class="bg-sricblue hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-lg transition duration-300">
+                <a href="admission_form.html" class="bg-sricblue hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">
                     Apply Now
                 </a>
-                <a href="#" class="bg-transparent border-2 border-sricblue hover:bg-sricblue hover:text-white font-bold py-3 px-8 rounded-lg transition duration-300">
+                <a href="#" class="bg-transparent border-2 border-sricblue hover:bg-sricblue hover:text-white font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">
                     Schedule a Visit
                 </a>
             </div>
@@ -534,10 +631,10 @@
                     <h4 class="text-lg font-bold mb-4">Quick Links</h4>
                     <ul class="space-y-2">
                         <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Academics</a></li>
+                        <li><a href="History.html" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="curriculum.html" class="text-gray-400 hover:text-white">Academics</a></li>
                         <li><a href="admission_form.html" class="text-gray-400 hover:text-white">Admissions</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white">Contact</a></li>
                     </ul>
                 </div>
                 
@@ -562,7 +659,7 @@
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-envelope mr-3 text-gray-400"></i>
-                            <span class="text-gray-400">info@sricschool.edu.in</span>
+                            <span class="text-gray-400">Yespalsinghsaini@gmail.com</span>
                         </li>
                     </ul>
                 </div>
