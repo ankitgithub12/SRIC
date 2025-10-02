@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum - SRIC Senior Secondary School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sricblue: '#002366',
+                        sricgold: '#FFD700',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero {
+            background: linear-gradient(rgba(0, 35, 102, 0.8), rgba(0, 35, 102, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .subject-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 35, 102, 0.2);
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #002366 0%, #0044cc 100%);
+        }
+        .floating-icon {
+            animation: float 3s ease-in-out infinite;
+        }
+        @media (max-width: 768px) {
+            .tab-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .tab-buttons button {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <!-- Header with Mobile Menu - Matching index.html -->
+    <header class="sticky top-0 z-50 shadow-md">
+        <nav class="bg-sricblue p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <!-- Logo + School Name -->
+                <div class="flex items-center space-x-2">
+                    <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="h-10 w-10 rounded-full">
+                    <a href="index.html" class="text-white text-xl font-bold">SITARAM INTER COLLEGE</a>
+                    <span class="hidden sm:inline text-sricgold text-sm">Empowering Minds, Shaping Futures</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <ul class="hidden md:flex space-x-6 items-center">
+                    <li><a href="index.html" class="text-gray-300 hover:text-white hover:underline">Home</a></li>
+                    
+                    <!-- About Us Dropdown -->
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            About Us <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="mission.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Mission</a></li>
+                            <li><a href="History.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">History</a></li>
+                            <li><a href="faculty.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Academics Dropdown -->
+                    <li class="relative group">
+                        <button class="text-white focus:outline-none flex items-center">
+                            Academics <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="curriculum.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Curriculum</a></li>
+                            <li><a href="programs.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="Achievements.html" class="text-gray-300 hover:text-white hover:underline">Achievements</a></li>
+                    
+                    <li><a href="admission_form.html" class="text-gray-300 hover:text-white hover:underline">Admissions</a></li>
+                    
+                    <li><a href="contact.html" class="text-gray-300 hover:text-white hover:underline">Contact</a></li>
+                </ul>
+
+                <!-- CTA Button (Desktop) -->
+                <a href="admission_form.html" alt="" class="hidden md:block bg-sricgold text-sricblue px-4 py-2 rounded-md font-semibold hover:bg-yellow-600 transition">Apply Now</a>
+
+                <!-- Mobile Hamburger Menu -->
+                <button id="menu-toggle" class="md:hidden text-white focus:outline-none" aria-expanded="false" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu (Hidden by default) -->
+            <div id="mobile-menu" class="md:hidden hidden bg-sricblue pb-4 px-4">
+                <ul class="flex flex-col space-y-2">
+                    <li><a href="index.html" class="block text-gray-300 hover:text-white py-2">Home</a></li>
+                    
+                    <!-- About Us Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            About Us <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="mission.html" class="block text-gray-400 hover:text-white py-1 text-sm">Mission</a></li>
+                            <li><a href="History.html" class="block text-gray-400 hover:text-white py-1 text-sm">History</a></li>
+                            <li><a href="faculty.html" class="block text-gray-400 hover:text-white py-1 text-sm">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Academics Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-white py-2 flex justify-between items-center">
+                            Academics <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="curriculum.html" class="block text-gray-400 hover:text-white py-1 text-sm">Curriculum</a></li>
+                            <li><a href="programs.html" class="block text-gray-400 hover:text-white py-1 text-sm">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="Achievements.html" class="block text-gray-300 hover:text-white py-2">Achievements</a></li>
+                    
+                    <li><a href="admission_form.html" class="block text-gray-300 hover:text-white py-2">Admissions</a></li>
+                    
+                    <li><a href="contact.html" class="block text-gray-300 hover:text-white py-2">Contact</a></li>
+                    
+                    <li><a href="admission_form.html" class="block bg-sricgold text-sricblue px-4 py-2 rounded-md text-center font-semibold mt-2">Apply Now</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">UP Board Curriculum</h1>
+            <p class="text-xl max-w-3xl mx-auto mb-8">Comprehensive academic programs designed for Classes 9-12 with focus on UP Board examination success</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#curriculum" class="bg-sricgold hover:bg-yellow-600 text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300">
+                    Explore Curriculum
+                </a>
+                <a href="programs.html" class="bg-transparent border-2 border-white hover:bg-white hover:text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300">
+                    View Programs
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curriculum Section -->
+    <section id="curriculum" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Our Curriculum Framework</h2>
+                <p class="text-lg text-gray-600">SRIC follows the UP Board curriculum with enhancements to provide a holistic education that balances academic rigor with practical learning experiences.</p>
+            </div>
+            
+            <!-- Grade Level Tabs -->
+            <div class="flex flex-wrap justify-center mb-8 tab-buttons">
+                <button class="tab-btn px-6 py-3 font-medium border-b-2 border-transparent hover:border-sricblue" data-tab="class9">
+                    <i class="fas fa-graduation-cap mr-2"></i> Class 9-10
+                </button>
+                <button class="tab-btn px-6 py-3 font-medium border-b-2 border-transparent hover:border-sricblue" data-tab="class11sci">
+                    <i class="fas fa-atom mr-2"></i> Science Stream
+                </button>
+                <button class="tab-btn px-6 py-3 font-medium border-b-2 border-transparent hover:border-sricblue" data-tab="class11hum">
+                    <i class="fas fa-landmark mr-2"></i> Humanities
+                </button>
+            </div>
+            
+            <!-- Class 9-10 Curriculum -->
+            <div id="class9" class="tab-content active">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="subject-card bg-gradient-to-br from-blue-50 to-white p-8 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-sricblue text-white rounded-full w-12 h-12 flex items-center justify-center text-xl mr-4">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-sricblue">Core Subjects</h3>
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-language text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Hindi & English</h4>
+                                    <p class="text-gray-600 text-sm">Comprehensive study of literature, grammar, and composition skills</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-square-root-alt text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Mathematics</h4>
+                                    <p class="text-gray-600 text-sm">Algebra, Geometry, Statistics and problem-solving techniques</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-flask text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Science</h4>
+                                    <p class="text-gray-600 text-sm">Physics, Chemistry, Biology with practical laboratory work</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-globe-asia text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Social Science</h4>
+                                    <p class="text-gray-600 text-sm">History, Geography, Political Science, and Economics</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="subject-card bg-gradient-to-br from-blue-50 to-white p-8 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-sricblue text-white rounded-full w-12 h-12 flex items-center justify-center text-xl mr-4">
+                                <i class="fas fa-plus-circle"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-sricblue">Additional Components</h3>
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-language text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Urdu</h4>
+                                    <p class="text-gray-600 text-sm">Language and literature studies</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-running text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Physical Education</h4>
+                                    <p class="text-gray-600 text-sm">Sports, yoga, and health education</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-palette text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Art Education</h4>
+                                    <p class="text-gray-600 text-sm">Creative expression through visual and performing arts</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-hands-helping text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Value Education</h4>
+                                    <p class="text-gray-600 text-sm">Moral and ethical development programs</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Class 11-12 Science Curriculum -->
+            <div id="class11sci" class="tab-content">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="subject-card bg-gradient-to-br from-blue-50 to-white p-8 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-sricblue text-white rounded-full w-12 h-12 flex items-center justify-center text-xl mr-4">
+                                <i class="fas fa-atom"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-sricblue">Science Stream (PCM)</h3>
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-atom text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Physics</h4>
+                                    <p class="text-gray-600 text-sm">Theory and practical with modern laboratory equipment</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-vial text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Chemistry</h4>
+                                    <p class="text-gray-600 text-sm">Inorganic, Organic and Physical Chemistry with experiments</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-square-root-alt text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Mathematics</h4>
+                                    <p class="text-gray-600 text-sm">Calculus, Algebra, Vectors, and Probability</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-language text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">English</h4>
+                                    <p class="text-gray-600 text-sm">Advanced literature and communication skills</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="subject-card bg-gradient-to-br from-blue-50 to-white p-8 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-sricblue text-white rounded-full w-12 h-12 flex items-center justify-center text-xl mr-4">
+                                <i class="fas fa-dna"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-sricblue">Science Stream (PCB)</h3>
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-dna text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Biology</h4>
+                                    <p class="text-gray-600 text-sm">Botany and Zoology with extensive laboratory work</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-vial text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Chemistry</h4>
+                                    <p class="text-gray-600 text-sm">Inorganic, Organic and Physical Chemistry with experiments</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-atom text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Physics</h4>
+                                    <p class="text-gray-600 text-sm">Theory and practical with modern laboratory equipment</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-language text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">English</h4>
+                                    <p class="text-gray-600 text-sm">Advanced literature and communication skills</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Class 11-12 Humanities Curriculum -->
+            <div id="class11hum" class="tab-content">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="subject-card bg-gradient-to-br from-blue-50 to-white p-8 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-sricblue text-white rounded-full w-12 h-12 flex items-center justify-center text-xl mr-4">
+                                <i class="fas fa-landmark"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-sricblue">Core Subjects</h3>
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-landmark text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">History</h4>
+                                    <p class="text-gray-600 text-sm">Indian and World History with focus on analytical skills</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-balance-scale text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Political Science</h4>
+                                    <p class="text-gray-600 text-sm">Indian Constitution, Political Theory and International Relations</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-chart-line text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Economics</h4>
+                                    <p class="text-gray-600 text-sm">Micro and Macro Economics with Indian Economic Development</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-language text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">English</h4>
+                                    <p class="text-gray-600 text-sm">Advanced literature and communication skills</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="subject-card bg-gradient-to-br from-blue-50 to-white p-8 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-sricblue text-white rounded-full w-12 h-12 flex items-center justify-center text-xl mr-4">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-sricblue">Optional Subjects</h3>
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-globe-asia text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Geography</h4>
+                                    <p class="text-gray-600 text-sm">Physical and Human Geography with practical work</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-language text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Urdu</h4>
+                                    <p class="text-gray-600 text-sm">Language and literature studies</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-home text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Home Science</h4>
+                                    <p class="text-gray-600 text-sm">Practical knowledge for home management and nutrition</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg">
+                                <div class="bg-blue-100 text-sricblue rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    <i class="fas fa-paint-brush text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Fine Arts</h4>
+                                    <p class="text-gray-600 text-sm">Theory and practical in visual arts</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Assessment Section -->
+    <section class="py-16 bg-gradient-to-r from-blue-50 to-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">UP Board Examination Preparation</h2>
+                <p class="text-lg text-gray-600">Our comprehensive assessment system ensures students are well-prepared for UP Board examinations</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <div class="subject-card bg-white p-8 rounded-xl shadow-md text-center">
+                    <div class="bg-sricblue text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 floating-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Periodic Tests</h3>
+                    <p class="text-gray-600">Regular tests following UP Board pattern to assess understanding of concepts</p>
+                </div>
+                
+                <div class="subject-card bg-white p-8 rounded-xl shadow-md text-center">
+                    <div class="bg-sricblue text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 floating-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Practical Exams</h3>
+                    <p class="text-gray-600">Hands-on experiments and project-based learning assessments</p>
+                </div>
+                
+                <div class="subject-card bg-white p-8 rounded-xl shadow-md text-center">
+                    <div class="bg-sricblue text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 floating-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Mock Board Exams</h3>
+                    <p class="text-gray-600">Full-length practice exams simulating UP Board conditions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">What Our Teachers Say</h2>
+                <p class="text-lg text-gray-600">Our educators on the SRIC curriculum approach for UP Board</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="bg-gradient-to-br from-sricblue to-blue-900 text-white p-8 rounded-xl shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-white text-sricblue rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mr-4">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Mr. Chandarpal Singh</h4>
+                            <p class="text-blue-200">Physics Teacher</p>
+                        </div>
+                    </div>
+                    <p class="italic">"Our curriculum aligns perfectly with UP Board requirements while providing additional practical exposure that gives our students an edge in examinations."</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-sricgold to-yellow-600 text-sricblue p-8 rounded-xl shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-white text-sricblue rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mr-4">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Mrs. Kiran</h4>
+                            <p class="text-sricblue">Humanities Coordinator</p>
+                        </div>
+                    </div>
+                    <p class="italic">"We focus on developing strong writing skills and analytical abilities that are crucial for scoring well in UP Board humanities subjects."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-16 bg-sricgold text-sricblue">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Want Detailed Syllabus Information?</h2>
+            <p class="text-xl max-w-2xl mx-auto mb-8">Contact us for complete UP Board curriculum documents and academic planning guidance</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="contact.html" class="bg-sricblue hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-lg transition duration-300">
+                    Contact Us
+                </a>
+                <a href="programs.html" class="bg-transparent border-2 border-sricblue hover:bg-sricblue hover:text-white font-bold py-3 px-8 rounded-lg transition duration-300">
+                    View Programs
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-br from-sricblue to-blue-900 w-12 h-12 rounded-xl flex items-center justify-center">
+                            <span class="text-white text-xl font-bold">SRIC</span>
+                        </div>
+                        <h3 class="text-xl font-bold ml-3">SRIC</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">Preparing students for UP Board success since 2002.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="curriculum.html" class="text-gray-400 hover:text-white">Curriculum</a></li>
+                        <li><a href="Achievements.html" class="text-gray-400 hover:text-white">Achievements</a></li>
+                        <li><a href="admission_form.html" class="text-gray-400 hover:text-white">Admissions</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Academic Streams</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Science (PCM)</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Science (PCB)</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Humanities</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">Sabdalpur Sharki, Mathana Road Hasanpur, Amroha 244242</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">+91 9756517750</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">sitaramintercollege1205@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-400">
+                <p>© 2025 SRIC Senior Secondary School. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', function() {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Mobile dropdown functionality
+        document.querySelectorAll('.dropdown-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const dropdown = button.nextElementSibling;
+                const icon = button.querySelector('.dropdown-icon');
+                
+                // Toggle dropdown
+                if (dropdown.style.maxHeight) {
+                    dropdown.style.maxHeight = null;
+                    icon.classList.remove('rotate-180');
+                } else {
+                    dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
+
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('border-sricblue', 'text-sricblue');
+                    btn.classList.add('border-transparent');
+                });
+                
+                // Add active class to clicked button
+                button.classList.add('border-sricblue', 'text-sricblue');
+                button.classList.remove('border-transparent');
+                
+                // Hide all tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show the selected tab content
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Set the first tab as active by default
+        document.querySelector('.tab-btn').click();
+    </script>
+</body>
+</html>

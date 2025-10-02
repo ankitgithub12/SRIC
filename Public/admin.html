@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRIC Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sricblue: '#002366',
+                        sricgold: '#FFD700',
+                        sriclightblue: '#003399',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .sidebar {
+            width: 260px;
+            transition: all 0.3s ease;
+        }
+        
+        .main-content {
+            margin-left: 260px;
+            transition: all 0.3s ease;
+        }
+        
+        .collapsed .sidebar {
+            width: 80px;
+        }
+        
+        .collapsed .main-content {
+            margin-left: 80px;
+        }
+        
+        .sidebar-item {
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar-item.active {
+            background-color: rgba(255, 215, 0, 0.2);
+            border-left: 4px solid #FFD700;
+        }
+        
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 250px;
+        }
+        
+        .notification-dot {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            background-color: #ef4444;
+            border-radius: 50%;
+            color: white;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 80px;
+            }
+            
+            .main-content {
+                margin-left: 80px;
+            }
+            
+            .collapsed .sidebar {
+                width: 0;
+                overflow: hidden;
+            }
+            
+            .collapsed .main-content {
+                margin-left: 0;
+            }
+        }
+        
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        
+        .toast.success {
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .toast.error {
+            background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Toast notification -->
+    <div id="toast" class="toast hidden">
+        <div class="flex items-center">
+            <i id="toast-icon" class="mr-2"></i>
+            <span id="toast-message"></span>
+        </div>
+    </div>
+
+    <div class="flex" id="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar bg-sricblue text-white fixed h-full overflow-y-auto">
+            <div class="p-5 border-b border-sriclightblue">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="h-10 w-10 rounded-full">
+                        <span class="ml-3 font-bold text-lg">SRIC Admin</span>
+                    </div>
+                    <button id="sidebar-toggle" class="text-white">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="p-4">
+                <div class="mb-6">
+                    <p class="text-gray-400 text-xs uppercase mb-2">Main</p>
+                    <a href="#" class="sidebar-item active flex items-center p-3 rounded-lg mb-2" data-tab="dashboard">
+                        <i class="fas fa-home mr-3"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                
+                <div class="mb-6">
+                    <p class="text-gray-400 text-xs uppercase mb-2">Applications</p>
+                    <a href="#admissions" class="sidebar-item flex items-center p-3 rounded-lg mb-2" data-tab="admissions">
+                        <i class="fas fa-user-graduate mr-3"></i>
+                        <span>Admissions</span>
+                        <span class="notification-dot hidden" id="admissions-notification"></span>
+                    </a>
+                    <a href="#fees" class="sidebar-item flex items-center p-3 rounded-lg mb-2" data-tab="fees">
+                        <i class="fas fa-money-bill-wave mr-3"></i>
+                        <span>Fee Payments</span>
+                        <span class="notification-dot hidden" id="fees-notification"></span>
+                    </a>
+                    <a href="#contacts" class="sidebar-item flex items-center p-3 rounded-lg mb-2" data-tab="contacts">
+                        <i class="fas fa-envelope mr-3"></i>
+                        <span>Contact Forms</span>
+                        <span class="notification-dot hidden" id="contacts-notification"></span>
+                    </a>
+                </div>
+                
+                <div class="mb-6">
+                    <p class="text-gray-400 text-xs uppercase mb-2">Management</p>
+                    <a href="#students" class="sidebar-item flex items-center p-3 rounded-lg mb-2" data-tab="students">
+                        <i class="fas fa-users mr-3"></i>
+                        <span>Students</span>
+                    </a>
+                    <a href="#reports" class="sidebar-item flex items-center p-3 rounded-lg mb-2" data-tab="reports">
+                        <i class="fas fa-chart-bar mr-3"></i>
+                        <span>Reports</span>
+                    </a>
+                    <a href="#settings" class="sidebar-item flex items-center p-3 rounded-lg mb-2" data-tab="settings">
+                        <i class="fas fa-cog mr-3"></i>
+                        <span>Settings</span>
+                    </a>
+                </div>
+                
+                <div class="pt-6 border-t border-sriclightblue">
+                    <a href="/index.html" class="sidebar-item flex items-center p-3 rounded-lg mb-2">
+                        <i class="fas fa-globe mr-3"></i>
+                        <span>View Website</span>
+                    </a>
+                    <a href="#" class="sidebar-item flex items-center p-3 rounded-lg" id="logout-btn">
+                        <i class="fas fa-sign-out-alt mr-3"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content w-full p-5">
+            <!-- Header -->
+            <div class="bg-white rounded-lg shadow-sm p-4 mb-6 flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-gray-800">Admin Dashboard</h1>
+                <div class="flex items-center">
+                    <div class="relative mr-4">
+                        <i class="fas fa-bell text-gray-500 text-xl"></i>
+                        <span class="notification-dot hidden" id="header-notification"></span>
+                    </div>
+                    <div class="flex items-center">
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=002366&color=fff" alt="User" class="h-10 w-10 rounded-full">
+                        <span class="ml-2 text-gray-700">Admin User</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Dashboard Tab -->
+            <div id="dashboard-tab" class="tab-content">
+                <!-- Stats Overview -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="stat-card bg-white rounded-lg shadow-sm p-6">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-gray-500">New Applications</p>
+                                <p class="text-3xl font-bold text-sricblue" id="new-applications-count">0</p>
+                            </div>
+                            <div class="bg-blue-100 p-3 rounded-full">
+                                <i class="fas fa-user-graduate text-sricblue text-xl"></i>
+                            </div>
+                        </div>
+                        <p class="text-green-500 text-sm mt-2" id="applications-trend">
+                            <i class="fas fa-arrow-up"></i> <span id="applications-trend-value">0</span> pending approval
+                        </p>
+                    </div>
+                    
+                    <div class="stat-card bg-white rounded-lg shadow-sm p-6">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-gray-500">Fee Payments</p>
+                                <p class="text-3xl font-bold text-sricblue" id="fee-payments-count">0</p>
+                            </div>
+                            <div class="bg-green-100 p-3 rounded-full">
+                                <i class="fas fa-money-bill-wave text-green-500 text-xl"></i>
+                            </div>
+                        </div>
+                        <p class="text-green-500 text-sm mt-2" id="payments-trend">
+                            <i class="fas fa-arrow-up"></i> <span id="payments-trend-value">0</span> pending verification
+                        </p>
+                    </div>
+                    
+                    <div class="stat-card bg-white rounded-lg shadow-sm p-6">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-gray-500">Contact Messages</p>
+                                <p class="text-3xl font-bold text-sricblue" id="contact-messages-count">0</p>
+                            </div>
+                            <div class="bg-purple-100 p-3 rounded-full">
+                                <i class="fas fa-envelope text-purple-500 text-xl"></i>
+                            </div>
+                        </div>
+                        <p class="text-yellow-500 text-sm mt-2" id="contacts-trend">
+                            <i class="fas fa-envelope"></i> <span id="contacts-trend-value">0</span> unread messages
+                        </p>
+                    </div>
+                    
+                    <div class="stat-card bg-white rounded-lg shadow-sm p-6">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-gray-500">Approved Students</p>
+                                <p class="text-3xl font-bold text-sricblue" id="total-students-count">0</p>
+                            </div>
+                            <div class="bg-yellow-100 p-3 rounded-full">
+                                <i class="fas fa-users text-yellow-500 text-xl"></i>
+                            </div>
+                        </div>
+                        <p class="text-green-500 text-sm mt-2" id="students-trend">
+                            <i class="fas fa-check-circle"></i> <span id="students-trend-value">0%</span> approval rate
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Charts Section -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h3 class="text-lg font-medium text-gray-800 mb-4">Applications by Class</h3>
+                        <div class="chart-container">
+                            <canvas id="applicationsChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h3 class="text-lg font-medium text-gray-800 mb-4">Payment Status</h3>
+                        <div class="chart-container">
+                            <canvas id="paymentsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Activity -->
+                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Recent Activity</h2>
+                    <div class="space-y-4" id="recent-activity">
+                        <!-- Will be populated by JavaScript -->
+                        <div class="text-center py-8 text-gray-500">
+                            <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
+                            <p>Loading recent activity...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Admissions Tab -->
+            <div id="admissions-tab" class="tab-content hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-gray-800">Admission Applications</h2>
+                    <div class="flex">
+                        <div class="relative mr-3">
+                            <input type="text" placeholder="Search applications..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sricblue" id="admission-search">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                        <select class="border border-gray-300 rounded-lg px-3 py-2 mr-3 focus:outline-none focus:ring-2 focus:ring-sricblue" id="admission-status-filter">
+                            <option value="">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                        <button class="bg-sricblue text-white px-4 py-2 rounded-lg flex items-center" id="export-admissions">
+                            <i class="fas fa-download mr-2"></i> Export
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Student Name
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Class
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Father's Name
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Contact
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Date
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Status
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="admissions-table-body">
+                            <!-- Will be populated by JavaScript -->
+                            <tr>
+                                <td colspan="7" class="px-6 py-8 text-center text-gray-500">
+                                    <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
+                                    <p>Loading admission applications...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="bg-gray-50 px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 mt-4">
+                    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                Showing
+                                <span class="font-medium" id="admissions-start">1</span>
+                                to
+                                <span class="font-medium" id="admissions-end">10</span>
+                                of
+                                <span class="font-medium" id="admissions-total">0</span>
+                                results
+                            </p>
+                        </div>
+                        <div>
+                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination" id="admissions-pagination">
+                                <!-- Pagination will be populated by JavaScript -->
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fees Tab -->
+            <div id="fees-tab" class="tab-content hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-gray-800">Fee Payments</h2>
+                    <div class="flex">
+                        <div class="relative mr-3">
+                            <input type="text" placeholder="Search payments..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sricblue" id="fees-search">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                        <select class="border border-gray-300 rounded-lg px-3 py-2 mr-3 focus:outline-none focus:ring-2 focus:ring-sricblue" id="fees-status-filter">
+                            <option value="">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="verified">Verified</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                        <button class="bg-sricblue text-white px-4 py-2 rounded-lg flex items-center" id="export-fees">
+                            <i class="fas fa-download mr-2"></i> Export
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Transaction ID
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Student
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Class
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Amount
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Payment Method
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Date
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Status
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="fees-table-body">
+                            <!-- Will be populated by JavaScript -->
+                            <tr>
+                                <td colspan="8" class="px-6 py-8 text-center text-gray-500">
+                                    <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
+                                    <p>Loading fee payments...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="bg-gray-50 px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 mt-4">
+                    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                Showing
+                                <span class="font-medium" id="fees-start">1</span>
+                                to
+                                <span class="font-medium" id="fees-end">10</span>
+                                of
+                                <span class="font-medium" id="fees-total">0</span>
+                                results
+                            </p>
+                        </div>
+                        <div>
+                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination" id="fees-pagination">
+                                <!-- Pagination will be populated by JavaScript -->
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contacts Tab -->
+            <div id="contacts-tab" class="tab-content hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-gray-800">Contact Messages</h2>
+                    <div class="flex">
+                        <div class="relative mr-3">
+                            <input type="text" placeholder="Search messages..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sricblue" id="contacts-search">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                        <select class="border border-gray-300 rounded-lg px-3 py-2 mr-3 focus:outline-none focus:ring-2 focus:ring-sricblue" id="contacts-status-filter">
+                            <option value="">All Status</option>
+                            <option value="unread">Unread</option>
+                            <option value="read">Read</option>
+                            <option value="replied">Replied</option>
+                        </select>
+                        <button class="bg-sricblue text-white px-4 py-2 rounded-lg flex items-center" id="export-contacts">
+                            <i class="fas fa-download mr-2"></i> Export
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Name
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Email
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Subject
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Date
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Status
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="contacts-table-body">
+                            <!-- Will be populated by JavaScript -->
+                            <tr>
+                                <td colspan="6" class="px-6 py-8 text-center text-gray-500">
+                                    <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
+                                    <p>Loading contact messages...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="bg-gray-50 px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 mt-4">
+                    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                Showing
+                                <span class="font-medium" id="contacts-start">1</span>
+                                to
+                                <span class="font-medium" id="contacts-end">10</span>
+                                of
+                                <span class="font-medium" id="contacts-total">0</span>
+                                results
+                            </p>
+                        </div>
+                        <div>
+                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination" id="contacts-pagination">
+                                <!-- Pagination will be populated by JavaScript -->
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Students Tab -->
+            <div id="students-tab" class="tab-content hidden p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-6">Student Management</h2>
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <p class="text-gray-600">Student management features coming soon. This section will allow you to manage enrolled students, view their profiles, and track academic progress.</p>
+                </div>
+            </div>
+            
+            <!-- Reports Tab -->
+            <div id="reports-tab" class="tab-content hidden p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-6">Reports & Analytics</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h3 class="text-lg font-medium text-gray-800 mb-4">Applications by Class</h3>
+                        <div class="chart-container">
+                            <canvas id="applicationsChartReport"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h3 class="text-lg font-medium text-gray-800 mb-4">Payment Status</h3>
+                        <div class="chart-container">
+                            <canvas id="paymentsChartReport"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-lg font-medium text-gray-800 mb-4">Monthly Applications</h3>
+                    <div class="chart-container" style="height: 300px;">
+                        <canvas id="monthlyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Settings Tab -->
+            <div id="settings-tab" class="tab-content hidden p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-6">Admin Settings</h2>
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <p class="text-gray-600">Admin settings and configuration options will be available here. This section allows you to manage system preferences, user roles, and other administrative functions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentTab = 'dashboard';
+        let admissionsData = [];
+        let feesData = [];
+        let contactsData = [];
+        let currentAdmissionsPage = 1;
+        let currentFeesPage = 1;
+        let currentContactsPage = 1;
+        const itemsPerPage = 10;
+        
+        // Chart instances
+        let applicationsChart = null;
+        let paymentsChart = null;
+        let applicationsChartReport = null;
+        let paymentsChartReport = null;
+        let monthlyChart = null;
+
+        // Check if admin is logged in
+        const adminToken = localStorage.getItem('adminToken');
+        if (!adminToken) {
+            window.location.href = '/admin-login.html';
+        }
+
+        // Toast notification function
+        function showToast(message, type) {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toast-icon');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            
+            if (type === 'success') {
+                toast.className = 'toast success';
+                toastIcon.className = 'fas fa-check-circle';
+            } else {
+                toast.className = 'toast error';
+                toastIcon.className = 'fas fa-exclamation-circle';
+            }
+            
+            toast.classList.remove('hidden');
+            
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // API functions
+        async function fetchAdmissions() {
+            try {
+                const response = await fetch('/api/admissions');
+                const result = await response.json();
+                
+                if (result.success) {
+                    admissionsData = result.data;
+                    renderAdmissionsTable();
+                    updateNotificationCounts();
+                    updateDashboardStats();
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                console.error('Error fetching admissions:', error);
+                showToast('Error loading admission data', 'error');
+            }
+        }
+
+        async function fetchFeePayments() {
+            try {
+                const response = await fetch('/api/fee-payments');
+                const result = await response.json();
+                
+                if (result.success) {
+                    feesData = result.data;
+                    renderFeesTable();
+                    updateNotificationCounts();
+                    updateDashboardStats();
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                console.error('Error fetching fee payments:', error);
+                showToast('Error loading fee payment data', 'error');
+            }
+        }
+
+        async function fetchContacts() {
+            try {
+                const response = await fetch('/api/contacts');
+                const result = await response.json();
+                
+                if (result.success) {
+                    contactsData = result.data;
+                    renderContactsTable();
+                    updateNotificationCounts();
+                    updateDashboardStats();
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                console.error('Error fetching contacts:', error);
+                showToast('Error loading contact data', 'error');
+            }
+        }
+
+        // Update admission status
+        async function updateAdmissionStatus(admissionId, status) {
+            try {
+                const response = await fetch(`/api/admissions/${admissionId}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast(`Admission ${status} successfully`, 'success');
+                    fetchAdmissions(); // Refresh data
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                console.error('Error updating admission status:', error);
+                showToast('Error updating admission status', 'error');
+            }
+        }
+
+        // Update contact status
+        async function updateContactStatus(contactId, status) {
+            try {
+                const response = await fetch(`/api/contacts/${contactId}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast(`Contact marked as ${status}`, 'success');
+                    fetchContacts(); // Refresh data
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                console.error('Error updating contact status:', error);
+                showToast('Error updating contact status', 'error');
+            }
+        }
+
+        // Update fee payment status
+        async function updateFeePaymentStatus(paymentId, status) {
+            try {
+                const response = await fetch(`/api/fee-payments/${paymentId}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast(`Fee payment ${status}`, 'success');
+                    fetchFeePayments(); // Refresh data
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                console.error('Error updating fee payment status:', error);
+                showToast('Error updating fee payment status', 'error');
+            }
+        }
+
+        // Delete contact
+        async function deleteContact(contactId) {
+            if (!confirm('Are you sure you want to delete this contact?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/contacts/${contactId}`, {
+                    method: 'DELETE'
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast('Contact deleted successfully', 'success');
+                    fetchContacts(); // Refresh data
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                console.error('Error deleting contact:', error);
+                showToast('Error deleting contact', 'error');
+            }
+        }
+
+        // Get status badge HTML
+        function getStatusBadge(status) {
+            const statusConfig = {
+                pending: { class: 'bg-yellow-100 text-yellow-800', text: 'Pending' },
+                approved: { class: 'bg-green-100 text-green-800', text: 'Approved' },
+                rejected: { class: 'bg-red-100 text-red-800', text: 'Rejected' },
+                verified: { class: 'bg-green-100 text-green-800', text: 'Verified' },
+                unread: { class: 'bg-yellow-100 text-yellow-800', text: 'Unread' },
+                read: { class: 'bg-blue-100 text-blue-800', text: 'Read' },
+                replied: { class: 'bg-green-100 text-green-800', text: 'Replied' }
+            };
+            
+            const config = statusConfig[status] || statusConfig.pending;
+            return `<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${config.class}">${config.text}</span>`;
+        }
+
+        // Update notification counts
+        function updateNotificationCounts() {
+            // Count pending items
+            const pendingAdmissions = admissionsData.filter(admission => 
+                admission.status === 'pending'
+            ).length;
+            
+            const pendingFees = feesData.filter(fee => 
+                fee.status === 'pending'
+            ).length;
+            
+            const unreadContacts = contactsData.filter(contact => 
+                contact.status === 'unread'
+            ).length;
+            
+            const totalPending = pendingAdmissions + pendingFees + unreadContacts;
+            
+            // Update notification dots
+            document.getElementById('admissions-notification').style.display = pendingAdmissions > 0 ? 'flex' : 'none';
+            document.getElementById('fees-notification').style.display = pendingFees > 0 ? 'flex' : 'none';
+            document.getElementById('contacts-notification').style.display = unreadContacts > 0 ? 'flex' : 'none';
+            document.getElementById('header-notification').style.display = totalPending > 0 ? 'flex' : 'none';
+            
+            // Update notification counts in badges
+            document.getElementById('admissions-notification').textContent = pendingAdmissions > 0 ? pendingAdmissions : '';
+            document.getElementById('fees-notification').textContent = pendingFees > 0 ? pendingFees : '';
+            document.getElementById('contacts-notification').textContent = unreadContacts > 0 ? unreadContacts : '';
+            document.getElementById('header-notification').textContent = totalPending > 0 ? totalPending : '';
+        }
+
+        // Update dashboard statistics
+        function updateDashboardStats() {
+            // Update counts
+            document.getElementById('new-applications-count').textContent = admissionsData.length;
+            document.getElementById('fee-payments-count').textContent = feesData.length;
+            document.getElementById('contact-messages-count').textContent = contactsData.length;
+            
+            // Count approved students
+            const approvedStudents = admissionsData.filter(admission => admission.status === 'approved').length;
+            document.getElementById('total-students-count').textContent = approvedStudents;
+            
+            // Update trends
+            const pendingAdmissions = admissionsData.filter(admission => admission.status === 'pending').length;
+            const pendingFees = feesData.filter(fee => fee.status === 'pending').length;
+            const unreadContacts = contactsData.filter(contact => contact.status === 'unread').length;
+            const approvalRate = admissionsData.length > 0 ? Math.round((approvedStudents / admissionsData.length) * 100) : 0;
+            
+            document.getElementById('applications-trend-value').textContent = pendingAdmissions;
+            document.getElementById('payments-trend-value').textContent = pendingFees;
+            document.getElementById('contacts-trend-value').textContent = unreadContacts;
+            document.getElementById('students-trend-value').textContent = `${approvalRate}%`;
+            
+            // Update recent activity
+            updateRecentActivity();
+            
+            // Update charts
+            updateCharts();
+        }
+
+        // Update recent activity
+        function updateRecentActivity() {
+            const activityContainer = document.getElementById('recent-activity');
+            
+            // Combine all data and sort by date
+            const allActivities = [
+                ...admissionsData.map(item => ({
+                    type: 'admission',
+                    title: `New Admission Application`,
+                    description: `${item.name} applied for ${item.admissionClass}`,
+                    date: new Date(item.submittedAt),
+                    icon: 'user-graduate',
+                    status: item.status
+                })),
+                ...feesData.map(item => ({
+                    type: 'fee',
+                    title: `Fee Payment Received`,
+                    description: `${item.studentName} paid ₹${item.amount} for ${item.className}`,
+                    date: new Date(item.submittedAt),
+                    icon: 'money-bill-wave',
+                    status: item.status
+                })),
+                ...contactsData.map(item => ({
+                    type: 'contact',
+                    title: `New Contact Message`,
+                    description: `${item.name} sent a message about ${item.subject || 'general inquiry'}`,
+                    date: new Date(item.submittedAt),
+                    icon: 'envelope',
+                    status: item.status
+                }))
+            ];
+            
+            // Sort by date (newest first)
+            allActivities.sort((a, b) => b.date - a.date);
+            
+            // Get top 5
+            const recentActivities = allActivities.slice(0, 5);
+            
+            // Render activities
+            if (recentActivities.length === 0) {
+                activityContainer.innerHTML = '<div class="text-center py-8 text-gray-500">No recent activity</div>';
+                return;
+            }
+            
+            activityContainer.innerHTML = recentActivities.map(activity => `
+                <div class="flex items-start">
+                    <div class="bg-sricblue text-white p-2 rounded-full mr-4 mt-1">
+                        <i class="fas fa-${activity.icon}"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-medium text-gray-800">${activity.title}</h4>
+                        <p class="text-gray-600">${activity.description}</p>
+                        <p class="text-sm text-gray-500 mt-1">${formatDate(activity.date)}</p>
+                    </div>
+                    <div class="ml-2">
+                        ${getStatusBadge(activity.status)}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Format date for display
+        function formatDate(date) {
+            return new Date(date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Render admissions table
+        function renderAdmissionsTable() {
+            const tableBody = document.getElementById('admissions-table-body');
+            const searchTerm = document.getElementById('admission-search').value.toLowerCase();
+            const statusFilter = document.getElementById('admission-status-filter').value;
+            
+            // Filter data based on search term and status
+            const filteredData = admissionsData.filter(admission => {
+                const matchesSearch = 
+                    admission.name.toLowerCase().includes(searchTerm) ||
+                    admission.admissionClass.toLowerCase().includes(searchTerm) ||
+                    admission.fatherName.toLowerCase().includes(searchTerm) ||
+                    admission.email.toLowerCase().includes(searchTerm);
+                
+                const matchesStatus = statusFilter ? admission.status === statusFilter : true;
+                
+                return matchesSearch && matchesStatus;
+            });
+            
+            // Calculate pagination
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+            const startIndex = (currentAdmissionsPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, filteredData.length);
+            const paginatedData = filteredData.slice(startIndex, endIndex);
+            
+            // Update pagination info
+            document.getElementById('admissions-start').textContent = filteredData.length > 0 ? startIndex + 1 : 0;
+            document.getElementById('admissions-end').textContent = endIndex;
+            document.getElementById('admissions-total').textContent = filteredData.length;
+            
+            // Render table rows
+            if (paginatedData.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="px-6 py-8 text-center text-gray-500">
+                            No admission applications found
+                        </td>
+                    </tr>
+                `;
+            } else {
+                tableBody.innerHTML = paginatedData.map(admission => `
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 h-10 w-10">
+                                    <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=${encodeURIComponent(admission.name)}&background=random" alt="${admission.name}">
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-900">${admission.name}</div>
+                                    <div class="text-sm text-gray-500">${admission.email}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">${admission.admissionClass}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">${admission.fatherName}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${admission.fatherContact}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${formatDate(admission.submittedAt)}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            ${getStatusBadge(admission.status)}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button onclick="viewAdmission('${admission._id}')" class="text-sricblue hover:text-sriclightblue mr-3">View</button>
+                            ${admission.status !== 'approved' ? `<button onclick="updateAdmissionStatus('${admission._id}', 'approved')" class="text-green-600 hover:text-green-900 mr-3">Approve</button>` : ''}
+                            ${admission.status !== 'rejected' ? `<button onclick="updateAdmissionStatus('${admission._id}', 'rejected')" class="text-red-600 hover:text-red-900 mr-3">Reject</button>` : ''}
+                            ${admission.status !== 'pending' ? `<button onclick="updateAdmissionStatus('${admission._id}', 'pending')" class="text-yellow-600 hover:text-yellow-900">Reset</button>` : ''}
+                        </td>
+                    </tr>
+                `).join('');
+            }
+            
+            // Render pagination
+            renderPagination('admissions-pagination', currentAdmissionsPage, totalPages, 'admissions');
+        }
+
+        // Render fees table
+        function renderFeesTable() {
+            const tableBody = document.getElementById('fees-table-body');
+            const searchTerm = document.getElementById('fees-search').value.toLowerCase();
+            const statusFilter = document.getElementById('fees-status-filter').value;
+            
+            // Filter data based on search term and status
+            const filteredData = feesData.filter(fee => {
+                const matchesSearch = 
+                    fee.studentName.toLowerCase().includes(searchTerm) ||
+                    fee.className.toLowerCase().includes(searchTerm) ||
+                    fee.transactionId.toLowerCase().includes(searchTerm);
+                
+                const matchesStatus = statusFilter ? fee.status === statusFilter : true;
+                
+                return matchesSearch && matchesStatus;
+            });
+            
+            // Calculate pagination
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+            const startIndex = (currentFeesPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, filteredData.length);
+            const paginatedData = filteredData.slice(startIndex, endIndex);
+            
+            // Update pagination info
+            document.getElementById('fees-start').textContent = filteredData.length > 0 ? startIndex + 1 : 0;
+            document.getElementById('fees-end').textContent = endIndex;
+            document.getElementById('fees-total').textContent = filteredData.length;
+            
+            // Render table rows
+            if (paginatedData.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="px-6 py-8 text-center text-gray-500">
+                            No fee payments found
+                        </td>
+                    </tr>
+                `;
+            } else {
+                tableBody.innerHTML = paginatedData.map(fee => `
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            ${fee.transactionId}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 h-10 w-10">
+                                    <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=${encodeURIComponent(fee.studentName)}&background=random" alt="${fee.studentName}">
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-900">${fee.studentName}</div>
+                                    <div class="text-sm text-gray-500">${fee.fatherName}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${fee.className}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ₹${fee.amount}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${fee.paymentMethod}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${formatDate(fee.submittedAt)}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            ${getStatusBadge(fee.status)}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            ${fee.receiptFile ? `<button onclick="downloadReceipt('${fee._id}')" class="text-sricblue hover:text-sriclightblue mr-3">Download</button>` : 'No file'}
+                            ${fee.status !== 'verified' ? `<button onclick="updateFeePaymentStatus('${fee._id}', 'verified')" class="text-green-600 hover:text-green-900 mr-3">Verify</button>` : ''}
+                            ${fee.status !== 'rejected' ? `<button onclick="updateFeePaymentStatus('${fee._id}', 'rejected')" class="text-red-600 hover:text-red-900 mr-3">Reject</button>` : ''}
+                            ${fee.status !== 'pending' ? `<button onclick="updateFeePaymentStatus('${fee._id}', 'pending')" class="text-yellow-600 hover:text-yellow-900">Reset</button>` : ''}
+                        </td>
+                    </tr>
+                `).join('');
+            }
+            
+            // Render pagination
+            renderPagination('fees-pagination', currentFeesPage, totalPages, 'fees');
+        }
+
+        // Render contacts table
+        function renderContactsTable() {
+            const tableBody = document.getElementById('contacts-table-body');
+            const searchTerm = document.getElementById('contacts-search').value.toLowerCase();
+            const statusFilter = document.getElementById('contacts-status-filter').value;
+            
+            // Filter data based on search term and status
+            const filteredData = contactsData.filter(contact => {
+                const matchesSearch = 
+                    contact.name.toLowerCase().includes(searchTerm) ||
+                    contact.email.toLowerCase().includes(searchTerm) ||
+                    (contact.subject && contact.subject.toLowerCase().includes(searchTerm));
+                
+                const matchesStatus = statusFilter ? contact.status === statusFilter : true;
+                
+                return matchesSearch && matchesStatus;
+            });
+            
+            // Calculate pagination
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+            const startIndex = (currentContactsPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, filteredData.length);
+            const paginatedData = filteredData.slice(startIndex, endIndex);
+            
+            // Update pagination info
+            document.getElementById('contacts-start').textContent = filteredData.length > 0 ? startIndex + 1 : 0;
+            document.getElementById('contacts-end').textContent = endIndex;
+            document.getElementById('contacts-total').textContent = filteredData.length;
+            
+            // Render table rows
+            if (paginatedData.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="px-6 py-8 text-center text-gray-500">
+                            No contact messages found
+                        </td>
+                    </tr>
+                `;
+            } else {
+                tableBody.innerHTML = paginatedData.map(contact => `
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 h-10 w-10">
+                                    <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=${encodeURIComponent(contact.name)}&background=random" alt="${contact.name}">
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-900">${contact.name}</div>
+                                    <div class="text-sm text-gray-500">${contact.email}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${contact.email}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${contact.subject || 'General Inquiry'}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${formatDate(contact.submittedAt)}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            ${getStatusBadge(contact.status)}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button onclick="viewContact('${contact._id}')" class="text-sricblue hover:text-sriclightblue mr-3">View</button>
+                            ${contact.status !== 'read' ? `<button onclick="updateContactStatus('${contact._id}', 'read')" class="text-green-600 hover:text-green-900 mr-3">Mark Read</button>` : ''}
+                            ${contact.status !== 'replied' ? `<button onclick="updateContactStatus('${contact._id}', 'replied')" class="text-blue-600 hover:text-blue-900 mr-3">Mark Replied</button>` : ''}
+                            <button onclick="deleteContact('${contact._id}')" class="text-red-600 hover:text-red-900">Delete</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+            
+            // Render pagination
+            renderPagination('contacts-pagination', currentContactsPage, totalPages, 'contacts');
+        }
+
+        // Render pagination controls
+        function renderPagination(containerId, currentPage, totalPages, type) {
+            const container = document.getElementById(containerId);
+            
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+            
+            let paginationHTML = '';
+            
+            // Previous button
+            paginationHTML += `
+                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 ${currentPage === 1 ? 'pointer-events-none opacity-50' : ''}" data-page="${currentPage - 1}" data-type="${type}">
+                    <span class="sr-only">Previous</span>
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+            `;
+            
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === currentPage) {
+                    paginationHTML += `
+                        <a href="#" aria-current="page" class="relative z-10 inline-flex items-center px-4 py-2 border border-sricblue bg-sricblue text-sm font-medium text-white" data-page="${i}" data-type="${type}">
+                            ${i}
+                        </a>
+                    `;
+                } else {
+                    paginationHTML += `
+                        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50" data-page="${i}" data-type="${type}">
+                            ${i}
+                        </a>
+                    `;
+                }
+            }
+            
+            // Next button
+            paginationHTML += `
+                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 ${currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}" data-page="${currentPage + 1}" data-type="${type}">
+                    <span class="sr-only">Next</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            `;
+            
+            container.innerHTML = paginationHTML;
+            
+            // Add event listeners to pagination buttons
+            container.querySelectorAll('a[data-page]').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = parseInt(this.getAttribute('data-page'));
+                    const paginationType = this.getAttribute('data-type');
+                    
+                    if (paginationType === 'admissions') {
+                        currentAdmissionsPage = page;
+                        renderAdmissionsTable();
+                    } else if (paginationType === 'fees') {
+                        currentFeesPage = page;
+                        renderFeesTable();
+                    } else if (paginationType === 'contacts') {
+                        currentContactsPage = page;
+                        renderContactsTable();
+                    }
+                });
+            });
+        }
+
+        // Update charts
+        function updateCharts() {
+            // Applications by class chart
+            const applicationsCtx = document.getElementById('applicationsChart').getContext('2d');
+            
+            // Destroy existing chart if it exists
+            if (applicationsChart) {
+                applicationsChart.destroy();
+            }
+            
+            // Group admissions by class
+            const classCounts = {};
+            admissionsData.forEach(admission => {
+                const className = admission.admissionClass;
+                classCounts[className] = (classCounts[className] || 0) + 1;
+            });
+            
+            applicationsChart = new Chart(applicationsCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(classCounts),
+                    datasets: [{
+                        label: 'Applications',
+                        data: Object.values(classCounts),
+                        backgroundColor: [
+                            'rgba(0, 35, 102, 0.7)',
+                            'rgba(0, 51, 153, 0.7)',
+                            'rgba(0, 70, 204, 0.7)',
+                            'rgba(51, 102, 204, 0.7)',
+                            'rgba(102, 140, 255, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(0, 35, 102)',
+                            'rgb(0, 51, 153)',
+                            'rgb(0, 70, 204)',
+                            'rgb(51, 102, 204)',
+                            'rgb(102, 140, 255)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Payment status chart
+            const paymentsCtx = document.getElementById('paymentsChart').getContext('2d');
+            
+            // Destroy existing chart if it exists
+            if (paymentsChart) {
+                paymentsChart.destroy();
+            }
+            
+            // Count payment statuses
+            const paymentStatuses = {
+                pending: feesData.filter(fee => fee.status === 'pending').length,
+                verified: feesData.filter(fee => fee.status === 'verified').length,
+                rejected: feesData.filter(fee => fee.status === 'rejected').length
+            };
+            
+            paymentsChart = new Chart(paymentsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Pending', 'Verified', 'Rejected'],
+                    datasets: [{
+                        data: [paymentStatuses.pending, paymentStatuses.verified, paymentStatuses.rejected],
+                        backgroundColor: [
+                            'rgba(255, 193, 7, 0.7)',
+                            'rgba(40, 167, 69, 0.7)',
+                            'rgba(220, 53, 69, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(255, 193, 7)',
+                            'rgb(40, 167, 69)',
+                            'rgb(220, 53, 69)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update reports charts
+        function updateReportsCharts() {
+            // Applications by class chart for reports
+            const applicationsReportCtx = document.getElementById('applicationsChartReport').getContext('2d');
+            
+            // Destroy existing chart if it exists
+            if (applicationsChartReport) {
+                applicationsChartReport.destroy();
+            }
+            
+            // Group admissions by class
+            const classCounts = {};
+            admissionsData.forEach(admission => {
+                const className = admission.admissionClass;
+                classCounts[className] = (classCounts[className] || 0) + 1;
+            });
+            
+            applicationsChartReport = new Chart(applicationsReportCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(classCounts),
+                    datasets: [{
+                        label: 'Applications',
+                        data: Object.values(classCounts),
+                        backgroundColor: [
+                            'rgba(0, 35, 102, 0.7)',
+                            'rgba(0, 51, 153, 0.7)',
+                            'rgba(0, 70, 204, 0.7)',
+                            'rgba(51, 102, 204, 0.7)',
+                            'rgba(102, 140, 255, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(0, 35, 102)',
+                            'rgb(0, 51, 153)',
+                            'rgb(0, 70, 204)',
+                            'rgb(51, 102, 204)',
+                            'rgb(102, 140, 255)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Payment status chart for reports
+            const paymentsReportCtx = document.getElementById('paymentsChartReport').getContext('2d');
+            
+            // Destroy existing chart if it exists
+            if (paymentsChartReport) {
+                paymentsChartReport.destroy();
+            }
+            
+            // Count payment statuses
+            const paymentStatuses = {
+                pending: feesData.filter(fee => fee.status === 'pending').length,
+                verified: feesData.filter(fee => fee.status === 'verified').length,
+                rejected: feesData.filter(fee => fee.status === 'rejected').length
+            };
+            
+            paymentsChartReport = new Chart(paymentsReportCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Pending', 'Verified', 'Rejected'],
+                    datasets: [{
+                        data: [paymentStatuses.pending, paymentStatuses.verified, paymentStatuses.rejected],
+                        backgroundColor: [
+                            'rgba(255, 193, 7, 0.7)',
+                            'rgba(40, 167, 69, 0.7)',
+                            'rgba(220, 53, 69, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(255, 193, 7)',
+                            'rgb(40, 167, 69)',
+                            'rgb(220, 53, 69)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+            
+            // Monthly applications chart
+            const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+            
+            // Destroy existing chart if it exists
+            if (monthlyChart) {
+                monthlyChart.destroy();
+            }
+            
+            // Group admissions by month
+            const monthlyCounts = {};
+            admissionsData.forEach(admission => {
+                const date = new Date(admission.submittedAt);
+                const monthYear = `${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
+                monthlyCounts[monthYear] = (monthlyCounts[monthYear] || 0) + 1;
+            });
+            
+            monthlyChart = new Chart(monthlyCtx, {
+                type: 'line',
+                data: {
+                    labels: Object.keys(monthlyCounts),
+                    datasets: [{
+                        label: 'Applications',
+                        data: Object.values(monthlyCounts),
+                        fill: false,
+                        backgroundColor: 'rgba(0, 35, 102, 0.7)',
+                        borderColor: 'rgb(0, 35, 102)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Switch tabs
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Show selected tab
+            document.getElementById(`${tabName}-tab`).classList.remove('hidden');
+            
+            // Update active sidebar item
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            document.querySelector(`.sidebar-item[data-tab="${tabName}"]`).classList.add('active');
+            
+            // Update current tab
+            currentTab = tabName;
+            
+            // If switching to reports tab, update reports charts
+            if (tabName === 'reports') {
+                updateReportsCharts();
+            }
+        }
+
+        // View admission details (placeholder)
+        function viewAdmission(id) {
+            showToast('View admission details - Feature coming soon', 'success');
+        }
+
+        // View contact details (placeholder)
+        function viewContact(id) {
+            showToast('View contact details - Feature coming soon', 'success');
+        }
+
+        // Download receipt (placeholder)
+        function downloadReceipt(id) {
+            showToast('Download receipt - Feature coming soon', 'success');
+        }
+
+        // Initialize the dashboard
+        function initDashboard() {
+            // Fetch initial data
+            fetchAdmissions();
+            fetchFeePayments();
+            fetchContacts();
+            
+            // Set up event listeners
+            document.getElementById('sidebar-toggle').addEventListener('click', function() {
+                document.getElementById('admin-container').classList.toggle('collapsed');
+            });
+            
+            // Tab switching
+            document.querySelectorAll('.sidebar-item[data-tab]').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tabName = this.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+            
+            // Search functionality
+            document.getElementById('admission-search').addEventListener('input', renderAdmissionsTable);
+            document.getElementById('fees-search').addEventListener('input', renderFeesTable);
+            document.getElementById('contacts-search').addEventListener('input', renderContactsTable);
+            
+            // Status filter functionality
+            document.getElementById('admission-status-filter').addEventListener('change', renderAdmissionsTable);
+            document.getElementById('fees-status-filter').addEventListener('change', renderFeesTable);
+            document.getElementById('contacts-status-filter').addEventListener('change', renderContactsTable);
+            
+            // Export buttons
+            document.getElementById('export-admissions').addEventListener('click', function() {
+                showToast('Admissions data exported successfully', 'success');
+            });
+            
+            document.getElementById('export-fees').addEventListener('click', function() {
+                showToast('Fee payments data exported successfully', 'success');
+            });
+            
+            document.getElementById('export-contacts').addEventListener('click', function() {
+                showToast('Contact messages data exported successfully', 'success');
+            });
+            
+            // Logout button
+            document.getElementById('logout-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Are you sure you want to logout?')) {
+                    // Clear the token from localStorage
+                    localStorage.removeItem('adminToken');
+                    // Redirect to admin login page
+                    window.location.href = '/admin-login.html';
+                }
+            });
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+</body>
+</html>

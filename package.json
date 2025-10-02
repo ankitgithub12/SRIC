@@ -1,27 +1,31 @@
 {
-  "name": "sric-web-dev-project",
+  "name": "sric-website",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "SRIC School Website with Admission Form",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ankitgithub12/SRIC.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ankitgithub12/SRIC/issues"
-  },
-  "homepage": "https://github.com/ankitgithub12/SRIC#readme",
-  "description": "",
+  "keywords": [
+    "school",
+    "website",
+    "admission",
+    "mongodb"
+  ],
+  "author": "SRIC",
+  "license": "MIT",
   "dependencies": {
-    "body-parser": "^2.2.0",
+    "@tailwindcss/vite": "^4.1.13",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
-    "dotenv": "^17.2.0",
-    "express": "^5.1.0",
-    "mongoose": "^8.16.3"
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "googleapis": "^161.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.3",
+    "multer": "^2.0.2",
+    "tailwindcss": "^4.1.13"
   }
 }

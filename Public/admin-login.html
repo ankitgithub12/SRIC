@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRIC Admin Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #002366 0%, #003399 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .login-header {
+            background: #002366;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .login-form {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            border-color: #002366;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 35, 102, 0.1);
+        }
+        
+        .btn-login {
+            background: #002366;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-login:hover {
+            background: #003399;
+            transform: translateY(-2px);
+        }
+        
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        
+        .toast.success {
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .toast.error {
+            background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="login-header">
+            <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="h-16 w-16 mx-auto mb-4 rounded-full">
+            <h1 class="text-2xl font-bold">SRIC Admin Portal</h1>
+            <p class="text-sricgold">Secure Access Only</p>
+        </div>
+        
+        <div class="login-form">
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label class="block text-gray-700 mb-2">Username</label>
+                    <input type="text" name="username" class="form-input" placeholder="Enter admin username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="block text-gray-700 mb-2">Password</label>
+                    <input type="password" name="password" class="form-input" placeholder="Enter password" required>
+                </div>
+                
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-lock mr-2"></i> Login
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden">
+        <div class="flex items-center">
+            <i id="toast-icon" class="mr-2"></i>
+            <span id="toast-message"></span>
+        </div>
+    </div>
+
+    <script>
+        // Toast notification function
+        function showToast(message, type) {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toast-icon');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            
+            if (type === 'success') {
+                toast.className = 'toast success';
+                toastIcon.className = 'fas fa-check-circle';
+            } else {
+                toast.className = 'toast error';
+                toastIcon.className = 'fas fa-exclamation-circle';
+            }
+            
+            toast.classList.remove('hidden');
+            
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const username = formData.get('username');
+            const password = formData.get('password');
+            
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Logging in...';
+            submitBtn.disabled = true;
+            
+            try {
+                const response = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Store authentication token and redirect
+                    localStorage.setItem('adminToken', result.token);
+                    showToast('Login successful! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = `/admin.html?token=${result.token}`;
+                    }, 1000);
+                } else {
+                    showToast(result.message || 'Invalid credentials', 'error');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showToast('Error connecting to server. Please try again.', 'error');
+            } finally {
+                // Restore button state
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+        
+        // Check if already logged in
+       const token = localStorage.getItem('adminToken');
+if (token) {
+    // Verify token is valid by making a quick API call
+    fetch('/api/admin/dashboard', {
+        headers: {
+            'Authorization': token
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = `/admin.html?token=${token}`;
+        } else {
+            // Token is invalid, clear it
+            localStorage.removeItem('adminToken');
+        }
+    })
+    .catch(() => {
+        localStorage.removeItem('adminToken');
+    });
+}
+    </script>
+</body>
+</html>

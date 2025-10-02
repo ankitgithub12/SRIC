@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee Structure | SRIC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sricblue: '#002366',
+                        sricgold: '#FFD700',
+                        sriclight: '#EBF5FF',
+                    },
+                    fontFamily: {
+                        'sans': ['Poppins', 'system-ui'],
+                    },
+                    boxShadow: {
+                        'elegant': '0 10px 40px -10px rgba(0, 35, 102, 0.2)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .fees-hero {
+            background: linear-gradient(135deg, rgba(0, 35, 102, 0.9) 0%, rgba(0, 20, 60, 0.95) 100%), url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .class-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .class-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.6s;
+        }
+        
+        .class-btn:hover::before {
+            left: 100%;
+        }
+        
+        .class-btn.active {
+            background: linear-gradient(135deg, #002366, #001a4d);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 35, 102, 0.3);
+        }
+        
+        .form-section {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s ease-out;
+        }
+        
+        .form-section.active {
+            max-height: 3000px;
+        }
+        
+        .payment-step {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .payment-step.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #002366, #0044cc);
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+        
+        .qr-code-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .qr-code {
+            text-align: center;
+            margin: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .qr-code:hover {
+            transform: translateY(-5px);
+        }
+        
+        .receipt {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #002366;
+        }
+        
+        .receipt::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, #002366, #FFD700, #002366);
+        }
+        
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .receipt-header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #002366, transparent);
+        }
+        
+        .receipt-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #002366;
+            margin-bottom: 5px;
+        }
+        
+        .receipt-subtitle {
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .receipt-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 10px;
+            display: block;
+            border-radius: 50%;
+            border: 2px solid #002366;
+            padding: 5px;
+        }
+        
+        .receipt-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .receipt-detail:last-child {
+            border-bottom: none;
+        }
+        
+        .receipt-detail-label {
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .receipt-detail-value {
+            font-weight: bold;
+            color: #002366;
+        }
+        
+        .receipt-amount {
+            font-size: 28px;
+            text-align: center;
+            margin: 20px 0;
+            color: #002366;
+            position: relative;
+        }
+        
+        .receipt-amount::before, .receipt-amount::after {
+            content: "✽";
+            color: #FFD700;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .receipt-amount::before {
+            left: 20%;
+        }
+        
+        .receipt-amount::after {
+            right: 20%;
+        }
+        
+        .receipt-footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        
+        /* File upload styles */
+        .file-upload-area {
+          border: 2px dashed #cbd5e0;
+          border-radius: 0.5rem;
+          padding: 1.5rem;
+          text-align: center;
+          transition: all 0.3s ease;
+          background-color: #f7fafc;
+        }
+
+        .file-upload-area:hover, .file-upload-area.dragover {
+          border-color: #002366;
+          background-color: #ebf8ff;
+        }
+
+        .file-preview {
+          display: none;
+          margin-top: 1rem;
+        }
+
+        .file-preview-item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          background-color: #edf2f7;
+          padding: 0.75rem;
+          border-radius: 0.375rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .file-preview-item .file-info {
+          display: flex;
+          align-items: center;
+        }
+
+        .file-preview-item .file-icon {
+          margin-right: 0.5rem;
+          color: #002366;
+        }
+
+        .file-preview-item .remove-file {
+          color: #e53e3e;
+          cursor: pointer;
+        }
+        
+        .receipt-watermark {
+            position: absolute;
+            opacity: 0.1;
+            font-size: 120px;
+            font-weight: bold;
+            color: #002366;
+            transform: rotate(-30deg);
+            top: 30%;
+            left: 10%;
+            z-index: 0;
+        }
+        
+        /* School stamp and signature styles */
+        .receipt-stamp {
+            position: absolute;
+            left: 20px;
+            bottom: 80px;
+            width: 120px;
+            height: 120px;
+            opacity: 0.8;
+            transform: rotate(-5deg);
+        }
+        
+        .receipt-signature {
+            position: absolute;
+            right: 30px;
+            bottom: 80px;
+            text-align: center;
+            border-top: 1px solid #002366;
+            padding-top: 5px;
+            width: 150px;
+        }
+        
+        .receipt-notice {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #856404;
+            text-align: center;
+        }
+        
+        .fee-input {
+            width: 100px;
+            text-align: right;
+            padding-right: 8px;
+        }
+        
+        .floating-notice {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #002366;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            max-width: 300px;
+        }
+        
+        .floating-notice i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .receipt, .receipt * {
+                visibility: visible;
+            }
+            .receipt {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 20px;
+                box-shadow: none;
+                border: none;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .receipt-watermark {
+                opacity: 0.05;
+            }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #002366 0%, #0044cc 100%);
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-sriclight">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 shadow-lg gradient-bg">
+        <nav class="p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <!-- Logo + School Name -->
+                <div class="flex items-center space-x-3">
+                    <div class="bg-white p-2 rounded-full">
+                        <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="h-10 w-10 rounded-full">
+                    </div>
+                    <div>
+                        <a href="#" class="text-white text-xl font-bold">SITARAM INTER COLLEGE</a>
+                        <span class="hidden sm:inline text-sricgold text-sm block">Empowering Minds, Shaping Futures</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <ul class="hidden md:flex space-x-6 items-center">
+                    <li><a href="index.html" class="text-gray-300 hover:text-white hover:underline transition">Home</a></li>
+                    
+                    <!-- About Us Dropdown -->
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center transition">
+                            About Us <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-elegant py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="mission.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white transition">Mission</a></li>
+                            <li><a href="History.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white transition">History</a></li>
+                            <li><a href="faculty.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white transition">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Academics Dropdown -->
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center transition">
+                            Academics <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-elegant py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-Y-0 translate-Y-2">
+                            <li><a href="curriculum.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white transition">Curriculum</a></li>
+                            <li><a href="programs.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white transition">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Admissions Dropdown -->
+                    <li class="relative group">
+                        <button class="text-white focus:outline-none flex items-center transition">
+                            Admissions <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-elegant py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-Y-0 translate-Y-2">
+                            <li><a href="process.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white transition">Process</a></li>
+                            <li><a href="fees.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white transition">Fees</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- News & Events Dropdown -->
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center transition">
+                            News & Events <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-elegant py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-Y-0 translate-Y-2">
+                            <li><a href="calendar.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white transition">Calendar</a></li>
+                            <li><a href="announcements.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white transition">Announcements</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Gallery Dropdown -->
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center transition">
+                            Gallery <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-elegant py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-Y-0 translate-Y-2">
+                            <li><a href="photos_videos.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white transition">Photos/Videos</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="contact.html" class="text-gray-300 hover:text-white hover:underline transition">Contact</a></li>
+                </ul>
+
+                <!-- CTA Button (Desktop) -->
+                <a href="admission_form.html" alt="" class="hidden md:block bg-sricgold text-sricblue px-4 py-2 rounded-md font-semibold hover:bg-yellow-600 transition hover-lift">
+                    Apply Now
+                </a>
+
+                <!-- Mobile Hamburger Menu -->
+                <button id="menu-toggle" class="md:hidden text-white focus:outline-none" aria-expanded="false" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu (Hidden by default) -->
+            <div id="mobile-menu" class="md:hidden hidden pb-4 px-4 mt-2 glass-card rounded-lg">
+                <ul class="flex flex-col space-y-2">
+                    <li><a href="index.html" class="block text-gray-300 hover:text-white py-2 transition">Home</a></li>
+                    
+                    <!-- About Us Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center transition">
+                            About Us <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="mission.html" class="block text-gray-400 hover:text-white py-1 text-sm transition">Mission</a></li>
+                            <li><a href="History.html" class="block text-gray-400 hover:text-white py-1 text-sm transition">History</a></li>
+                            <li><a href="faculty.html" class="block text-gray-400 hover:text-white py-1 text-sm transition">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Academics Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center transition">
+                            Academics <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="curriculum.html" class="block text-gray-400 hover:text-white py-1 text-sm transition">Curriculum</a></li>
+                            <li><a href="programs.html" class="block text-gray-400 hover:text-white py-1 text-sm transition">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Admissions Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-white py-2 flex justify-between items-center transition">
+                            Admissions <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="process.html" class="block text-gray-400 hover:text-white py-1 text-sm transition">Process</a></li>
+                            <li><a href="fees.html" class="block text-white py-1 text-sm transition">Fees</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- News & Events Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center transition">
+                            News & Events <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="calendar.html" class="block text-gray-400 hover:text-white py-1 text-sm transition">Calendar</a></li>
+                            <li><a href="announcements.html" class="block text-gray-400 hover:text-white py-1 text-sm transition">Announcements</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Gallery Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center transition">
+                            Gallery <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="photos_videos.html" class="block text-gray-400 hover:text-white py-1 text-sm transition">Photos/Videos</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="contact.html" class="block text-gray-300 hover:text-white py-2 transition">Contact</a></li>
+                    <li><a href="admission_form.html" class="block bg-sricgold text-sricblue px-4 py-2 rounded-md text-center font-semibold mt-2 transition hover-lift">Apply Now</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="fees-hero text-white py-24">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-pulse">Fee Structure & Payment</h1>
+            <p class="text-xl max-w-3xl mx-auto mb-8 glass-card p-4 rounded-lg">Transparent and affordable fee structure with secure online payment options</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="process.html" class="bg-white hover:bg-gray-100 text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300 hover-lift">
+                    Admission Process
+                </a>
+                <a href="#fee-details" class="bg-sricgold hover:bg-yellow-600 text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300 hover-lift">
+                    View Fees
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Class Selection -->
+    <section class="py-16 bg-white" id="fee-details">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6 text-center">Select Your Class</h2>
+                <p class="text-gray-600 text-center mb-8">Choose your class to view the detailed fee structure</p>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    <!-- Pre-Primary -->
+                    <button class="class-btn bg-gray-100 hover:bg-sricblue hover:text-white text-sricblue font-medium py-3 px-4 rounded-lg" data-class="lkg">
+                        LKG
+                    </button>
+                    <button class="class-btn bg-gray-100 hover:bg-sricblue hover:text-white text-sricblue font-medium py-3 px-4 rounded-lg" data-class="ukg">
+                        UKG
+                    </button>
+                    
+                    <!-- Primary -->
+                    <button class="class-btn bg-gray-100 hover:bg-sricblue hover:text-white text-sricblue font-medium py-3 px-4 rounded-lg" data-class="1">
+                        Class 1
+                    </button>
+                    <button class="class-btn bg-gray-100 hover:bg-sricblue hover:text-white text-sricblue font-medium py-3 px-4 rounded-lg" data-class="2">
+                        Class 2
+                    </button>
+                    <button class="class-btn bg-gray-100 hover:bg-sricblue hover:text-white text-sricblue font-medium py-3 px-4 rounded-lg" data-class="3">
+                        Class 3
+                    </button>
+                    <button class="class-btn bg-gray-100 hover:bg-sricblue hover:text-white text-sricblue font-medium py-3 px-4 rounded-lg" data-class="4">
+                        Class 4
+                    </button>
+                    <button class="class-btn bg-gray-100 hover:bg-sricblue hover:text-white text-sricblue font-medium py-3 px-4 rounded-lg" data-class="5">
+                        Class 5
+                    </button>
+                    
+                    <!-- Middle School -->
+                    <button class="class-btn bg-gray-100 hover:bg-sricblue hover:text-white text-sricblue font-medium py-3 px-4 rounded-lg" data-class="6">
+                        Class 6
+                    </button>
+                    <button class="class-btn bg-gray-100 hover:bg-sricblue hover:text-white text-sricblue font-medium py-3 px-4 rounded-lg" data-class="7">
+                        Class 7
+                    </button>
+                    <button class="class-btn bg-gray-100 hover:bg-sricblue hover:text-white text-sricblue font-medium py-3 px-4 rounded-lg" data-class="8">
+                        Class 8
+                    </button>
+                    
+                    <!-- Secondary -->
+                    <button class="class-btn bg-gray-100 hover:bg-sricblue hover:text-white text-sricblue font-medium py-3 px-4 rounded-lg" data-class="9">
+                        Class 9
+                    </button>
+                    <button class="class-btn bg-gray-100 hover:bg-sricblue hover:text-white text-sricblue font-medium py-3 px-4 rounded-lg" data-class="10">
+                        Class 10
+                    </button>
+                    
+                    <!-- Senior Secondary -->
+                    <button class="class-btn bg-gray-100 hover:bg-sricblue hover:text-white text-sricblue font-medium py-3 px-4 rounded-lg" data-class="11-science">
+                        Class 11 (Science)
+                    </button>
+                    <button class="class-btn bg-gray-100 hover:bg-sricblue hover:text-white text-sricblue font-medium py-3 px-4 rounded-lg" data-class="11-humanities">
+                        Class 11 (Humanities)
+                    </button>
+                    <button class="class-btn bg-gray-100 hover:bg-sricblue hover:text-white text-sricblue font-medium py-3 px-4 rounded-lg" data-class="12-science">
+                        Class 12 (Science)
+                    </button>
+                    <button class="class-btn bg-gray-100 hover:bg-sricblue hover:text-white text-sricblue font-medium py-3 px-4 rounded-lg" data-class="12-humanities">
+                        Class 12 (Humanities)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fee Structure (Dynamic based on selection) -->
+    <section class="py-16 bg-sriclight">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6 text-center" id="selected-class-heading">Select a class to view fee structure</h2>
+                
+                <div class="bg-white rounded-xl shadow-elegant overflow-hidden hover-lift">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full" id="fee-table">
+                            <thead class="gradient-bg text-white">
+                                <tr>
+                                    <th class="py-4 px-6 text-left">Fee Component</th>
+                                    <th class="py-4 px-6 text-right">Amount (₹)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200" id="fee-table-body">
+                                <!-- Will be populated by JavaScript -->
+                                <tr>
+                                    <td colspan="2" class="py-8 text-center text-gray-500">Please select a class from above to view the detailed fee structure</td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="bg-gray-50 font-bold" id="fee-table-footer">
+                                <!-- Will be populated by JavaScript -->
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="mt-6 bg-blue-50 border-l-4 border-blue-400 p-4 rounded hidden" id="fee-note">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h 1a1 1 0 100-2h-1V9z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-blue-700" id="fee-note-text"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <button id="proceed-to-payment" class="gradient-bg hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-lg transition duration-300 hover-lift hidden">
+                        Proceed to Payment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Process Steps -->
+    <section class="py-16 bg-white form-section" id="payment-process-section">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6 text-center">Complete Your Payment</h2>
+                
+                <!-- Progress Bar -->
+                <div class="mb-8">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm font-medium text-sricblue">Step 1: Details</span>
+                        <span class="text-sm font-medium text-gray-500">Step 2: Payment</span>
+                        <span class="text-sm font-medium text-gray-500">Step 3: Confirmation</span>
+                    </div>
+                    <div class="progress-bar rounded-full">
+                        <div class="progress-bar-fill rounded-full" style="width: 33%"></div>
+                    </div>
+                </div>
+                
+                <!-- Step 1: Student Details -->
+                <div class="payment-step active" id="step-1">
+                    <form id="payment-form" class="bg-gray-50 p-6 rounded-xl shadow-elegant">
+                        <div class="mb-6">
+                            <h3 class="text-xl font-bold text-sricblue mb-4">Selected Class: <span id="form-class-display" class="text-gray-700">-</span></h3>
+                            <h4 class="text-lg font-semibold mb-2">Total Fee: ₹<span id="form-total-fee">0</span></h4>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="student-name" class="block text-gray-700 font-medium mb-2">Student Name*</label>
+                                <input type="text" id="student-name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sricblue transition">
+                            </div>
+                            
+                            <div>
+                                <label for="father-name" class="block text-gray-700 font-medium mb-2">Father's Name*</label>
+                                <input type="text" id="father-name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sricblue transition">
+                            </div>
+                            
+                            <div>
+                                <label for="mobile" class="block text-gray-700 font-medium mb-2">Mobile Number*</label>
+                                <input type="tel" id="mobile" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sricblue transition">
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-gray-700 font-medium mb-2">Email Address*</label>
+                                <input type="email" id="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sricblue transition">
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <h3 class="text-xl font-bold text-sricblue mb-4">Payment Method</h3>
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <input type="radio" id="online-payment" name="payment-method" value="online" class="hidden peer" checked>
+                                    <label for="online-payment" class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer peer-checked:border-sricblue peer-checked:bg-blue-50 transition hover-lift">
+                                        <i class="fas fa-credit-card text-sricblue text-xl mr-3"></i>
+                                        <span>UPI Payment</span>
+                                    </label>
+                                </div>
+                                
+                                <div>
+                                    <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer" class="hidden peer">
+                                    <label for="bank-transfer" class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer peer-checked:border-sricblue peer-checked:bg-blue-50 transition hover-lift">
+                                        <i class="fas fa-university text-sricblue text-xl mr-3"></i>
+                                        <span>Bank Transfer</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <div class="flex items-start">
+                                <input type="checkbox" id="terms" required class="mt-1 mr-2">
+                                <label for="terms" class="text-gray-700">I agree to the <a href="#" class="text-sricblue hover:underline">terms and conditions</a> and confirm that all information provided is accurate*</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 flex justify-between">
+                            <button type="button" id="cancel-payment" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-8 rounded-lg transition duration-300 hover-lift">
+                                Back
+                            </button>
+                            <button type="button" id="next-to-payment" class="gradient-bg hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-lg transition duration-300 hover-lift">
+                                Continue to Payment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Step 2: Payment Gateway -->
+                <div class="payment-step" id="step-2">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-elegant">
+                        <div class="text-center mb-6">
+                            <h3 class="text-xl font-bold text-sricblue mb-2">Payment Summary</h3>
+                            <p class="text-gray-600">Class: <span id="payment-class" class="font-medium">-</span></p>
+                            <p class="text-2xl font-bold text-sricblue mt-2">₹<span id="payment-amount">0</span></p>
+                        </div>
+                        
+                        <div id="online-payment-section">
+                            <div class="bg-white p-4 rounded-lg border border-gray-200 mb-6 hover-lift">
+                                <div class="flex items-center mb-3">
+                                    <div class="gradient-bg text-white p-2 rounded-full mr-3">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                    <h4 class="font-bold">UPI Payment via GPay/PayTM</h4>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">Scan the QR code below using your UPI app (GPay, PayTM, PhonePe, etc.) to complete the payment</p>
+                                
+                                <!-- QR Codes for GPay and PayTM -->
+                                <div class="qr-code-container">
+                                    <div class="qr-code">
+                                        <p class="font-semibold text-sricblue mb-2">GPay</p>
+                                        <img src="assets/googlepay.jpeg" alt="GPay QR Code" class="w-48 h-48 mx-auto border border-gray-200 p-2 rounded-lg">
+                                        <p class="text-sm text-gray-600 mt-2">Scan with GPay app</p>
+                                    </div>
+                                    <div class="qr-code">
+                                        <p class="font-semibold text-sricblue mb-2">PayTM</p>
+                                        <img src="assets/paytm.jpeg" alt="PayTM QR Code" class="w-48 h-48 mx-auto border border-gray-200 p-2 rounded-lg">
+                                        <p class="text-sm text-gray-600 mt-2">Scan with PayTM app</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- File upload section for UPI -->
+                                <div class="mt-6">
+                                    <h3 class="text-xl font-bold text-sricblue mb-4">Upload Payment Receipt</h3>
+                                    <div class="file-upload-area" id="upload-area">
+                                        <input type="file" id="receipt-upload" accept="image/*,.pdf" class="hidden">
+                                        <div class="cursor-pointer py-8">
+                                            <i class="fas fa-cloud-upload-alt text-sricblue text-4xl mb-3"></i>
+                                            <p class="text-gray-600">Click to upload or drag and drop your payment receipt</p>
+                                            <p class="text-gray-500 text-sm mt-1">PNG, JPG, PDF up to 5MB</p>
+                                        </div>
+                                    </div>
+                                    <div class="file-preview" id="file-preview">
+                                        <div class="file-preview-item">
+                                            <div class="file-info">
+                                                <i class="fas fa-file file-icon"></i>
+                                                <span id="file-name" class="text-sm"></span>
+                                            </div>
+                                            <button type="button" id="remove-file" class="remove-file">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- SUBMIT BUTTON ADDED -->
+                                    <div class="mt-6 text-center">
+                                        <button type="button" id="submit-upi-receipt" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 hidden hover-lift">
+                                            <i class="fas fa-check-circle mr-2"></i>Submit Receipt
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-6">
+                                    <label for="transaction-id" class="block text-gray-700 font-medium mb-2">Transaction ID (After Payment)*</label>
+                                    <input type="text" id="transaction-id" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sricblue transition" placeholder="Enter UPI transaction ID">
+                                    <p class="text-xs text-gray-500 mt-1">You can find this in your payment app after successful transaction</p>
+                                </div>
+                                
+                                <div class="mt-4 flex items-center text-sm text-gray-500">
+                                    <i class="fas fa-lock mr-2"></i>
+                                    <span>Your payment is secured with UPI's encryption</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="bank-transfer-section" class="hidden">
+                            <div class="bg-white p-4 rounded-lg border border-gray-200 hover-lift">
+                                <div class="flex items-center mb-3">
+                                    <div class="gradient-bg text-white p-2 rounded-full mr-3">
+                                        <i class="fas fa-university"></i>
+                                    </div>
+                                    <h4 class="font-bold">Bank Transfer Details</h4>
+                                </div>
+                                
+                                <div class="bg-gray-100 p-4 rounded text-sm">
+                                    <p class="font-semibold">Sitaram Inter College</p>
+                                    <p>Bank: Prathama U.P Gramin Bank</p>
+                                    <p>A/C No: 85022137405652</p>
+                                    <p>IFSC: PUNB0SUPGB5</p>
+                                    <p class="mt-2 text-sricblue">Please send the payment receipt to accounts@sricschool.edu.in after transfer</p>
+                                </div>
+                                
+                                <!-- File upload section for Bank Transfer -->
+                                <div class="mt-6">
+                                    <h3 class="text-xl font-bold text-sricblue mb-4">Upload Transfer Receipt</h3>
+                                    <div class="file-upload-area" id="bank-upload-area">
+                                        <input type="file" id="bank-receipt-upload" accept="image/*,.pdf" class="hidden">
+                                        <div class="cursor-pointer py-8">
+                                            <i class="fas fa-cloud-upload-alt text-sricblue text-4xl mb-3"></i>
+                                            <p class="text-gray-600">Click to upload or drag and drop your bank transfer receipt</p>
+                                            <p class="text-gray-500 text-sm mt-1">PNG, JPG, PDF up to 5MB</p>
+                                        </div>
+                                    </div>
+                                    <div class="file-preview" id="bank-file-preview">
+                                        <div class="file-preview-item">
+                                            <div class="file-info">
+                                                <i class="fas fa-file file-icon"></i>
+                                                <span id="bank-file-name" class="text-sm"></span>
+                                            </div>
+                                            <button type="button" id="bank-remove-file" class="remove-file">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- SUBMIT BUTTON ADDED -->
+                                    <div class="mt-6 text-center">
+                                        <button type="button" id="submit-bank-receipt" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 hidden hover-lift">
+                                            <i class="fas fa-check-circle mr-2"></i>Submit Receipt
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-6">
+                                    <label for="bank-transaction-id" class="block text-gray-700 font-medium mb-2">Transaction ID/UTR Number*</label>
+                                    <input type="text" id="bank-transaction-id" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sricblue transition" placeholder="Enter bank transaction reference">
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <button type="button" id="confirm-bank-transfer" class="w-full gradient-bg hover:bg-blue-900 text-white font-bold py-3 px-4 rounded-lg transition duration-300 hover-lift">
+                                        I've Completed the Transfer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 flex justify-between">
+                            <button type="button" id="back-to-details" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-8 rounded-lg transition duration-300 hover-lift">
+                                Back
+                            </button>
+                            <button type="button" id="confirm-upi-payment" class="gradient-bg hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-lg transition duration-300 hidden hover-lift">
+                                Confirm Payment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Confirmation -->
+                <div class="payment-step" id="step-3">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-elegant text-center">
+                        <div class="text-green-500 text-6xl mb-4">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Payment Successful!</h3>
+                        <p class="text-gray-600 mb-6">Thank you for your payment. Your transaction has been completed.</p>
+                        
+                        <!-- IMPORTANT NOTICE ABOUT HARDCOPY -->
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 text-left rounded-lg">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-exclamation-triangle text-yellow-400 text-xl"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-yellow-700 font-medium">
+                                        <strong>Important Notice:</strong> You have to submit the hardcopy of this receipt in the school office within 7 days for verification and final approval.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Printable Receipt -->
+                        <div class="receipt">
+                            <div class="receipt-watermark">SRIC</div>
+                            
+                            <!-- School Stamp -->
+                            <div class="receipt-stamp">
+                                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="50" cy="50" r="45" fill="none" stroke="#002366" stroke-width="2"/>
+                                    <circle cx="50" cy="50" r="40" fill="none" stroke="#002366" stroke-width="1"/>
+                                    <text x="50" y="35" text-anchor="middle" font-family="Arial" font-size="8" fill="#002366">OFFICIAL STAMP</text>
+                                    <text x="50" y="50" text-anchor="middle" font-family="Arial" font-size="6" fill="#002366">SITARAM INTER COLLEGE</text>
+                                    <text x="50" y="65" text-anchor="middle" font-family="Arial" font-size="6" fill="#002366">VERIFIED</text>
+                                </svg>
+                            </div>
+                            
+                            <!-- Principal's Signature -->
+                            <div class="receipt-signature">
+                                <div>_________________________</div>
+                                <div>Principal's Signature</div>
+                            </div>
+                            
+                            <div class="receipt-header">
+                                <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="receipt-logo">
+                                <div class="receipt-title">Sitaram Inter College</div>
+                                <div class="receipt-subtitle">Sabdalpur Sharki, Mathana Road Hasanpur, Amroha 244242</div>
+                            </div>
+                            
+                            <div class="receipt-title">FEE PAYMENT RECEIPT</div>
+                            
+                            <div class="space-y-3 mt-6">
+                                <div class="receipt-detail">
+                                    <span class="receipt-detail-label">Date:</span>
+                                    <span class="receipt-detail-value" id="receipt-date">-</span>
+                                </div>
+                                <div class="receipt-detail">
+                                    <span class="receipt-detail-label">Receipt No:</span>
+                                    <span class="receipt-detail-value" id="receipt-number">-</span>
+                                </div>
+                                <div class="receipt-detail">
+                                    <span class="receipt-detail-label">Transaction ID:</span>
+                                    <span class="receipt-detail-value" id="receipt-txn-id">-</span>
+                                </div>
+                                <div class="receipt-detail">
+                                    <span class="receipt-detail-label">Payment Method:</span>
+                                    <span class="receipt-detail-value" id="receipt-payment-method">-</span>
+                                </div>
+                                <div class="receipt-detail">
+                                    <span class="receipt-detail-label">Student Name:</span>
+                                    <span class="receipt-detail-value" id="receipt-student-name">-</span>
+                                </div>
+                                <div class="receipt-detail">
+                                    <span class="receipt-detail-label">Father's Name:</span>
+                                    <span class="receipt-detail-value" id="receipt-father-name">-</span>
+                                </div>
+                                <div class="receipt-detail">
+                                    <span class="receipt-detail-label">Class:</span>
+                                    <span class="receipt-detail-value" id="receipt-class">-</span>
+                                </div>
+                            </div>
+                            
+                            <div class="receipt-amount">
+                                ₹<span id="receipt-amount">0</span>
+                            </div>
+                            
+                            <!-- HARDCOPY SUBMISSION NOTICE -->
+                            <div class="receipt-notice">
+                                <strong>Important:</strong> You have to submit the hardcopy of this receipt in the school office within 7 days for verification and final approval.
+                            </div>
+                            
+                            <div class="receipt-footer">
+                                <p>This is a computer generated receipt and does not require signature</p>
+                                <p class="mt-2">Thank you for your payment</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 no-print">
+                            <p class="text-gray-600 mb-4">A receipt has been sent to <span class="font-medium" id="confirmation-email">-</span></p>
+                            <button type="button" id="print-receipt" class="gradient-bg hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-lg transition duration-300 mr-4 hover-lift">
+                                Print Receipt
+                            </button>
+                            <button type="button" id="new-payment" class="bg-sricgold hover:bg-yellow-600 text-sricblue font-bold py-3 px-8 rounded-lg transition duration-300 hover-lift">
+                                Make Another Payment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Notice -->
+    <div class="floating-notice no-print">
+        <i class="fas fa-info-circle"></i>
+        <div>
+            <strong>Important:</strong> Submit hardcopy of receipt to school office within 7 days
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="gradient-bg text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-white w-12 h-12 rounded-xl flex items-center justify-center">
+                            <span class="text-sricblue text-xl font-bold">SRIC</span>
+                        </div>
+                        <h3 class="text-xl font-bold ml-3">SRIC</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">Preparing students for board success since 2002.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-300 hover:text-white transition">Home</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">About Us</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Academics</a></li>
+                        <li><a href="#" class="text-white hover:text-gray-300 transition">Admissions</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-sricgold"></i>
+                            <span class="text-gray-300">Sabdalpur Sharki, Mathana Road Hasanpur, Amroha 244242</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-sricgold"></i>
+                            <span class="text-gray-300">+91 9756517750</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-sricgold"></i>
+                            <span class="text-gray-300">sitaramintercollege1205@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">School Hours</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>Monday - Friday: 8:00 AM - 2:00 PM</li>
+                        <li>Saturday: 8:00 AM - 12:00 PM</li>
+                        <li>Sunday: Closed</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-10 pt-6 text-center text-gray-400">
+                <p>© 2025 SRIC Senior Secondary School. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', function() {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Mobile dropdown functionality
+        document.querySelectorAll('.dropdown-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const dropdown = button.nextElementSibling;
+                const icon = button.querySelector('.dropdown-icon');
+                
+                // Toggle dropdown
+                if (dropdown.style.maxHeight) {
+                    dropdown.style.maxHeight = null;
+                    icon.classList.remove('rotate-180');
+                } else {
+                    dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
+
+        // Fee Structure Data
+        const feeStructure = {
+            'lkg': {
+                name: 'LKG',
+                fees: [
+                    { name: 'Tuition Fee', amount: 3000, editable: true, min: 1000 },
+                    { name: 'Exam Fee', amount: 200, editable: false },
+                    { name: 'Annual Charges', amount: 0, editable: true, min: 0 }
+                ],
+                note: 'Includes books and basic supplies. Uniform costs extra (₹1,500).'
+            },
+            'ukg': {
+                name: 'UKG',
+                fees: [
+                    { name: 'Tuition Fee', amount: 3200, editable: true, min: 1000 },
+                    { name: 'Exam Fee', amount: 200, editable: false },
+                    { name: 'Annual Charges', amount: 0, editable: true, min: 0 }
+                ],
+                note: 'Includes books and basic supplies. Uniform costs extra (₹1,500).'
+            },
+            '1': {
+                name: 'Class 1',
+                fees: [
+                    { name: 'Tuition Fee', amount: 3200, editable: true, min: 1000 },
+                    { name: 'Exam Fee', amount: 200, editable: false },
+                    { name: 'Annual Charges', amount: 0, editable: true, min: 0 }
+                ],
+                note: 'Includes books. Uniform costs extra (₹2,000).'
+            },
+            '2': {
+                name: 'Class 2',
+                fees: [
+                    { name: 'Tuition Fee', amount: 3600, editable: true, min: 1000 },
+                    { name: 'Exam Fee', amount: 200, editable: false },
+                    { name: 'Annual Charges', amount: 0, editable: true, min: 0 }
+                ],
+                note: 'Includes books. Uniform costs extra (₹2,000).'
+            },
+            '3': {
+                name: 'Class 3',
+                fees: [
+                    { name: 'Tuition Fee', amount: 3600, editable: true, min: 1000 },
+                    { name: 'Exam Fee', amount: 200, editable: false },
+                    { name: 'Annual Charges', amount: 0, editable: true, min: 0 }
+                ],
+                note: 'Includes books. Uniform costs extra (₹2,000).'
+            },
+            '4': {
+                name: 'Class 4',
+                fees: [
+                    { name: 'Tuition Fee', amount: 3600, editable: true, min: 1000 },
+                    { name: 'Exam Fee', amount: 200, editable: false },
+                    { name: 'Annual Charges', amount: 0, editable: true, min: 0 }
+                ],
+                note: 'Includes books. Uniform costs extra (₹2,000).'
+            },
+            '5': {
+                name: 'Class 5',
+                fees: [
+                    { name: 'Tuition Fee', amount: 3600, editable: true, min: 1000 },
+                    { name: 'Exam Fee', amount: 200, editable: false },
+                    { name: 'Annual Charges', amount: 0, editable: true, min: 0 }
+                ],
+                note: 'Includes books. Uniform costs extra (₹2,200).'
+            },
+            '6': {
+                name: 'Class 6',
+                fees: [
+                    { name: 'Tuition Fee', amount: 4200, editable: true, min: 1000 },
+                    { name: 'Exam Fee', amount: 200, editable: false },
+                    { name: 'Annual Charges', amount: 0, editable: true, min: 0 }
+                ],
+                note: 'Includes books. Uniform costs extra (₹2,600).'
+            },
+            '7': {
+                name: 'Class 7',
+                fees: [
+                    { name: 'Tuition Fee', amount: 4200, editable: true, min: 1000 },
+                    { name: 'Exam Fee', amount: 200, editable: false },
+                    { name: 'Annual Charges', amount: 0, editable: true, min: 0 }
+                ],
+                note: 'Includes books. Uniform costs extra (₹2,700).'
+            },
+            '8': {
+                name: 'Class 8',
+                fees: [
+                    { name: 'Tuition Fee', amount: 4200, editable: true, min: 1000 },
+                    { name: 'Exam Fee', amount: 200, editable: false },
+                    { name: 'Annual Charges', amount: 0, editable: true, min: 0 }
+                ],
+                note: 'Includes books. Uniform costs extra (₹2,800).'
+            },
+            '9': {
+                name: 'Class 9',
+                fees: [
+                    { name: 'Tuition Fee', amount: 6000, editable: true, min: 1000 },
+                    { name: 'Registration Fee', amount: 500, editable: true },
+                    { name: 'Exam Fee', amount: 200, editable: false },
+                    { name: 'Annual Charges', amount: 0, editable: true, min: 0 }
+                ],
+                note: 'Includes books. Uniform costs extra (₹3,000). Board exam fee will be additional.'
+            },
+            '10': {
+                name: 'Class 10',
+                fees: [
+                    { name: 'Tuition Fee', amount: 6000, editable: true, min: 1000 },
+                    { name: 'Practical Fee', amount: 600, editable: true },
+                    { name: 'PreBoard + HalfYearly', amount: 400, editable: true },
+                    { name: 'Board Exam Fee', amount: 1000, editable: true }
+                ],
+                note: 'Includes books. Uniform costs extra (₹3,000).'
+            },
+            '11-science': {
+                name: 'Class 11 (Science)',
+                fees: [
+                    { name: 'Tuition Fee', amount: 7200, editable: true, min: 1000 },
+                    { name: 'Activity Fee', amount: 0, editable: true, min: 0 },
+                    { name: 'Reg Fee', amount: 500, editable: true },
+                    { name: 'HalfYearly+Yearly Exam fee', amount: 500, editable: true }
+                ],
+                note: 'Includes practical notebooks. Uniform costs extra (₹4,000).'
+            },
+            '11-humanities': {
+                name: 'Class 11 (Humanities)',
+                fees: [
+                    { name: 'Tuition Fee', amount: 6000, editable: true, min: 1000 },
+                    { name: 'Activity Fee', amount: 0, editable: true, min: 0 },
+                    { name: 'Reg Fee', amount: 500, editable: false },
+                    { name: 'HalfYearly+Yearly Exam fee', amount: 500, editable: false }
+                ],
+                note: 'Includes practical notebooks. Uniform costs extra (₹4,000).'
+            },
+            '12-science': {
+                name: 'Class 12 (Science)',
+                fees: [
+                    { name: 'Tuition Fee', amount: 8400, editable: true, min: 1000 },
+                    { name: 'Practical Fee', amount: 1500, editable: true },
+                    { name: 'Board Exam Fee', amount: 1000, editable: true }
+                ],
+                note: 'Includes practical notebooks. Uniform costs extra (₹4,000).'
+            },
+            '12-humanities': {
+                name: 'Class 12 (Humanities)',
+                fees: [
+                    { name: 'Tuition Fee', amount: 8400, editable: true, min: 1000 },
+                    { name: 'Practical Fee', amount: 1000, editable: true },
+                    { name: 'Board Exam Fee', amount: 1000, editable: true }
+                ],
+                note: 'Includes practical notebooks. Uniform costs extra (₹4,000).'
+            }
+        };
+
+        // Class Selection
+        document.querySelectorAll('.class-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('.class-btn').forEach(b => {
+                    b.classList.remove('active');
+                    b.classList.add('bg-gray-100', 'text-sricblue');
+                    b.classList.remove('bg-sricblue', 'text-white');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                this.classList.remove('bg-gray-100', 'text-sricblue');
+                this.classList.add('bg-sricblue', 'text-white');
+                
+                const classId = this.getAttribute('data-class');
+                const classData = feeStructure[classId];
+                
+                // Update fee table
+                const feeTableBody = document.getElementById('fee-table-body');
+                const feeTableFooter = document.getElementById('fee-table-footer');
+                const selectedClassHeading = document.getElementById('selected-class-heading');
+                const feeNote = document.getElementById('fee-note');
+                const feeNoteText = document.getElementById('fee-note-text');
+                const formClassDisplay = document.getElementById('form-class-display');
+                const formTotalFee = document.getElementById('form-total-fee');
+                const proceedBtn = document.getElementById('proceed-to-payment');
+                
+                // Calculate total
+                let total = 0;
+                feeTableBody.innerHTML = '';
+                
+                classData.fees.forEach(item => {
+                    total += item.amount;
+                    
+                    if (item.editable) {
+                        feeTableBody.innerHTML += `
+                            <tr>
+                                <td class="py-3 px-6">${item.name}</td>
+                                <td class="py-3 px-6 text-right">
+                                    <input type="number" 
+                                           class="fee-input border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-sricblue" 
+                                           value="${item.amount}" 
+                                           min="${item.min}"
+                                           data-fee-type="${item.name.toLowerCase().replace(/ /g, '-')}"
+                                           onchange="updateFeeTotal('${classId}')">
+                                </td>
+                            </tr>
+                        `;
+                    } else {
+                        feeTableBody.innerHTML += `
+                            <tr>
+                                <td class="py-3 px-6">${item.name}</td>
+                                <td class="py-3 px-6 text-right">${item.amount.toLocaleString('en-IN')}</td>
+                            </tr>
+                        `;
+                    }
+                });
+                
+                feeTableFooter.innerHTML = `
+                    <tr>
+                        <td class="py-3 px-6 font-bold">Total Annual Fee</td>
+                        <td class="py-3 px-6 text-right font-bold text-sricblue">
+                            ₹<span id="total-fee-amount">${total.toLocaleString('en-IN')}</span>
+                        </td>
+                    </tr>
+                `;
+                
+                selectedClassHeading.textContent = `${classData.name} Fee Structure`;
+                feeNoteText.textContent = classData.note;
+                feeNote.classList.remove('hidden');
+                
+                // Update payment form
+                formClassDisplay.textContent = classData.name;
+                formTotalFee.textContent = total.toLocaleString('en-IN');
+                
+                // Store the current class ID for fee updates
+                formClassDisplay.setAttribute('data-class-id', classId);
+                
+                // Show proceed button
+                proceedBtn.classList.remove('hidden');
+                
+                // Scroll to fee details
+                document.getElementById('fee-details').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Function to update fee total when editable fields change
+        window.updateFeeTotal = function(classId) {
+            const classData = feeStructure[classId];
+            let total = 0;
+            
+            classData.fees.forEach(item => {
+                if (item.editable) {
+                    const input = document.querySelector(`[data-fee-type="${item.name.toLowerCase().replace(/ /g, '-')}"]`);
+                    let value = parseInt(input.value);
+                    
+                    // Ensure value is not below minimum
+                    if (value < item.min) {
+                        value = item.min;
+                        input.value = value;
+                    }
+                    
+                    total += value;
+                } else {
+                    total += item.amount;
+                }
+            });
+            
+            // Update total display
+            document.getElementById('total-fee-amount').textContent = total.toLocaleString('en-IN');
+            document.getElementById('form-total-fee').textContent = total.toLocaleString('en-IN');
+        };
+
+        // Proceed to payment button
+        document.getElementById('proceed-to-payment').addEventListener('click', function() {
+            document.getElementById('payment-process-section').classList.add('active');
+            document.getElementById('payment-process-section').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Cancel payment button
+        document.getElementById('cancel-payment').addEventListener('click', function() {
+            document.getElementById('payment-process-section').classList.remove('active');
+        });
+
+        // Payment Process Steps
+        const steps = {
+            current: 1,
+            total: 3,
+            paymentMethod: 'online',
+            paymentDetails: {},
+            
+            next: function() {
+                if (this.validateStep(this.current)) {
+                    if (this.current < this.total) {
+                        document.getElementById(`step-${this.current}`).classList.remove('active');
+                        this.current++;
+                        document.getElementById(`step-${this.current}`).classList.add('active');
+                        this.updateProgressBar();
+                        
+                        if (this.current === 2) {
+                            this.updatePaymentSummary();
+                            
+                            if (this.paymentMethod === 'online') {
+                                document.getElementById('online-payment-section').classList.remove('hidden');
+                                document.getElementById('bank-transfer-section').classList.add('hidden');
+                                document.getElementById('confirm-upi-payment').classList.remove('hidden');
+                            } else {
+                                document.getElementById('online-payment-section').classList.add('hidden');
+                                document.getElementById('bank-transfer-section').classList.remove('hidden');
+                                document.getElementById('confirm-upi-payment').classList.add('hidden');
+                            }
+                        }
+                    }
+                }
+            },
+            
+            back: function() {
+                if (this.current > 1) {
+                    document.getElementById(`step-${this.current}`).classList.remove('active');
+                    this.current--;
+                    document.getElementById(`step-${this.current}`).classList.add('active');
+                    this.updateProgressBar();
+                } else {
+                    document.getElementById('payment-process-section').classList.remove('active');
+                }
+            },
+            
+            validateStep: function(step) {
+                if (step === 1) {
+                    const requiredFields = ['student-name', 'father-name', 'mobile', 'email'];
+                    let isValid = true;
+                    
+                    requiredFields.forEach(field => {
+                        const element = document.getElementById(field);
+                        if (!element.value.trim()) {
+                            element.classList.add('border-red-500');
+                            isValid = false;
+                        } else {
+                            element.classList.remove('border-red-500');
+                        }
+                    });
+                    
+                    if (!document.getElementById('terms').checked) {
+                        document.getElementById('terms').nextElementSibling.classList.add('text-red-500');
+                        isValid = false;
+                    } else {
+                        document.getElementById('terms').nextElementSibling.classList.remove('text-red-500');
+                    }
+                    
+                    if (!isValid) {
+                        alert('Please fill all required fields and accept the terms.');
+                    }
+                    
+                    return isValid;
+                }
+                
+                if (step === 2) {
+                    if (this.paymentMethod === 'online') {
+                        const txnId = document.getElementById('transaction-id').value.trim();
+                        if (!txnId) {
+                            document.getElementById('transaction-id').classList.add('border-red-500');
+                            alert('Please enter your UPI transaction ID');
+                            return false;
+                        }
+                        document.getElementById('transaction-id').classList.remove('border-red-500');
+                    } else {
+                        const txnId = document.getElementById('bank-transaction-id').value.trim();
+                        if (!txnId) {
+                            document.getElementById('bank-transaction-id').classList.add('border-red-500');
+                            alert('Please enter your bank transaction reference');
+                            return false;
+                        }
+                        document.getElementById('bank-transaction-id').classList.remove('border-red-500');
+                    }
+                }
+                
+                return true;
+            },
+            
+            updateProgressBar: function() {
+                const progress = (this.current / this.total) * 100;
+                document.querySelector('.progress-bar-fill').style.width = `${progress}%`;
+                
+                // Update step labels
+                for (let i = 1; i <= this.total; i++) {
+                    const label = document.querySelector(`.flex.justify-between.mb-2 span:nth-child(${i})`);
+                    if (i < this.current) {
+                        label.classList.add('text-sricblue');
+                        label.classList.remove('text-gray-500');
+                    } else if (i === this.current) {
+                        label.classList.add('text-sricblue');
+                        label.classList.remove('text-gray-500');
+                    } else {
+                        label.classList.add('text-gray-500');
+                        label.classList.remove('text-sricblue');
+                    }
+                }
+            },
+            
+            updatePaymentSummary: function() {
+                this.paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+                
+                document.getElementById('payment-class').textContent = document.getElementById('form-class-display').textContent;
+                document.getElementById('payment-amount').textContent = document.getElementById('form-total-fee').textContent;
+                
+                // Store payment details
+                this.paymentDetails = {
+                    studentName: document.getElementById('student-name').value,
+                    fatherName: document.getElementById('father-name').value,
+                    mobile: document.getElementById('mobile').value,
+                    email: document.getElementById('email').value,
+                    className: document.getElementById('form-class-display').textContent,
+                    amount: parseInt(document.getElementById('form-total-fee').textContent.replace(/,/g, '')),
+                    paymentMethod: this.paymentMethod
+                };
+            },
+            
+            completePayment: function() {
+                // Generate receipt details
+                const now = new Date();
+                const receiptDate = now.toLocaleDateString('en-IN', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                });
+                
+                const receiptNumber = 'SRIC-' + now.getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
+                
+                let transactionId = '';
+                if (this.paymentMethod === 'online') {
+                    transactionId = document.getElementById('transaction-id').value.trim();
+                } else {
+                    transactionId = document.getElementById('bank-transaction-id').value.trim();
+                }
+                
+                // Update receipt
+                document.getElementById('receipt-date').textContent = receiptDate;
+                document.getElementById('receipt-number').textContent = receiptNumber;
+                document.getElementById('receipt-txn-id').textContent = transactionId;
+                document.getElementById('receipt-payment-method').textContent = this.paymentMethod === 'online' ? 'UPI Payment' : 'Bank Transfer';
+                document.getElementById('receipt-student-name').textContent = this.paymentDetails.studentName;
+                document.getElementById('receipt-father-name').textContent = this.paymentDetails.fatherName;
+                document.getElementById('receipt-class').textContent = this.paymentDetails.className;
+                document.getElementById('receipt-amount').textContent = this.paymentDetails.amount.toLocaleString('en-IN');
+                
+                // Move to confirmation step
+                this.current++;
+                document.getElementById(`step-${this.current - 1}`).classList.remove('active');
+                document.getElementById(`step-${this.current}`).classList.add('active');
+                this.updateProgressBar();
+                
+                // Update confirmation details
+                document.getElementById('confirmation-email').textContent = this.paymentDetails.email;
+            },
+            
+            reset: function() {
+                this.current = 1;
+                this.paymentMethod = 'online';
+                this.paymentDetails = {};
+                
+                document.getElementById('payment-form').reset();
+                document.querySelector('input[name="payment-method"][value="online"]').checked = true;
+                
+                document.querySelectorAll('.payment-step').forEach(step => {
+                    step.classList.remove('active');
+                });
+                document.getElementById('step-1').classList.add('active');
+                
+                this.updateProgressBar();
+                
+                document.getElementById('payment-process-section').scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+
+        // Event listeners for payment process
+        document.getElementById('next-to-payment').addEventListener('click', function() {
+            steps.next();
+        });
+
+        document.getElementById('back-to-details').addEventListener('click', function() {
+            steps.back();
+        });
+
+        // NEW: Submit buttons for UPI and Bank Transfer
+        document.getElementById('submit-upi-receipt').addEventListener('click', async function() {
+            if (!uploadedFile) {
+                alert('Please upload your payment receipt before submitting.');
+                return;
+            }
+            
+            if (steps.validateStep(2)) {
+                try {
+                    // Show loading state
+                    this.disabled = true;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+                    
+                    // Prepare payment data
+                    const paymentData = {
+                        studentName: steps.paymentDetails.studentName,
+                        fatherName: steps.paymentDetails.fatherName,
+                        mobile: steps.paymentDetails.mobile,
+                        email: steps.paymentDetails.email,
+                        className: steps.paymentDetails.className,
+                        amount: steps.paymentDetails.amount,
+                        paymentMethod: steps.paymentMethod,
+                        transactionId: document.getElementById('transaction-id').value.trim(),
+                        receiptNumber: 'SRIC-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000),
+                        receiptDate: new Date()
+                    };
+                    
+                    // Create FormData to send file and data
+                    const formData = new FormData();
+                    formData.append('receipt', uploadedFile);
+                    formData.append('paymentData', JSON.stringify(paymentData));
+                    
+                    // Send to server
+                    const response = await fetch('/api/fee-payment', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Update receipt with database ID
+                        document.getElementById('receipt-number').textContent = result.data.receiptNumber;
+                        
+                        // Complete the payment process
+                        steps.completePayment();
+                    } else {
+                        throw new Error(result.message);
+                    }
+                    
+                } catch (error) {
+                    alert('Error submitting payment: ' + error.message);
+                    console.error('Payment submission error:', error);
+                    
+                    // Reset button state
+                    this.disabled = false;
+                    this.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Submit Receipt';
+                }
+            }
+        });
+
+        document.getElementById('submit-bank-receipt').addEventListener('click', async function() {
+            if (!bankUploadedFile) {
+                alert('Please upload your bank transfer receipt before submitting.');
+                return;
+            }
+            
+            if (steps.validateStep(2)) {
+                try {
+                    // Show loading state
+                    this.disabled = true;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+                    
+                    // Prepare payment data
+                    const paymentData = {
+                        studentName: steps.paymentDetails.studentName,
+                        fatherName: steps.paymentDetails.fatherName,
+                        mobile: steps.paymentDetails.mobile,
+                        email: steps.paymentDetails.email,
+                        className: steps.paymentDetails.className,
+                        amount: steps.paymentDetails.amount,
+                        paymentMethod: steps.paymentMethod,
+                        transactionId: document.getElementById('bank-transaction-id').value.trim(),
+                        receiptNumber: 'SRIC-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000),
+                        receiptDate: new Date()
+                    };
+                    
+                    // Create FormData to send file and data
+                    const formData = new FormData();
+                    formData.append('receipt', bankUploadedFile);
+                    formData.append('paymentData', JSON.stringify(paymentData));
+                    
+                    // Send to server
+                    const response = await fetch('/api/fee-payment', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Update receipt with database ID
+                        document.getElementById('receipt-number').textContent = result.data.receiptNumber;
+                        
+                        // Complete the payment process
+                        steps.completePayment();
+                    } else {
+                        throw new Error(result.message);
+                    }
+                    
+                } catch (error) {
+                    alert('Error submitting payment: ' + error.message);
+                    console.error('Payment submission error:', error);
+                    
+                    // Reset button state
+                    this.disabled = false;
+                    this.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Submit Receipt';
+                }
+            }
+        });
+
+        document.getElementById('new-payment').addEventListener('click', function() {
+            steps.reset();
+            // Reset file uploads
+            uploadedFile = null;
+            bankUploadedFile = null;
+            document.getElementById('file-preview').style.display = 'none';
+            document.getElementById('bank-file-preview').style.display = 'none';
+            document.getElementById('receipt-upload').value = '';
+            document.getElementById('bank-receipt-upload').value = '';
+            document.getElementById('submit-upi-receipt').classList.add('hidden');
+            document.getElementById('submit-bank-receipt').classList.add('hidden');
+        });
+
+        document.getElementById('print-receipt').addEventListener('click', function() {
+            // Show the receipt before printing
+            document.querySelector('.receipt').style.display = 'block';
+            window.print();
+            // Hide it again after printing (in case user cancels)
+            setTimeout(() => {
+                document.querySelector('.receipt').style.display = 'none';
+            }, 1000);
+        });
+
+        // File upload functionality
+        let uploadedFile = null;
+        const uploadArea = document.getElementById('upload-area');
+        const receiptUpload = document.getElementById('receipt-upload');
+        const filePreview = document.getElementById('file-preview');
+        const fileName = document.getElementById('file-name');
+        const removeFileBtn = document.getElementById('remove-file');
+        
+        // Click to upload
+        uploadArea.addEventListener('click', function() {
+            receiptUpload.click();
+        });
+        
+        // File selected
+        receiptUpload.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                handleFileUpload(e.target.files[0], 'upi');
+            }
+        });
+        
+        // Remove file
+        removeFileBtn.addEventListener('click', function() {
+            uploadedFile = null;
+            receiptUpload.value = '';
+            filePreview.style.display = 'none';
+            document.getElementById('submit-upi-receipt').classList.add('hidden');
+        });
+        
+        // Drag and drop functionality
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+            uploadArea.classList.add('dragover');
+        }
+        
+        function unhighlight() {
+            uploadArea.classList.remove('dragover');
+        }
+        
+        uploadArea.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                handleFileUpload(files[0], 'upi');
+            }
+        }
+        
+        // Bank transfer file upload functionality
+        let bankUploadedFile = null;
+        const bankUploadArea = document.getElementById('bank-upload-area');
+        const bankReceiptUpload = document.getElementById('bank-receipt-upload');
+        const bankFilePreview = document.getElementById('bank-file-preview');
+        const bankFileName = document.getElementById('bank-file-name');
+        const bankRemoveFileBtn = document.getElementById('bank-remove-file');
+        
+        // Click to upload
+        bankUploadArea.addEventListener('click', function() {
+            bankReceiptUpload.click();
+        });
+        
+        // File selected
+        bankReceiptUpload.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                handleFileUpload(e.target.files[0], 'bank');
+            }
+        });
+        
+        // Remove file
+        bankRemoveFileBtn.addEventListener('click', function() {
+            bankUploadedFile = null;
+            bankReceiptUpload.value = '';
+            bankFilePreview.style.display = 'none';
+            document.getElementById('submit-bank-receipt').classList.add('hidden');
+        });
+        
+        // Drag and drop functionality for bank transfer
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            bankUploadArea.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            bankUploadArea.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            bankUploadArea.addEventListener(eventName, unhighlight, false);
+        });
+        
+        bankUploadArea.addEventListener('drop', handleBankDrop, false);
+        
+        function handleBankDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                handleFileUpload(files[0], 'bank');
+            }
+        }
+        
+        function handleFileUpload(file, type) {
+            // Check file size (5MB limit)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size exceeds 5MB limit. Please choose a smaller file.');
+                return;
+            }
+            
+            // Check file type
+            const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
+            if (!validTypes.includes(file.type)) {
+                alert('Only JPEG, PNG, GIF, and PDF files are allowed.');
+                return;
+            }
+            
+            if (type === 'upi') {
+                uploadedFile = file;
+                fileName.textContent = file.name;
+                filePreview.style.display = 'block';
+                document.getElementById('submit-upi-receipt').classList.remove('hidden');
+            } else {
+                bankUploadedFile = file;
+                bankFileName.textContent = file.name;
+                bankFilePreview.style.display = 'block';
+                document.getElementById('submit-bank-receipt').classList.remove('hidden');
+            }
+        }
+        
+        
+    </script>
+</body>
+</html>

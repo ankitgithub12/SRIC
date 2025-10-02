@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Calendar 2025-26 | SRIC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sricblue: '#002366',
+                        sricblueLight: '#003399',
+                        sricgold: '#FFD700',
+                        sricgoldLight: '#FFE44D',
+                    },
+                    transitionProperty: {
+                        'height': 'height',
+                        'opacity': 'opacity',
+                        'transform': 'transform'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .calendar-day:hover {
+            background-color: rgba(0, 35, 102, 0.1);
+        }
+        
+        .calendar-day.event-day {
+            background-color: rgba(255, 215, 0, 0.2);
+        }
+        
+        .calendar-day.today {
+            border: 2px solid #FFD700;
+        }
+        
+        .month-header {
+            background: linear-gradient(135deg, #002366 0%, #0044cc 100%);
+        }
+        
+        .holiday {
+            background-color: rgba(255, 0, 0, 0.1);
+        }
+        
+        .exam-day {
+            background-color: rgba(0, 128, 0, 0.1);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .month-transition {
+            transition: all 0.3s ease;
+        }
+        
+        .academic-table tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        
+        .academic-table tr:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .event-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 4px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background-color: #e5e7eb;
+        }
+        
+        @media (max-width: 768px) {
+            .calendar-grid {
+                grid-template-columns: repeat(1, 1fr);
+            }
+            
+            .calendar-day {
+                height: auto;
+                min-height: 80px;
+            }
+        }
+        
+        /* Exam schedule specific styles */
+        .exam-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        .exam-table th {
+            background: linear-gradient(135deg, #002366 0%, #0044cc 100%);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .exam-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        .exam-table tr:hover {
+            background-color: #e2e8f0;
+        }
+        
+        .exam-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .class-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin: 2px;
+        }
+        
+        .class-badge.ukg {
+            background-color: #e0f2fe;
+            color: #0369a1;
+        }
+        
+        .class-badge.primary {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .class-badge.middle {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        
+        .class-badge.secondary {
+            background-color: #fce7f3;
+            color: #9d174d;
+        }
+        
+        .class-badge.senior {
+            background-color: #f3e8ff;
+            color: #6b21a8;
+        }
+        
+        .exam-highlight {
+            background: linear-gradient(120deg, #fef3c7 0%, #fef3c7 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 40%;
+            background-position: 0 90%;
+        }
+        
+        .parent-meeting {
+            background: linear-gradient(120deg, #dcfce7 0%, #dcfce7 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 40%;
+            background-position: 0 90%;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 shadow-md">
+        <nav class="bg-sricblue p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <!-- Logo + School Name -->
+                <div class="flex items-center space-x-2">
+                    <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="h-10 w-10 rounded-full">
+                    <a href="index.html" class="text-white text-xl font-bold">SITARAM INTER COLLEGE</a>
+                    <span class="hidden sm:inline text-sricgold text-sm">Empowering Minds, Shaping Futures</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <ul class="hidden md:flex space-x-6 items-center">
+                    <li><a href="index.html" class="text-gray-300 hover:text-white hover:underline">Home</a></li>
+                    
+                    <!-- About Us Dropdown -->
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            About Us <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="mission.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Mission</a></li>
+                            <li><a href="History.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">History</a></li>
+                            <li><a href="faculty.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Academics Dropdown -->
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Academics <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="curriculum.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Curriculum</a></li>
+                            <li><a href="programs.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- News & Events Active -->
+                    <li class="relative group">
+                        <button class="text-white flex items-center">
+                            News & Events <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
+                            <li><a href="calendar.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white font-semibold">Calendar</a></li>
+                            <li><a href="announcements.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Announcements</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Other Links -->
+                    <li><a href="contact.html" class="text-gray-300 hover:text-white hover:underline">Contact</a></li>
+                </ul>
+
+                <!-- CTA Button (Desktop) -->
+                <a href="admission_form.html" alt="" class="hidden md:block bg-sricgold text-sricblue px-4 py-2 rounded-md font-semibold hover:bg-yellow-600 transition">Apply Now</a>
+
+                <!-- Mobile Hamburger Menu -->
+                <button id="menu-toggle" class="md:hidden text-white focus:outline-none" aria-expanded="false" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu (Hidden by default) -->
+            <div id="mobile-menu" class="md:hidden hidden bg-sricblue pb-4 px-4">
+                <ul class="flex flex-col space-y-2">
+                    <li><a href="index.html" class="block text-gray-300 hover:text-white py-2">Home</a></li>
+                    
+                    <!-- About Us Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            About Us <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="mission.html" class="block text-gray-400 hover:text-white py-1 text-sm">Mission</a></li>
+                            <li><a href="History.html" class="block text-gray-400 hover:text-white py-1 text-sm">History</a></li>
+                            <li><a href="faculty.html" class="block text-gray-400 hover:text-white py-1 text-sm">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Academics Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Academics <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="curriculum.html" class="block text-gray-400 hover:text-white py-1 text-sm">Curriculum</a></li>
+                            <li><a href="programs.html" class="block text-gray-400 hover:text-white py-1 text-sm">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- News & Events Active -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-white py-2 flex justify-between items-center">
+                            News & Events <svg class="dropdown-icon w-4 h-4 transform transition-transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1" style="max-height: 200px;">
+                            <li><a href="calendar.html" class="block text-white py-1 text-sm font-medium">Calendar</a></li>
+                            <li><a href="announcements.html" class="block text-gray-400 hover:text-white py-1 text-sm">Announcements</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="contact.html" class="block text-gray-300 hover:text-white py-2">Contact</a></li>
+                    <li><a href="admission_form.html" class="block bg-sricgold text-sricblue px-4 py-2 rounded-md text-center font-semibold mt-2">Apply Now</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <!-- Page Header with Decorative Elements -->
+        <div class="text-center mb-16 relative">
+            <div class="absolute -top-6 -left-6 w-16 h-16 rounded-full bg-sricgold opacity-20"></div>
+            <div class="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-sricblue opacity-20"></div>
+            <h1 class="text-4xl md:text-5xl font-bold text-sricblue mb-4 relative z-10">Academic Calendar 2025-26</h1>
+            <div class="w-24 h-1 bg-gradient-to-r from-sricblue to-sricgold mx-auto mb-6 rounded-full"></div>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto relative z-10">Stay updated with all important dates, events, and academic schedules</p>
+        </div>
+        
+        <!-- Special Notice Section -->
+        <div class="bg-gradient-to-r from-yellow-50 to-amber-50 border-l-4 border-yellow-500 p-6 mb-8 rounded-lg shadow-sm">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-exclamation-circle text-yellow-500 text-2xl"></i>
+                </div>
+                <div class="ml-4">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">त्रैमासिक परीक्षा समय सारणी / Quarterly Examination Schedule</h3>
+                    <div class="text-gray-700">
+                        <p class="mb-4 font-semibold">विशेष सूचना / Special Notice:</p>
+                        <p class="mb-2">कक्षा 9 से 12 तक के सभी छात्र/छात्राओं को सूचित किया जाता है कि:</p>
+                        <p class="mb-2">All students from classes 9 to 12 are informed that:</p>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li>सभी विद्यार्थी दिनांक 03-10-2025, शुक्रवार को अपने अभिभावकों के साथ विद्यालय में प्रातः 8 बजे उपस्थित हों।</li>
+                            <li>All students must be present at school with their parents/guardians on Friday, 03-10-2025 at 8:00 AM.</li>
+                            <li>उस दिन परीक्षा भी संचालित होगी; जिस विषय की परीक्षा है, वही परीक्षा आयोजित की जाएगी।</li>
+                            <li>Exams will also be conducted on that day; the scheduled exam for that day will take place.</li>
+                            <li>प्रत्येक विद्यार्थी के लिए यह अनिवार्य है कि वे अपने अभिभावक (माता/पिता/बड़े भाई/बहन) को शुक्रवार को विद्यालय में लाएं।</li>
+                            <li>It is mandatory for every student to bring their parent/guardian to school on Friday.</li>
+                        </ul>
+                        <p class="mt-3 font-semibold">धन्यवाद। / Thank you.</p>
+                        <p class="mt-2">आज्ञानुसार, / Sincerely,</p>
+                        <p class="font-bold">प्रधानाचार्य / Principal</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Exam Schedule Section -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-12">
+            <div class="bg-gradient-to-r from-sricblue to-blue-800 text-white p-6">
+                <h2 class="text-2xl md:text-3xl font-bold flex items-center">
+                    <i class="fas fa-calendar-alt mr-3"></i>
+                    त्रैमासिक परीक्षा समय सारणी (Quarterly Examination Schedule)
+                </h2>
+                <p class="mt-2 opacity-90">October 2025 | Time: 8:30 AM - 11:30 AM</p>
+            </div>
+            
+            <div class="p-6">
+                <div class="overflow-x-auto">
+                    <table class="exam-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Day</th>
+                                <th>UKG to 1st</th>
+                                <th>2nd to 5th</th>
+                                <th>6th to 8th</th>
+                                <th>9th to 10th</th>
+                                <th>11th to 12th</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           <tr class="parent-meeting">
+        <td class="font-semibold">03-10-2025</td>
+        <td>Friday</td>
+        <td colspan="5" class="text-center font-semibold">
+            <i class="fas fa-users mr-2 text-green-600"></i>
+            Parent Meeting - All students must attend with parents at 8:00 AM
+        </td>
+    </tr>
+
+    <tr>
+        <td>03-10-2025</td>
+        <td>Friday</td>
+        <td><span class="class-badge ukg">हिन्दी मौखिक</span></td>
+        <td><span class="class-badge primary">अंग्रेजी</span></td>
+        <td><span class="class-badge middle">गणित</span></td>
+        <td><span class="class-badge secondary">विज्ञान प्रयोगात्मक</span></td>
+        <td><span class="class-badge senior">भूगोल + भौतिक विज्ञान (प्रयोगात्मक)</span></td>
+    </tr>
+
+    <tr>
+        <td>04-10-2025</td>
+        <td>Saturday</td>
+        <td><span class="class-badge ukg">अवकाश (Holiday)</span></td>
+        <td><span class="class-badge primary">संस्कृत/उर्दू</span></td>
+        <td><span class="class-badge middle">चित्रकला</span></td>
+        <td><span class="class-badge secondary">विज्ञान</span></td>
+        <td><span class="class-badge senior">भौतिक विज्ञान + भूगोल</span></td>
+    </tr>
+
+    <tr>
+        <td>06-10-2025</td>
+        <td>Monday</td>
+        <td><span class="class-badge ukg">हिन्दी लिखित</span></td>
+        <td><span class="class-badge primary">चित्रकला</span></td>
+        <td><span class="class-badge middle">हिन्दी</span></td>
+        <td><span class="class-badge secondary">सामाजिक विज्ञान प्रयोगात्मक</span></td>
+        <td><span class="class-badge senior">रसायन + गृह विज्ञान (प्रयोगात्मक)</span></td>
+    </tr>
+
+    <tr>
+        <td>07-10-2025</td>
+        <td>Tuesday</td>
+        <td><span class="class-badge ukg">अवकाश (Holiday)</span></td>
+        <td><span class="class-badge primary">गणित</span></td>
+        <td><span class="class-badge middle">विज्ञान</span></td>
+        <td><span class="class-badge secondary">सामाजिक विज्ञान</span></td>
+        <td><span class="class-badge senior">रसायन + गृह विज्ञान + समाज.</span></td>
+    </tr>
+
+    <tr>
+        <td>08-10-2025</td>
+        <td>Wednesday</td>
+        <td><span class="class-badge ukg">अंग्रेजी मौखिक</span></td>
+        <td><span class="class-badge primary">नैतिक शिक्षा/सामान्य ज्ञान</span></td>
+        <td><span class="class-badge middle">कृषि विज्ञान/गृह विज्ञान</span></td>
+        <td><span class="class-badge secondary">चित्रकला</span></td>
+        <td><span class="class-badge senior">हिन्दी</span></td>
+    </tr>
+
+    <tr>
+        <td>09-10-2025</td>
+        <td>Thursday</td>
+        <td><span class="class-badge ukg">अंग्रेजी लिखित</span></td>
+        <td><span class="class-badge primary">हिन्दी</span></td>
+        <td><span class="class-badge middle">सामाजिक विज्ञान</span></td>
+        <td><span class="class-badge secondary">हिन्दी</span></td>
+        <td><span class="class-badge senior">जीव विज्ञान प्रयोगात्मक</span></td>
+    </tr>
+
+    <tr>
+        <td>10-10-2025</td>
+        <td>Friday</td>
+        <td><span class="class-badge ukg">गणित मौखिक</span></td>
+        <td><span class="class-badge primary">सामाजिक अध्ययन</span></td>
+        <td><span class="class-badge middle">संस्कृत/उर्दू</span></td>
+        <td><span class="class-badge secondary">अंग्रेजी</span></td>
+        <td><span class="class-badge senior">जीव विज्ञान + चित्रकला</span></td>
+    </tr>
+
+    <tr>
+        <td>11-10-2025</td>
+        <td>Saturday</td>
+        <td><span class="class-badge ukg">गणित लिखित</span></td>
+        <td><span class="class-badge primary">विज्ञान</span></td>
+        <td><span class="class-badge middle">पी.टी.</span></td>
+        <td><span class="class-badge secondary">गणित + गृहवि. प्रयोगात्मक</span></td>
+        <td><span class="class-badge senior">अंग्रेजी</span></td>
+    </tr>
+
+    <tr>
+        <td>13-10-2025</td>
+        <td>Monday</td>
+        <td><span class="class-badge ukg">पी.टी.</span></td>
+        <td><span class="class-badge primary">पी.टी.</span></td>
+        <td><span class="class-badge middle">अंग्रेजी</span></td>
+        <td><span class="class-badge secondary">गृह विज्ञान + गणित</span></td>
+        <td><span class="class-badge senior">गणित</span></td>
+    </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="mt-6 flex flex-col sm:flex-row gap-4">
+                    <a href="assets/त्रैमासिक परीक्षा समय सारणी.pdf" 
+                       class="inline-flex items-center justify-center bg-sricblue hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                        <i class="fas fa-download mr-2"></i>
+                        Download Datesheet (PDF)
+                    </a>
+                    <a href="#year-calendar" 
+                       class="inline-flex items-center justify-center bg-sricgold hover:bg-yellow-600 text-sricblue font-bold py-3 px-6 rounded-lg transition duration-300">
+                        <i class="fas fa-calendar mr-2"></i>
+                        View Full Calendar
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Year Navigation -->
+        <div class="flex justify-between items-center mb-8 bg-white p-4 rounded-xl shadow-md">
+            <h2 class="text-2xl font-bold text-sricblue">2025-2026 Academic Year</h2>
+            <div class="flex items-center gap-4">
+                <a href="calendar.html" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition">2024-25</a>
+                <span class="px-4 py-2 bg-sricblue text-white rounded-lg font-medium">2025-26</span>
+            </div>
+        </div>
+        
+        <!-- Calendar Navigation with Month Selector -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+            <div class="p-4 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-4">
+                    <button id="prev-month" class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h3 id="current-month" class="text-xl font-bold text-sricblue">October 2025</h3>
+                    <button id="next-month" class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button id="today-btn" class="px-4 py-2 bg-sricblue text-white rounded-lg hover:bg-blue-900 transition">
+                        Today
+                    </button>
+                </div>
+                
+                <div class="relative">
+                    <select id="month-selector" class="appearance-none bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-sricblue focus:border-transparent">
+                        <option value="0">January 2025</option>
+                        <option value="1">February 2025</option>
+                        <option value="2">March 2025</option>
+                        <option value="3">April 2025</option>
+                        <option value="4">May 2025</option>
+                        <option value="5">June 2025</option>
+                        <option value="6">July 2025</option>
+                        <option value="7">August 2025</option>
+                        <option value="8">September 2025</option>
+                        <option value="9" selected>October 2025</option>
+                        <option value="10">November 2025</option>
+                        <option value="11">December 2025</option>
+                        <option value="12">January 2026</option>
+                        <option value="13">February 2026</option>
+                        <option value="14">March 2026</option>
+                        <option value="15">April 2026</option>
+                        <option value="16">May 2026</option>
+                        <option value="17">June 2026</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Calendar Grid -->
+        <div id="calendar-container" class="bg-white rounded-xl shadow-md overflow-hidden mb-12 fade-in">
+            <!-- Calendar will be dynamically generated here -->
+        </div>
+        
+        <!-- Legend -->
+        <div class="bg-white rounded-xl shadow-md p-4 mb-12">
+            <h3 class="text-lg font-bold text-sricblue mb-3">Calendar Legend</h3>
+            <div class="flex flex-wrap gap-4">
+                <div class="flex items-center">
+                    <div class="w-4 h-4 rounded-full bg-blue-100 border border-blue-300 mr-2"></div>
+                    <span class="text-sm">Staff Events</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 rounded-full bg-yellow-100 border border-yellow-300 mr-2"></div>
+                    <span class="text-sm">Admissions</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 rounded-full bg-red-100 border border-red-300 mr-2"></div>
+                    <span class="text-sm">Parent Events</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 rounded-full bg-green-100 border border-green-300 mr-2"></div>
+                    <span class="text-sm">Examinations</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 rounded-full bg-purple-100 border border-purple-300 mr-2"></div>
+                    <span class="text-sm">Holidays</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 rounded-full bg-pink-100 border border-pink-300 mr-2"></div>
+                    <span class="text-sm">School Events</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Upcoming Events Section -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold text-sricblue mb-6">Upcoming Events</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Event Card 1 -->
+                <div class="event-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 border-l-4 border-sricblue">
+                    <div class="bg-sricblue text-white p-4">
+                        <div class="flex justify-between items-center">
+                            <div class="text-xl font-bold">01</div>
+                            <div class="text-right">
+                                <div class="font-semibold">April</div>
+                                <div class="text-sm">2025</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Session Begins</h3>
+                        <p class="text-gray-600 mb-3">First day of academic session 2025-26 for all classes</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="far fa-clock mr-2"></i>
+                            <span>8:00 AM - 2:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 2 -->
+                <div class="event-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 border-l-4 border-sricgold">
+                    <div class="bg-sricgold text-sricblue p-4">
+                        <div class="flex justify-between items-center">
+                            <div class="text-xl font-bold">15</div>
+                            <div class="text-right">
+                                <div class="font-semibold">August</div>
+                                <div class="text-sm">2025</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Independence Day</h3>
+                        <p class="text-gray-600 mb-3">Celebration and cultural program</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="far fa-clock mr-2"></i>
+                            <span>8:00 AM - 11:00 AM</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 3 -->
+                <div class="event-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 border-l-4 border-green-500">
+                    <div class="bg-green-500 text-white p-4">
+                        <div class="flex justify-between items-center">
+                            <div class="text-xl font-bold">03-13</div>
+                            <div class="text-right">
+                                <div class="font-semibold">October</div>
+                                <div class="text-sm">2025</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-2">Quarterly Exams</h3>
+                        <p class="text-gray-600 mb-3">Quarterly examinations for all classes</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="far fa-clock mr-2"></i>
+                            <span>8:30 AM - 11:30 AM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Academic Year Calendar -->
+        <div id="year-calendar">
+            <h2 class="text-2xl font-bold text-sricblue mb-6">Academic Year 2025-26 Important Dates</h2>
+            
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 academic-table">
+                        <thead class="bg-gradient-to-r from-sricblue to-blue-800 text-white">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Event</th>
+                                <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Details</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">Session Begins</td>
+                                <td class="px-6 py-4 whitespace-nowrap">01 April 2025</td>
+                                <td class="px-6 py-4">First day of the academic session 2025-26</td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">Independence Day</td>
+                                <td class="px-6 py-4 whitespace-nowrap">15 August 2025</td>
+                                <td class="px-6 py-4">School holiday – Independence Day celebration</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">Monthly Test Exams</td>
+                                <td class="px-6 py-4 whitespace-nowrap">First Week of August 2025</td>
+                                <td class="px-6 py-4">Monthly examinations for all classes</td>
+                            </tr>
+                            <tr class="exam-highlight">
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">त्रैमासिक परीक्षा / Quarterly Exams</td>
+                                <td class="px-6 py-4 whitespace-nowrap">03-13 October 2025</td>
+                                <td class="px-6 py-4">Quarterly examinations for all classes (UKG to 12th)</td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">Diwali Break</td>
+                                <td class="px-6 py-4 whitespace-nowrap">19 – 24 October 2025</td>
+                                <td class="px-6 py-4">School closed for Diwali holidays</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">Half-Yearly Exams</td>
+                                <td class="px-6 py-4 whitespace-nowrap">Last Week of November 2025</td>
+                                <td class="px-6 py-4">Half-yearly examinations for all classes</td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">Syllabus Completion</td>
+                                <td class="px-6 py-4 whitespace-nowrap">First or Second Week of January 2026</td>
+                                <td class="px-6 py-4">Syllabus completion for all classes</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">Republic Day</td>
+                                <td class="px-6 py-4 whitespace-nowrap">26 January 2026</td>
+                                <td class="px-6 py-4">School holiday – Republic Day celebration</td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">Pre-Board Exams</td>
+                                <td class="px-6 py-4 whitespace-nowrap">15 January 2026 Onwards</td>
+                                <td class="px-6 py-4">Pre-board examinations for Classes 10 & 12</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">Board Practicals</td>
+                                <td class="px-6 py-4 whitespace-nowrap">21 January – 05 February 2026</td>
+                                <td class="px-6 py-4">Board practical examinations for Classes 10 & 12</td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">Board Exams</td>
+                                <td class="px-6 py-4 whitespace-nowrap">February 2026 Onwards</td>
+                                <td class="px-6 py-4">UP Board examinations for Classes 10 & 12</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">Session Ends</td>
+                                <td class="px-6 py-4 whitespace-nowrap">30 April 2026</td>
+                                <td class="px-6 py-4">Last day of the academic session 2025-26</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-br from-sricblue to-blue-900 w-12 h-12 rounded-xl flex items-center justify-center">
+                            <span class="text-white text-xl font-bold">SRIC</span>
+                        </div>
+                        <h3 class="text-xl font-bold ml-3">SRIC</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">Preparing students for board success since 2002.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Academics</a></li>
+                        <li><a href="admission_form.html" class="text-gray-400 hover:text-white">Admissions</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">News & Events</h4>
+                    <ul class="space-y-2">
+                        <li><a href="calendar.html" class="text-gray-400 hover:text-white">School Calendar</a></li>
+                        <li><a href="announcements.html" class="text-gray-400 hover:text-white">Announcements</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Latest News</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">Sabdalpur Sharki, Mathana Road Hasanpur, Amroha 244242</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">+91 9756517750</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">info@sricschool.edu.in</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-400">
+                <p>© 2025 SRIC Senior Secondary School. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', function() {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Mobile dropdown functionality
+        document.querySelectorAll('.dropdown-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const dropdown = button.nextElementSibling;
+                const icon = button.querySelector('.dropdown-icon');
+                
+                // Toggle dropdown
+                if (dropdown.style.maxHeight) {
+                    dropdown.style.maxHeight = null;
+                    icon.classList.remove('rotate-180');
+                } else {
+                    dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
+
+        // Calendar functionality
+        let currentMonth = 9; // October (0-indexed)
+        let currentYear = 2025;
+        
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        
+        // Academic calendar events data
+        const academicEvents = {
+            "2025-04-01": { title: "Session Begins", type: "school", color: "pink" },
+            "2025-08-15": { title: "Independence Day", type: "holiday", color: "purple" },
+            "2025-08-01": { title: "Monthly Tests Start", type: "exam", color: "green" },
+            "2025-08-07": { title: "Monthly Tests End", type: "exam", color: "green" },
+            "2025-10-03": { title: "Parent Meeting", type: "parent", color: "red" },
+            "2025-10-03": { title: "Quarterly Exams Start", type: "exam", color: "green" },
+            "2025-10-04": { title: "Quarterly Exams", type: "exam", color: "green" },
+            "2025-10-06": { title: "Quarterly Exams", type: "exam", color: "green" },
+            "2025-10-07": { title: "Quarterly Exams", type: "exam", color: "green" },
+            "2025-10-08": { title: "Quarterly Exams", type: "exam", color: "green" },
+            "2025-10-09": { title: "Quarterly Exams", type: "exam", color: "green" },
+            "2025-10-10": { title: "Quarterly Exams", type: "exam", color: "green" },
+            "2025-10-11": { title: "Quarterly Exams", type: "exam", color: "green" },
+            "2025-10-13": { title: "Quarterly Exams End", type: "exam", color: "green" },
+            "2025-10-19": { title: "Diwali Break Starts", type: "holiday", color: "purple" },
+            "2025-10-24": { title: "Diwali Break Ends", type: "holiday", color: "purple" },
+            "2025-11-01": { title: "Half-Yearly Exams Start", type: "exam", color: "green" },
+            "2025-11-07": { title: "Half-Yearly Exams End", type: "exam", color: "green" },
+            "2026-01-10": { title: "Syllabus Completion", type: "school", color: "pink" },
+            "2026-01-15": { title: "Pre-Board Exams Start", type: "exam", color: "green" },
+            "2026-01-20": { title: "Pre-Board Exams End", type: "exam", color: "green" },
+            "2026-01-21": { title: "Board Practicals Start", type: "exam", color: "green" },
+            "2026-02-05": { title: "Board Practicals End", type: "exam", color: "green" },
+            "2026-01-26": { title: "Republic Day", type: "holiday", color: "purple" },
+            "2026-02-15": { title: "Board Exams Start", type: "exam", color: "green" },
+            "2026-04-15": { title: "Board Exams End", type: "exam", color: "green" },
+            "2026-04-30": { title: "Session Ends", type: "school", color: "pink" }
+        };
+        
+        // Function to generate calendar
+        function generateCalendar(month, year) {
+            const calendarContainer = document.getElementById('calendar-container');
+            const currentMonthElement = document.getElementById('current-month');
+            
+            // Update current month display
+            currentMonthElement.textContent = `${monthNames[month]} ${year}`;
+            
+            // Set the month selector to current month
+            document.getElementById('month-selector').value = month + (year === 2026 ? 12 : 0);
+            
+            // Get first day of month and number of days
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            // Create calendar header
+            let calendarHTML = `
+                <div class="calendar-grid">
+                    <div class="bg-sricblue text-white p-2 text-center font-semibold">Sun</div>
+                    <div class="bg-sricblue text-white p-2 text-center font-semibold">Mon</div>
+                    <div class="bg-sricblue text-white p-2 text-center font-semibold">Tue</div>
+                    <div class="bg-sricblue text-white p-2 text-center font-semibold">Wed</div>
+                    <div class="bg-sricblue text-white p-2 text-center font-semibold">Thu</div>
+                    <div class="bg-sricblue text-white p-2 text-center font-semibold">Fri</div>
+                    <div class="bg-sricblue text-white p-2 text-center font-semibold">Sat</div>
+            `;
+            
+            // Add empty cells for days before the first day of the month
+            for (let i = 0; i < firstDay; i++) {
+                calendarHTML += `<div class="calendar-day bg-gray-100 p-2 min-h-[80px] md:min-h-[120px]"></div>`;
+            }
+            
+            // Add cells for each day of the month
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const event = academicEvents[dateStr];
+                const currentDate = new Date(year, month, day);
+                const isToday = currentDate.getTime() === today.getTime();
+                
+                let dayClass = "calendar-day p-2 min-h-[80px] md:min-h-[120px] border border-gray-200";
+                
+                if (event) {
+                    dayClass += " event-day";
+                }
+                
+                if (isToday) {
+                    dayClass += " today bg-blue-50";
+                }
+                
+                if (event && event.type === "holiday") {
+                    dayClass += " holiday";
+                }
+                
+                if (event && event.type === "exam") {
+                    dayClass += " exam-day";
+                }
+                
+                if (event && event.type === "parent") {
+                    dayClass += " parent-meeting";
+                }
+                
+                calendarHTML += `<div class="${dayClass}">`;
+                calendarHTML += `<div class="flex justify-between items-center">`;
+                calendarHTML += `<span class="text-lg font-semibold">${day}</span>`;
+                
+                if (event) {
+                    calendarHTML += `<span class="event-indicator bg-${event.color}-300"></span>`;
+                }
+                
+                calendarHTML += `</div>`;
+                
+                if (event) {
+                    calendarHTML += `<div class="mt-1 text-xs md:text-sm text-${event.color}-700 font-medium">${event.title}</div>`;
+                }
+                
+                calendarHTML += `</div>`;
+            }
+            
+            calendarHTML += `</div>`;
+            
+            // Add month navigation
+            calendarHTML += `
+                <div class="p-4 bg-gray-50 flex justify-between items-center">
+                    <button id="prev-month-btn" class="px-4 py-2 bg-sricblue text-white rounded-lg hover:bg-blue-900 transition">Previous Month</button>
+                    <button id="next-month-btn" class="px-4 py-2 bg-sricblue text-white rounded-lg hover:bg-blue-900 transition">Next Month</button>
+                </div>
+            `;
+            
+            calendarContainer.innerHTML = calendarHTML;
+            
+            // Add event listeners to navigation buttons
+            document.getElementById('prev-month-btn').addEventListener('click', () => {
+                if (currentMonth === 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                } else {
+                    currentMonth--;
+                }
+                generateCalendar(currentMonth, currentYear);
+            });
+            
+            document.getElementById('next-month-btn').addEventListener('click', () => {
+                if (currentMonth === 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                } else {
+                    currentMonth++;
+                }
+                generateCalendar(currentMonth, currentYear);
+            });
+        }
+        
+        // Initialize calendar
+        generateCalendar(currentMonth, currentYear);
+        
+        // Add event listeners to header navigation
+        document.getElementById('prev-month').addEventListener('click', () => {
+            if (currentMonth === 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else {
+                currentMonth--;
+            }
+            generateCalendar(currentMonth, currentYear);
+        });
+        
+        document.getElementById('next-month').addEventListener('click', () => {
+            if (currentMonth === 11) {
+                currentMonth = 0;
+                currentYear++;
+            } else {
+                currentMonth++;
+            }
+            generateCalendar(currentMonth, currentYear);
+        });
+        
+        document.getElementById('today-btn').addEventListener('click', () => {
+            const today = new Date();
+            currentMonth = today.getMonth();
+            currentYear = today.getFullYear();
+            generateCalendar(currentMonth, currentYear);
+        });
+        
+        document.getElementById('month-selector').addEventListener('change', (e) => {
+            const selectedMonth = parseInt(e.target.value);
+            if (selectedMonth < 12) {
+                currentMonth = selectedMonth;
+                currentYear = 2025;
+            } else {
+                currentMonth = selectedMonth - 12;
+                currentYear = 2026;
+            }
+            generateCalendar(currentMonth, currentYear);
+        });
+    </script>
+</body>
+</html>

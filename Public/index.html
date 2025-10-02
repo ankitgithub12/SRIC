@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRIC - Empowering Minds, Shaping Futures</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sricblue: '#002366',
+                        sricgold: '#FFD700',
+                        sriclightblue: '#003399',
+                    },
+                    transitionProperty: {
+                        'height': 'height',
+                        'opacity': 'opacity',
+                        'transform': 'transform'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero {
+            background: linear-gradient(rgba(0, 35, 102, 0.8), rgba(0, 35, 102, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stats-card {
+            transition: all 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Custom animations */
+        @keyframes pulse-gold {
+            0%, 100% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+        }
+        
+        .pulse-button {
+            animation: pulse-gold 2s infinite;
+        }
+
+        /* Admin button specific styles */
+        .admin-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-button:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #FFD700;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Improved dropdown styling */
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-group:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        /* Mobile menu improvements */
+        @media (max-width: 768px) {
+            .mobile-menu-item {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .mobile-menu-item:last-child {
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="sticky top-0 z-50 shadow-md">
+        <nav class="bg-sricblue p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <!-- Logo + School Name -->
+                <div class="flex items-center space-x-2">
+                    <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="h-10 w-10 rounded-full">
+                    <a href="#" class="text-white text-xl font-bold">SITARAM INTER COLLEGE</a>
+                    <span class="hidden sm:inline text-sricgold text-sm">Empowering Minds, Shaping Futures</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <ul class="hidden md:flex space-x-6 items-center">
+                    <li><a href="#" class="nav-link text-gray-300 hover:text-white">Home</a></li>
+                    
+                    <!-- About Us Dropdown -->
+                    <li class="relative dropdown-group">
+                        <button class="nav-link text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            About Us <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-menu absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
+                            <li><a href="mission.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Mission</a></li>
+                            <li><a href="History.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">History</a></li>
+                            <li><a href="faculty.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Repeat similar structure for other dropdowns -->
+                    <li class="relative dropdown-group">
+                        <button class="nav-link text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Academics <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-menu absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
+                            <li><a href="curriculum.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Curriculum</a></li>
+                            <li><a href="programs.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Programs</a></li>
+                        </ul>
+                    </li>
+                    <li class="relative dropdown-group">
+                        <button class="nav-link text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Admissions <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-menu absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
+                            <li><a href="process.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Process</a></li>
+                            <li><a href="fees.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Fees</a></li>
+                        </ul>
+                    </li>
+                    <li class="relative dropdown-group">
+                        <button class="nav-link text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            News & Events <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-menu absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
+                            <li><a href="calendar.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Calendar</a></li>
+                            <li><a href="announcements.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Announcements</a></li>
+                        </ul>
+                    </li>
+                    <li class="relative dropdown-group">
+                        <button class="nav-link text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Gallery <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-menu absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
+                            <li><a href="photos_videos.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Photos/Videos</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Added margin-right to create space before the CTA button -->
+                    <li class="mr-4"><a href="contact.html" class="nav-link text-gray-300 hover:text-white">Contact</a></li>
+                </ul>
+
+                <!-- Desktop Buttons Group -->
+                <div class="hidden md:flex items-center space-x-3">
+                    <!-- Admin Button -->
+                    <a href="admin-login.html" class="admin-button px-4 py-2.5 rounded-md font-bold flex items-center space-x-2">
+                        <i class="fas fa-user-shield"></i>
+                        <span>Admin</span>
+                    </a>
+                    
+                    <!-- CTA Button (Desktop) - Added pulse animation -->
+                    <a href="admission_form.html" class="pulse-button bg-sricgold text-sricblue px-5 py-2.5 rounded-md font-bold hover:bg-yellow-500 transition transform hover:scale-105">
+                        Apply Now
+                    </a>
+                </div>
+
+                <!-- Mobile Hamburger Menu -->
+                <button id="menu-toggle" class="md:hidden text-white focus:outline-none" aria-expanded="false" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu (Hidden by default) -->
+            <div id="mobile-menu" class="md:hidden hidden bg-sriclightblue pb-4 px-4">
+                <ul class="flex flex-col space-y-2">
+                    <li class="mobile-menu-item"><a href="#" class="block text-gray-300 hover:text-white py-3 px-4 rounded-md hover:bg-sricblue transition">Home</a></li>
+                    
+                    <!-- About Us Dropdown -->
+                    <li class="dropdown-container mobile-menu-item">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-3 px-4 rounded-md hover:bg-sricblue flex justify-between items-center transition">
+                            About Us <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="mission.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Mission</a></li>
+                            <li><a href="History.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">History</a></li>
+                            <li><a href="faculty.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Repeat similar structure for other mobile dropdowns -->
+                    <li class="dropdown-container mobile-menu-item">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-3 px-4 rounded-md hover:bg-sricblue flex justify-between items-center transition">
+                            Academics <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="curriculum.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Curriculum</a></li>
+                            <li><a href="programs.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Programs</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-container mobile-menu-item">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-3 px-4 rounded-md hover:bg-sricblue flex justify-between items-center transition">
+                            Admissions <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="process.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Process</a></li>
+                            <li><a href="fees.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Fees</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-container mobile-menu-item">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-3 px-4 rounded-md hover:bg-sricblue flex justify-between items-center transition">
+                            News & Events <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="calendar.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Calendar</a></li>
+                            <li><a href="announcements.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Announcements</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-container mobile-menu-item">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-3 px-4 rounded-md hover:bg-sricblue flex justify-between items-center transition">
+                            Gallery <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="photos_videos.html" class="block text-gray-400 hover:text-white py-2 px-4 rounded-md hover:bg-sricblue transition text-sm">Photos/Videos</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="mobile-menu-item"><a href="contact.html" class="block text-gray-300 hover:text-white py-3 px-4 rounded-md hover:bg-sricblue transition">Contact</a></li>
+                    
+                    <!-- Mobile Admin Button -->
+                    <li class="mobile-menu-item">
+                        <a href="admin-login.html" class="block admin-button text-white py-3 px-4 rounded-md text-center font-bold flex items-center justify-center space-x-2">
+                            <i class="fas fa-user-shield"></i>
+                            <span>Admin Login</span>
+                        </a>
+                    </li>
+                    
+                    <!-- Mobile Apply Now Button -->
+                    <li class="mobile-menu-item">
+                        <a href="admission_form.html" class="block pulse-button bg-sricgold text-sricblue px-4 py-3 rounded-md text-center font-bold hover:bg-yellow-500 transition">
+                            Apply Now
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Rest of your existing content remains exactly the same -->
+    <!-- Hero Section -->
+    <section class="hero text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Empowering Minds, Shaping Futures</h1>
+            <p class="text-xl max-w-3xl mx-auto mb-8">SRIC Senior Secondary School provides quality education with a focus on academic excellence and holistic development since 2002</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="admission_form.html" class="bg-sricgold hover:bg-yellow-600 text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
+                    Apply Now
+                </a>
+                <a href="#" class="bg-transparent border-2 border-white hover:bg-white hover:text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Welcome to SRIC Senior Secondary School</h2>
+                <p class="text-lg text-gray-600 mb-12 max-w-3xl mx-auto">
+                    Established in 2002, SRIC Senior Secondary School has been a beacon of quality education in Amroha, providing students with a nurturing environment that fosters academic excellence, character development, and holistic growth.
+                </p>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="feature-card bg-gray-50 p-8 rounded-lg shadow-md transition duration-300">
+                        <div class="text-sricblue text-4xl mb-4">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Academic Excellence</h3>
+                        <p class="text-gray-600">Consistent 95%+ board results with specialized coaching for 10th and 12th standard examinations.</p>
+                    </div>
+                    
+                    <div class="feature-card bg-gray-50 p-8 rounded-lg shadow-md transition duration-300">
+                        <div class="text-sricblue text-4xl mb-4">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Experienced Faculty</h3>
+                        <p class="text-gray-600">Our dedicated teachers provide personalized attention and mentorship to every student.</p>
+                    </div>
+                    
+                    <div class="feature-card bg-gray-50 p-8 rounded-lg shadow-md transition duration-300">
+                        <div class="text-sricblue text-4xl mb-4">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Modern Facilities</h3>
+                        <p class="text-gray-600">Smart classrooms, well-equipped labs, and a digital library enhance the learning experience.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-sricblue text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Why Choose SRIC?</h2>
+                <p class="text-xl max-w-2xl mx-auto">Our numbers speak for themselves</p>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="stats-card bg-white text-sricblue p-6 rounded-lg text-center">
+                    <div class="text-4xl font-bold mb-2">96%</div>
+                    <p class="font-semibold">12th Board Pass Rate</p>
+                </div>
+                
+                <div class="stats-card bg-white text-sricblue p-6 rounded-lg text-center">
+                    <div class="text-4xl font-bold mb-2">98%</div>
+                    <p class="font-semibold">10th Board Pass Rate</p>
+                </div>
+                
+                <div class="stats-card bg-white text-sricblue p-6 rounded-lg text-center">
+                    <div class="text-4xl font-bold mb-2">50+</div>
+                    <p class="font-semibold">Students in Govt Jobs Yearly</p>
+                </div>
+                
+                <div class="stats-card bg-white text-sricblue p-6 rounded-lg text-center">
+                    <div class="text-4xl font-bold mb-2">20+</div>
+                    <p class="font-semibold">Years of Excellence</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Add this section after the Stats Section in index.html -->
+  <!-- Enhanced Exam Datesheet Section -->
+<section class="py-20 relative overflow-hidden bg-gradient-to-br from-sricblue via-blue-800 to-purple-900 text-white">
+    <!-- Background decorative elements -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-10 left-10 w-20 h-20 bg-sricgold rounded-full"></div>
+        <div class="absolute bottom-10 right-10 w-16 h-16 bg-sricgold rounded-full"></div>
+        <div class="absolute top-1/2 left-1/4 w-12 h-12 bg-white rounded-full"></div>
+    </div>
+    
+    <!-- Floating academic icons -->
+    <div class="absolute top-5 right-5 opacity-20">
+        <i class="fas fa-graduation-cap text-6xl"></i>
+    </div>
+    <div class="absolute bottom-5 left-5 opacity-20">
+        <i class="fas fa-book-open text-5xl"></i>
+    </div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="max-w-5xl mx-auto">
+            <!-- Header with animated decoration -->
+            <div class="text-center mb-12">
+                <div class="inline-block relative mb-4">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-sricgold to-yellow-200">
+                        त्रैमासिक परीक्षा समय सारणी
+                    </h2>
+                    <div class="h-1 w-24 bg-sricgold mx-auto mt-2 rounded-full"></div>
+                    <div class="absolute -top-2 -right-2 w-6 h-6 bg-sricgold rounded-full animate-pulse"></div>
+                    <div class="absolute -bottom-2 -left-2 w-4 h-4 bg-white rounded-full"></div>
+                </div>
+                <p class="text-xl md:text-2xl opacity-90">Quarterly Examination Schedule 2025-26</p>
+                
+                <!-- Animated badge -->
+                <div class="inline-flex items-center mt-4 bg-white bg-opacity-20 backdrop-blur-sm rounded-full px-4 py-2 border border-white border-opacity-30">
+                    <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
+                    <span class="text-sm font-medium">Latest Schedule Published</span>
+                </div>
+            </div>
+            
+            <!-- Notice Card with enhanced design -->
+            <div class="bg-white bg-opacity-15 backdrop-blur-lg rounded-2xl p-8 mb-10 border border-white border-opacity-20 shadow-2xl transform transition-transform duration-300 hover:scale-[1.02]">
+                <div class="flex items-start mb-6">
+                    <div class="flex-shrink-0 bg-sricgold bg-opacity-20 p-3 rounded-full mr-4">
+                        <i class="fas fa-bullhorn text-sricgold text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4 flex items-center">
+                            विशेष सूचना / Special Notice
+                            <span class="ml-3 px-2 py-1 bg-red-500 text-xs rounded-full animate-pulse">Important</span>
+                        </h3>
+                        
+                        <div class="space-y-6">
+                            <!-- Notice in Hindi -->
+                            <div class="bg-white bg-opacity-10 rounded-xl p-5 border-l-4 border-sricgold">
+                                <h4 class="font-bold text-lg mb-3 text-sricgold">हिंदी में सूचना</h4>
+                                <p class="mb-4">कक्षा 9 से 12 तक के सभी छात्र/छात्राओं को सूचित किया जाता है कि:</p>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-3 text-green-400"></i>
+                                        <span>सभी विद्यार्थी दिनांक 03-10-2025, शुक्रवार को अपने अभिभावकों के साथ विद्यालय में प्रातः 8 बजे उपस्थित हों।</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-3 text-green-400"></i>
+                                        <span>उस दिन परीक्षा भी संचालित होगी; जिस विषय की परीक्षा है, वही परीक्षा आयोजित की जाएगी।</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-3 text-green-400"></i>
+                                        <span>प्रत्येक विद्यार्थी के लिए यह अनिवार्य है कि वे अपने अभिभावक (माता/पिता/बड़े भाई/बहन) को शुक्रवार को विद्यालय में लाएं।</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Notice in English -->
+                            <div class="bg-white bg-opacity-10 rounded-xl p-5 border-l-4 border-blue-400">
+                                <h4 class="font-bold text-lg mb-3 text-blue-300">Information in English</h4>
+                                <p class="mb-4">All students from classes 9 to 12 are informed that:</p>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-3 text-green-400"></i>
+                                        <span>All students must be present at school with their parents/guardians on Friday, 03-10-2025 at 8:00 AM.</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-3 text-green-400"></i>
+                                        <span>Exams will also be conducted on that day; the scheduled exam for that day will take place.</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-3 text-green-400"></i>
+                                        <span>It is mandatory for every student to bring their parent/guardian to school on Friday.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Signature section -->
+                        <div class="mt-8 pt-6 border-t border-white border-opacity-20 text-center">
+                            <p class="font-semibold text-sricgold">धन्यवाद। / Thank you.</p>
+                            <div class="mt-4 flex justify-center items-center">
+                                <div class="h-px w-16 bg-sricgold mx-2"></div>
+                                <p class="text-lg">आज्ञानुसार, / Sincerely,</p>
+                                <div class="h-px w-16 bg-sricgold mx-2"></div>
+                            </div>
+                            <p class="text-xl font-bold mt-2">प्रधानाचार्य / Principal</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Preview of Schedule -->
+            <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-6 mb-10 border border-white border-opacity-20">
+                <h3 class="text-2xl font-bold mb-6 text-center">Exam Schedule Preview</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="bg-white bg-opacity-15 rounded-xl p-4 text-center transform transition-transform hover:scale-105">
+                        <div class="text-sricgold text-2xl font-bold">04</div>
+                        <div class="text-sm">October</div>
+                        <div class="text-xs mt-2">हिंदी / Hindi</div>
+                    </div>
+                    <div class="bg-white bg-opacity-15 rounded-xl p-4 text-center transform transition-transform hover:scale-105">
+                        <div class="text-sricgold text-2xl font-bold">06</div>
+                        <div class="text-sm">October</div>
+                        <div class="text-xs mt-2">अंग्रेजी / English</div>
+                    </div>
+                    <div class="bg-white bg-opacity-15 rounded-xl p-4 text-center transform transition-transform hover:scale-105">
+                        <div class="text-sricgold text-2xl font-bold">07</div>
+                        <div class="text-sm">October</div>
+                        <div class="text-xs mt-2">गणित / Mathematics</div>
+                    </div>
+                </div>
+                <p class="text-center mt-4 text-sm opacity-80">Time: 8:30 AM - 11:30 AM for all exams</p>
+            </div>
+            
+            <!-- Action Buttons with enhanced design -->
+            <div class="flex flex-col md:flex-row justify-center gap-6">
+                <a href="calendar.html" class="group relative bg-gradient-to-r from-sricgold to-yellow-500 text-sricblue font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl overflow-hidden">
+                    <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                    <div class="relative z-10 flex items-center justify-center">
+                        <i class="fas fa-calendar-alt mr-3 text-xl"></i>
+                        View Full Schedule
+                        <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
+                    </div>
+                </a>
+                
+                <a href="assets\त्रैमासिक परीक्षा समय सारणी.pdf" class="group relative bg-transparent border-2 border-white text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-white hover:text-sricblue overflow-hidden">
+                    <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="relative z-10 flex items-center justify-center">
+                        <i class="fas fa-download mr-3 text-xl"></i>
+                        Download Datesheet
+                        <i class="fas fa-external-link-alt ml-2 group-hover:translate-y-1 transition-transform duration-300"></i>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Additional info -->
+            <div class="text-center mt-8 opacity-80">
+                <p class="text-sm flex items-center justify-center">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    For any queries, contact school administration
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Toppers Section -->
+<section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Academic Toppers</h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Celebrating the outstanding achievements of our students in board examinations</p>
+        </div>
+
+        <!-- Special Recognition for Top 1% Achievers -->
+        <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl p-6 mb-10 shadow-xl">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="mb-4 md:mb-0 md:mr-6">
+                    <div class="bg-white bg-opacity-20 w-16 h-16 rounded-full flex items-center justify-center">
+                        <i class="fas fa-trophy text-3xl text-yellow-300"></i>
+                    </div>
+                </div>
+                <div class="text-center md:text-left">
+                    <h3 class="text-2xl font-bold mb-2">State-Level Excellence</h3>
+                    <p class="text-lg mb-3">Our Class 12 students have achieved remarkable success by ranking in the <span class="font-bold text-yellow-300">TOP 1%</span> of the entire Uttar Pradesh Board!</p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">Anushka - 86.8%</span>
+                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">Nitika Saini - 85.8%</span>
+                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">Divesh Saini - 83%</span>
+                    </div>
+                </div>
+                <div class="mt-4 md:mt-0 md:ml-auto">
+                    <a href="assets/top_performers_certificates.pdf" class="inline-flex items-center px-4 py-2 bg-white text-blue-600 font-bold rounded-lg hover:bg-gray-100 transition">
+                        <i class="fas fa-certificate mr-2"></i> View All Certificates
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <!-- 12th Toppers -->
+            <div class="bg-gradient-to-br from-sricblue to-blue-900 text-white p-6 rounded-xl shadow-lg">
+                <div class="flex items-center mb-4">
+                    <div class="bg-white text-sricblue w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold ml-4">Class 12 Toppers (2024-25)</h3>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-white bg-opacity-20 p-4 rounded-lg backdrop-blur-sm">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-bold">ANUSHKA</h4>
+                            <span class="bg-white text-sricblue px-3 py-1 rounded-full text-sm font-bold">86.8%</span>
+                        </div>
+                        <p class="text-sm opacity-90">Science Stream</p>
+                        <div class="mt-2">
+                            <a href="assets/Anushka Merit certificate.pdf" class="text-xs text-blue-200 hover:text-white underline flex items-center" target="_blank">
+                                <i class="fas fa-certificate mr-1"></i> View Certificate
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white bg-opacity-20 p-4 rounded-lg backdrop-blur-sm">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-bold">NITIKA SAINI</h4>
+                            <span class="bg-white text-sricblue px-3 py-1 rounded-full text-sm font-bold">85.8%</span>
+                        </div>
+                        <p class="text-sm opacity-90">Science Stream</p>
+                        <div class="mt-2">
+                            <a href="assets/NITIKA merit certificate.pdf" class="text-xs text-blue-200 hover:text-white underline flex items-center" target="_blank">
+                                <i class="fas fa-certificate mr-1"></i> View Certificate
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white bg-opacity-20 p-4 rounded-lg backdrop-blur-sm">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-bold">DIVESH SAINI</h4>
+                            <span class="bg-white text-sricblue px-3 py-1 rounded-full text-sm font-bold">83%</span>
+                        </div>
+                        <p class="text-sm opacity-90">Science Stream</p>
+                        <div class="mt-2">
+                            <a href="assets/Divesh Merit Certificate.pdf" class="text-xs text-blue-200 hover:text-white underline flex items-center" target="_blank">
+                                <i class="fas fa-certificate mr-1"></i> View Certificate
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 10th Toppers -->
+            <div class="bg-gradient-to-br from-sricgold to-yellow-600 text-sricblue p-6 rounded-xl shadow-lg">
+                <div class="flex items-center mb-4">
+                    <div class="bg-white text-sricblue w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold ml-4">Class 10 Toppers (2024-25)</h3>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-white bg-opacity-30 p-4 rounded-lg backdrop-blur-sm">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-bold">MOHANE SAINI</h4>
+                            <span class="bg-white text-sricblue px-3 py-1 rounded-full text-sm font-bold">85.11%</span>
+                        </div>
+                        <p class="text-sm opacity-90">School Topper</p>
+                    </div>
+                    
+                    <div class="bg-white bg-opacity-30 p-4 rounded-lg backdrop-blur-sm">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-bold">SHIVANSHI</h4>
+                            <span class="bg-white text-sricblue px-3 py-1 rounded-full text-sm font-bold">83.83%</span>
+                        </div>
+                        <p class="text-sm opacity-90">90+ marks in Hindi and English</p>
+                    </div>
+                    
+                    <div class="bg-white bg-opacity-30 p-4 rounded-lg backdrop-blur-sm">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-bold">PINKI</h4>
+                            <span class="bg-white text-sricblue px-3 py-1 rounded-full text-sm font-bold">83.66%</span>
+                        </div>
+                        <p class="text-sm opacity-90">80+ marks in Every Subject</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-12">
+            <a href="Achievements.html" class="inline-flex items-center text-sricblue font-semibold hover:underline">
+                View All Toppers
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+    <!-- Programs Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Academic Programs</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Comprehensive education for Classes 9 to 12 with multiple streams</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-blue-500">
+                    <h3 class="text-xl font-bold mb-4">Science Stream</h3>
+                    <p class="text-gray-600 mb-4">Physics, Chemistry, Mathematics, Biology with comprehensive lab facilities</p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Advanced laboratory equipment</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Competitive exam preparation</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Research projects</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-yellow-500">
+                    <h3 class="text-xl font-bold mb-4">Humanities Stream</h3>
+                    <p class="text-gray-600 mb-4">History, Political Science, Economics, Geography with practical applications</p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Debate and public speaking</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Field visits and surveys</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Current affairs analysis</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-purple-500">
+                    <h3 class="text-xl font-bold mb-4">Secondary School (9-10)</h3>
+                    <p class="text-gray-600 mb-4">Strong foundation for board examinations with comprehensive syllabus coverage</p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Regular assessments</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Remedial classes</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Career counseling</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+<!-- Testimonials -->
+<section class="py-20 bg-gradient-to-b from-gray-50 to-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">What Our Students Say</h2>
+            <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Hear from our alumni about their SRIC experience</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto">
+            <!-- Testimonial 1 -->
+            <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border-l-4 border-blue-600">
+                <div class="flex items-center mb-6">
+                    <div class="relative">
+                        <img src="assets/bittu.jpeg" alt="Bittu Saini" class="rounded-full w-16 h-16 object-cover border-4 border-white shadow-md">
+                        <div class="absolute -bottom-1 -right-1 bg-blue-600 rounded-full p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-5">
+                        <h4 class="font-bold text-lg text-gray-900">Bittu Saini</h4>
+                        <p class="text-sm text-blue-600 font-medium">Chief Health Officer | Class of 2016</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 text-lg italic relative pl-6 before:content-['"'] before:text-4xl before:text-gray-300 before:absolute before:left-0 before:top-0 before:font-serif">SRIC provided me with the strong foundation I needed to pursue my career in public health. The teachers' dedication and the school's focus on practical knowledge were invaluable.</p>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border-l-4 border-blue-600">
+                <div class="flex items-center mb-6">
+                    <div class="relative">
+                        <img src="assets/virendra_saini.jpg" alt="Virendra Saini" class="rounded-full w-16 h-16 object-cover border-4 border-white shadow-md">
+                        <div class="absolute -bottom-1 -right-1 bg-blue-600 rounded-full p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-5">
+                        <h4 class="font-bold text-lg text-gray-900">Virendra Saini</h4>
+                        <p class="text-sm text-blue-600 font-medium">Lekhpal | Class of 2017</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 text-lg italic relative pl-6 before:content-['"'] before:text-4xl before:text-gray-300 before:absolute before:left-0 before:top-0 before:font-serif">The discipline and academic rigor at SRIC prepared me well for competitive exams. I'm grateful for the guidance I received from my teachers.</p>
+            </div>
+        </div>
+        
+        <!-- View more button -->
+        <div class="text-center mt-12">
+            <button class="px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-md hover:shadow-lg">
+                View More Testimonials
+            </button>
+        </div>
+    </div>
+</section>
+
+    <!-- Call to Action -->
+    <section class="py-16 bg-sricgold text-sricblue">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Join Our Community?</h2>
+            <p class="text-xl max-w-2xl mx-auto mb-8">Applications for the 2025-26 academic year are now open</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="admission_form.html" class="bg-sricblue hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">
+                    Apply Now
+                </a>
+                <a href="#" class="bg-transparent border-2 border-sricblue hover:bg-sricblue hover:text-white font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">
+                    Schedule a Visit
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-br from-sricblue to-blue-900 w-12 h-12 rounded-xl flex items-center justify-center">
+                            <span class="text-white text-xl font-bold">SRIC</span>
+                        </div>
+                        <h3 class="text-xl font-bold ml-3">SRIC</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">Preparing students for board success since 2002.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="History.html" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="curriculum.html" class="text-gray-400 hover:text-white">Academics</a></li>
+                        <li><a href="admission_form.html" class="text-gray-400 hover:text-white">Admissions</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Academic Streams</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Science (PCMB)</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Humanities</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">Sabdalpur Sharki, Mathana Road Hasanpur, Amroha 244242</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">+91 9756517750</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">sitaramintercollege1205@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-400">
+                <p>© 2025 SRIC Senior Secondary School. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+         // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', function() {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Mobile dropdown functionality
+        document.querySelectorAll('.dropdown-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const dropdown = button.nextElementSibling;
+                const icon = button.querySelector('.dropdown-icon');
+                
+                // Toggle dropdown
+                if (dropdown.style.maxHeight) {
+                    dropdown.style.maxHeight = null;
+                    icon.classList.remove('rotate-180');
+                } else {
+                    dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

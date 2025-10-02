@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | SRIC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sricblue: '#002366',
+                        sricgold: '#FFD700',
+                    },
+                    transitionProperty: {
+                        'height': 'height',
+                        'opacity': 'opacity',
+                        'transform': 'transform'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero {
+            background: linear-gradient(rgba(0, 35, 102, 0.8), rgba(0, 35, 102, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-input:focus {
+            border-color: #002366;
+            box-shadow: 0 0 0 3px rgba(0, 35, 102, 0.2);
+        }
+        
+        .map-container {
+            height: 400px;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        
+        @media (max-width: 768px) {
+            .map-container {
+                height: 300px;
+            }
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stats-card {
+            transition: all 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Custom spacing for navbar items */
+        .nav-spacing {
+            margin-right: 1.5rem; /* 24px spacing between nav items */
+        }
+        
+        /* Special spacing for the Apply Now button */
+        .apply-now-btn {
+            margin-left: 1.5rem;
+            padding: 0.5rem 1.5rem;
+        }
+        
+        /* Active link styling */
+        .active-nav-link {
+            color: white;
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .active-nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #FFD700; /* sricgold */
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <!-- Header with improved spacing -->
+    <header class="sticky top-0 z-50 shadow-md">
+        <nav class="bg-sricblue p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <!-- Logo + School Name -->
+                <div class="flex items-center space-x-2">
+                    <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="h-10 w-10 rounded-full">
+                    <a href="index.html" class="text-white text-xl font-bold">SITARAM INTER COLLEGE</a>
+                    <span class="hidden sm:inline text-sricgold text-sm">Empowering Minds, Shaping Futures</span>
+                </div>
+
+                <!-- Desktop Menu with proper spacing -->
+                <ul class="hidden md:flex space-x-6 items-center">
+                    <li class="nav-spacing"><a href="index.html" class="text-gray-300 hover:text-white hover:underline">Home</a></li>
+                    
+                    <!-- About Us Dropdown -->
+                    <li class="relative group nav-spacing">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            About Us <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="mission.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Mission</a></li>
+                            <li><a href="History.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">History</a></li>
+                            <li><a href="faculty.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Academics Dropdown -->
+                    <li class="relative group nav-spacing">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Academics <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="curriculum.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Curriculum</a></li>
+                            <li><a href="programs.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Admissions Dropdown -->
+                    <li class="relative group nav-spacing">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Admissions <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="process.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Process</a></li>
+                            <li><a href="fees.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Fees</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- News & Events Dropdown -->
+                    <li class="relative group nav-spacing">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            News & Events <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="calendar.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Calendar</a></li>
+                            <li><a href="announcements.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Announcements</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Gallery Dropdown -->
+                    <li class="relative group nav-spacing">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Gallery <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="photos_videos.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Photos/Videos</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-spacing"><a href="contact.html" class="active-nav-link">Contact</a></li>
+                </ul>
+
+                <!-- CTA Button (Desktop) with proper spacing -->
+                <a href="admission_form.html" class="hidden md:block bg-sricgold text-sricblue px-4 py-2 rounded-md font-semibold hover:bg-yellow-600 transition apply-now-btn">
+                    Apply Now
+                </a>
+
+                <!-- Mobile Hamburger Menu -->
+                <button id="menu-toggle" class="md:hidden text-white focus:outline-none" aria-expanded="false" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu (Hidden by default) -->
+            <div id="mobile-menu" class="md:hidden hidden bg-sricblue pb-4 px-4">
+                <ul class="flex flex-col space-y-2">
+                    <li><a href="index.html" class="block text-gray-300 hover:text-white py-2">Home</a></li>
+                    
+                    <!-- About Us Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            About Us <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="mission.html" class="block text-gray-400 hover:text-white py-1 text-sm">Mission</a></li>
+                            <li><a href="History.html" class="block text-gray-400 hover:text-white py-1 text-sm">History</a></li>
+                            <li><a href="faculty.html" class="block text-gray-400 hover:text-white py-1 text-sm">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Academics Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Academics <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="curriculum.html" class="block text-gray-400 hover:text-white py-1 text-sm">Curriculum</a></li>
+                            <li><a href="programs.html" class="block text-gray-400 hover:text-white py-1 text-sm">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Admissions Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Admissions <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="process.html" class="block text-gray-400 hover:text-white py-1 text-sm">Process</a></li>
+                            <li><a href="fees.html" class="block text-gray-400 hover:text-white py-1 text-sm">Fees</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- News & Events Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            News & Events <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="calendar.html" class="block text-gray-400 hover:text-white py-1 text-sm">Calendar</a></li>
+                            <li><a href="announcements.html" class="block text-gray-400 hover:text-white py-1 text-sm">Announcements</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Gallery Dropdown -->
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Gallery <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="photos_videos.html" class="block text-gray-400 hover:text-white py-1 text-sm">Photos/Videos</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="contact.html" class="block text-white font-semibold py-2">Contact</a></li>
+                    <li><a href="admission_form.html" class="block bg-sricgold text-sricblue px-4 py-2 rounded-md text-center font-semibold mt-2">Apply Now</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero text-white py-20 md:py-28">
+            <div class="container mx-auto px-4 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">Get In Touch With SRIC</h1>
+                <p class="text-xl max-w-2xl mx-auto">We'd love to hear from you! Reach out for inquiries, admissions, or any questions about our school.</p>
+                <div class="mt-8 flex justify-center">
+                    <a href="#contact-form" class="bg-sricgold hover:bg-yellow-600 text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300 mr-4">
+                        Send Message
+                    </a>
+                    <a href="#map" class="bg-transparent border-2 border-white hover:bg-white hover:text-sricblue font-semibold py-3 px-6 rounded-lg transition duration-300">
+                        Visit Us
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Cards -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <!-- Address Card -->
+                    <div class="contact-card bg-gradient-to-br from-sricblue to-blue-900 text-white p-8 rounded-xl shadow-lg transition duration-300 text-center">
+                        <div class="bg-white text-sricblue w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-map-marker-alt text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">Our Location</h3>
+                        <p class="mb-2">Sabdalpur Sharki, Mathana Road</p>
+                        <p>Hasanpur, Amroha 244242</p>
+                        <a href="#map" class="mt-4 inline-block text-sricgold font-medium hover:underline">View on Map</a>
+                    </div>
+                    
+                    <!-- Contact Card -->
+                    <div class="contact-card bg-gradient-to-br from-sricgold to-yellow-600 text-sricblue p-8 rounded-xl shadow-lg transition duration-300 text-center">
+                        <div class="bg-sricblue text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-phone-alt text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                        <p class="mb-2">+91 9756517750</p>
+                        <p>+91 9639800912</p>
+                        <a href="tel:+919756517750" class="mt-4 inline-block text-sricblue font-medium hover:underline">Call Now</a>
+                    </div>
+                    
+                    <!-- Email Card -->
+                    <div class="contact-card bg-gradient-to-br from-sricblue to-blue-900 text-white p-8 rounded-xl shadow-lg transition duration-300 text-center">
+                        <div class="bg-white text-sricblue w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-envelope text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">Email Us</h3>
+                        <p class="mb-2">Yespalsinghsaini@gmail.com</p>
+                        <p>sitaramintercollege1205@gmail.com</p>
+                        <a href="mailto:Yespalsinghsaini@gmail.com" class="mt-4 inline-block text-sricgold font-medium hover:underline">Send Email</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form and Map -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-sricblue mb-4">Get In Touch</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Have questions about admissions, programs, or anything else? Fill out the form below and we'll respond as soon as possible.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                    <!-- Contact Form -->
+                    <div id="contact-form" class="bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-sricblue mb-6">Send Us a Message</h3>
+                        <form>
+                            <div class="mb-6">
+                                <label for="name" class="block text-gray-700 font-medium mb-2">Full Name</label>
+                                <input type="text" id="name" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1" placeholder="Enter your name" required>
+                            </div>
+                            <div class="mb-6">
+                                <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
+                                <input type="email" id="email" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1" placeholder="Enter your email" required>
+                            </div>
+                            <div class="mb-6">
+                                <label for="phone" class="block text-gray-700 font-medium mb-2">Phone Number</label>
+                                <input type="tel" id="phone" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1" placeholder="Enter your phone number">
+                            </div>
+                            <div class="mb-6">
+                                <label for="subject" class="block text-gray-700 font-medium mb-2">Subject</label>
+                                <select id="subject" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1">
+                                    <option value="">Select a subject</option>
+                                    <option value="admission">Admission Inquiry</option>
+                                    <option value="academics">Academic Programs</option>
+                                    <option value="feedback">Feedback/Suggestion</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="mb-6">
+                                <label for="message" class="block text-gray-700 font-medium mb-2">Your Message</label>
+                                <textarea id="message" rows="5" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1" placeholder="Write your message here..." required></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-sricblue hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Map and Hours -->
+                    <div>
+                        <!-- Map -->
+                        <div id="map" class="map-container mb-8 shadow-lg rounded-xl overflow-hidden">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d218.76463044368654!2d78.40936315013633!3d28.68264342342273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390b11d4f104f757%3A0x255ba60c6ff92879!2sCYBER%20CAFE!5e0!3m2!1sen!2sin!4v1759401943675!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                        </div>
+                        
+                        <!-- Office Hours -->
+                        <div class="bg-white p-6 rounded-xl shadow-lg">
+                            <h3 class="text-xl font-bold text-sricblue mb-4">Office Hours</h3>
+                            <ul class="space-y-3">
+                                <li class="flex justify-between border-b border-gray-100 pb-2">
+                                    <span class="text-gray-600">Monday - Friday</span>
+                                    <span class="font-medium">8:00 AM - 2:00 PM</span>
+                                </li>
+                                <li class="flex justify-between border-b border-gray-100 pb-2">
+                                    <span class="text-gray-600">Saturday</span>
+                                    <span class="font-medium">9:00 AM - 1:00 PM</span>
+                                </li>
+                                <li class="flex justify-between">
+                                    <span class="text-gray-600">Sunday</span>
+                                    <span class="font-medium">Closed</span>
+                                </li>
+                            </ul>
+                            
+                            <div class="mt-6 pt-6 border-t border-gray-100">
+                                <h3 class="text-xl font-bold text-sricblue mb-4">Admission Hours</h3>
+                                <p class="text-gray-600 mb-4">For admission inquiries, please visit during these special hours:</p>
+                                <ul class="space-y-3">
+                                    <li class="flex justify-between border-b border-gray-100 pb-2">
+                                        <span class="text-gray-600">Monday - Saturday</span>
+                                        <span class="font-medium">10:00 AM - 2:00 PM</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-sricblue mb-4">Frequently Asked Questions</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Find quick answers to common questions about our school and admissions process.</p>
+                </div>
+                
+                <div class="max-w-3xl mx-auto">
+                    <!-- FAQ Item 1 -->
+                    <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-5 text-left bg-gray-50 hover:bg-gray-100 transition duration-200">
+                            <h3 class="font-bold text-lg">What are the admission requirements for SRIC?</h3>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-5 border-t border-gray-200">
+                            <p class="text-gray-600">Admission to SRIC requires submission of previous school records, passing an entrance assessment (for certain classes), and completion of the admission form with necessary documents. Please visit our Admissions page for detailed requirements.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-5 text-left bg-gray-50 hover:bg-gray-100 transition duration-200">
+                            <h3 class="font-bold text-lg">What is the school fee structure?</h3>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-5 border-t border-gray-200">
+                            <p class="text-gray-600">Our fee structure varies by class and program. Fees include tuition, laboratory charges (for science students), and annual charges. We offer sibling discounts and scholarships for meritorious students. Please contact our office for the detailed fee structure.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 -->
+                    <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-5 text-left bg-gray-50 hover:bg-gray-100 transition duration-200">
+                            <h3 class="font-bold text-lg">What transportation options are available?</h3>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-5 border-t border-gray-200">
+                            <p class="text-gray-600">SRIC operates school buses covering major routes in Amroha and nearby areas. We also have arrangements with local transport providers. Detailed route information and fees are available at the school office.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 4 -->
+                    <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-5 text-left bg-gray-50 hover:bg-gray-100 transition duration-200">
+                            <h3 class="font-bold text-lg">What extracurricular activities are offered?</h3>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-5 border-t border-gray-200">
+                            <p class="text-gray-600">We offer a wide range of extracurricular activities including sports (cricket, football, basketball, athletics), cultural programs (music, dance, drama), science clubs, debate teams, and more. These activities are an integral part of our holistic education approach.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 5 -->
+                    <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-5 text-left bg-gray-50 hover:bg-gray-100 transition duration-200">
+                            <h3 class="font-bold text-lg">How can parents get involved in school activities?</h3>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-5 border-t border-gray-200">
+                            <p class="text-gray-600">We encourage parent involvement through our Parent-Teacher Association (PTA), volunteering opportunities for events, and regular parent-teacher meetings. Parents can also participate in our school's advisory committees.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-10">
+                    <p class="text-gray-600 mb-4">Didn't find your answer?</p>
+                    <a href="#" class="inline-flex items-center text-sricblue font-semibold hover:underline">
+                        View All FAQs
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-16 bg-sricblue text-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Why Contact SRIC?</h2>
+                    <p class="text-xl max-w-2xl mx-auto">Our responsive team is ready to assist you</p>
+                </div>
+                
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div class="stats-card bg-white text-sricblue p-6 rounded-lg text-center">
+                        <div class="text-4xl font-bold mb-2"><i class="fas fa-clock"></i></div>
+                        <p class="font-semibold">24h Response Time</p>
+                    </div>
+                    
+                    <div class="stats-card bg-white text-sricblue p-6 rounded-lg text-center">
+                        <div class="text-4xl font-bold mb-2"><i class="fas fa-user-check"></i></div>
+                        <p class="font-semibold">Personalized Guidance</p>
+                    </div>
+                    
+                    <div class="stats-card bg-white text-sricblue p-6 rounded-lg text-center">
+                        <div class="text-4xl font-bold mb-2"><i class="fas fa-calendar-check"></i></div>
+                        <p class="font-semibold">Flexible Appointment Times</p>
+                    </div>
+                    
+                    <div class="stats-card bg-white text-sricblue p-6 rounded-lg text-center">
+                        <div class="text-4xl font-bold mb-2"><i class="fas fa-headset"></i></div>
+                        <p class="font-semibold">Dedicated Support</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-br from-sricblue to-blue-900 w-12 h-12 rounded-xl flex items-center justify-center">
+                            <span class="text-white text-xl font-bold">SRIC</span>
+                        </div>
+                        <h3 class="text-xl font-bold ml-3">SRIC</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">Preparing students for board success since 2002.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="History.html" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="Achievements.html" class="text-gray-400 hover:text-white">Academics</a></li>
+                        <li><a href="admission_form.html" class="text-gray-400 hover:text-white">Admissions</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Academics</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Science Stream</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Humanities Stream</a></li>
+                        <li><a href="curriculum.html" class="text-gray-400 hover:text-white">Curriculum</a></li>
+                        <li><a href="faculty.html" class="text-gray-400 hover:text-white">Faculty</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">Sabdalpur Sharki, Mathana Road Hasanpur, Amroha 244242</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">+91 9756517750</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">sitaramintercollege1205@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-400">
+                <p>© 2025 SRIC Senior Secondary School. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+  // Mobile menu toggle
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuToggle.addEventListener('click', function() {
+      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', !isExpanded);
+      mobileMenu.classList.toggle('hidden');
+  });
+
+  // Mobile dropdown functionality
+  document.querySelectorAll('.dropdown-btn').forEach(button => {
+      button.addEventListener('click', () => {
+          const dropdown = button.nextElementSibling;
+          const icon = button.querySelector('.dropdown-icon');
+          
+          // Toggle dropdown
+          if (dropdown.style.maxHeight) {
+              dropdown.style.maxHeight = null;
+              icon.classList.remove('rotate-180');
+          } else {
+              dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
+              icon.classList.add('rotate-180');
+          }
+      });
+  });
+
+  // FAQ Accordion
+  document.querySelectorAll('.faq-toggle').forEach(button => {
+      button.addEventListener('click', () => {
+          const content = button.nextElementSibling;
+          const icon = button.querySelector('i');
+          
+          // Toggle content
+          content.classList.toggle('hidden');
+          
+          // Rotate icon
+          icon.classList.toggle('rotate-180');
+          
+          // Close other open FAQs
+          document.querySelectorAll('.faq-toggle').forEach(otherButton => {
+              if (otherButton !== button) {
+                  otherButton.nextElementSibling.classList.add('hidden');
+                  otherButton.querySelector('i').classList.remove('rotate-180');
+              }
+          });
+      });
+  });
+
+  // Toast notification function
+  function showToast(message, type) {
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+          <div class="flex items-center">
+              <i class="${type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'} mr-2"></i>
+              <span>${message}</span>
+          </div>
+      `;
+      
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+          toast.classList.add('show');
+      }, 100);
+      
+      setTimeout(() => {
+          toast.classList.remove('show');
+          setTimeout(() => {
+              document.body.removeChild(toast);
+          }, 300);
+      }, 3000);
+  }
+
+  // Add toast styles
+  const toastStyles = document.createElement('style');
+  toastStyles.textContent = `
+      .toast {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          padding: 15px 20px;
+          border-radius: 8px;
+          color: white;
+          font-weight: 500;
+          z-index: 1000;
+          opacity: 0;
+          transform: translateY(-20px);
+          transition: opacity 0.3s, transform 0.3s;
+      }
+      
+      .toast.success {
+          background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+      }
+      
+      .toast.error {
+          background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+      }
+      
+      .toast.show {
+          opacity: 1;
+          transform: translateY(0);
+      }
+  `;
+  document.head.appendChild(toastStyles);
+
+  // Form submission handler
+  const contactForm = document.querySelector('#contact-form form');
+  if (contactForm) {
+      contactForm.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          
+          // Show loading state
+          const submitBtn = contactForm.querySelector('button[type="submit"]');
+          const originalText = submitBtn.innerHTML;
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+          submitBtn.disabled = true;
+          
+          // Collect form data
+          const formData = {
+              name: document.getElementById('name').value,
+              email: document.getElementById('email').value,
+              phone: document.getElementById('phone').value,
+              subject: document.getElementById('subject').value,
+              message: document.getElementById('message').value
+          };
+          
+          try {
+              const response = await fetch('/api/contact', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(formData)
+              });
+              
+              const result = await response.json();
+              
+              if (result.success) {
+                  // Show success message
+                  showToast('Your message has been sent successfully!', 'success');
+                  // Reset the form
+                  contactForm.reset();
+              } else {
+                  showToast('Error: ' + result.message, 'error');
+              }
+          } catch (error) {
+              showToast('Error sending message. Please check your connection.', 'error');
+              console.error('Error:', error);
+          } finally {
+              // Restore button state
+              submitBtn.innerHTML = originalText;
+              submitBtn.disabled = false;
+          }
+      });
+  }
+</script>
+</body>
+</html>

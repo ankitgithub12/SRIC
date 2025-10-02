@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Faculty - SRIC Senior Secondary School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sricblue: '#002366',
+                        sricgold: '#FFD700',
+                        sriclight: '#F8FAFC',
+                    },
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'poppins': ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #333;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0, 35, 102, 0.85), rgba(0, 35, 102, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .faculty-card {
+            transition: all 0.3s ease;
+            perspective: 1000px;
+        }
+        
+        .faculty-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .faculty-image {
+            transition: all 0.5s ease;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .faculty-card:hover .faculty-image {
+            transform: scale(1.05);
+        }
+        
+        .department-tab {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .department-tab.active {
+            color: #002366;
+            font-weight: 600;
+        }
+        
+        .department-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background: #FFD700;
+            border-radius: 3px;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #f59e0b;
+            border-radius: 2px;
+        }
+        
+        .wave-shape {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        
+        .wave-shape svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 100px;
+        }
+        
+        .wave-shape .shape-fill {
+            fill: #F8FAFC;
+        }
+        
+        /* Mobile menu styles */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .mobile-menu.open {
+            max-height: 500px;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Department-specific colors */
+        .dept-science { background-color: #E1F5FE; }
+        .dept-humanities { background-color: #E8F5E9; }
+        .dept-language { background-color: #FFF3E0; }
+        .dept-arts { background-color: #F3E5F5; }
+        .dept-english { background-color: #E8EAF6; }
+        .dept-urdu { background-color: #F1F8E9; }
+        .dept-math { background-color: #E0F7FA; }
+        .dept-computer { background-color: #FFF8E1; }
+        .dept-physical { background-color: #E0F2F1; }
+    </style>
+</head>
+<body class="font-poppins min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 shadow-md">
+        <nav class="bg-sricblue p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <!-- Logo + School Name -->
+                <div class="flex items-center space-x-2">
+                    <img src="assets/SRIC LOGO.PNG" alt="SRIC Logo" class="h-10 w-10 rounded-full">
+                    <a href="index.html" class="text-white text-xl font-bold">SITARAM INTER COLLEGE</a>
+                    <span class="hidden sm:inline text-sricgold text-sm">Empowering Minds, Shaping Futures</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <ul class="hidden md:flex space-x-6 items-center">
+                    <li><a href="index.html" class="text-gray-300 hover:text-white hover:underline">Home</a></li>
+                    
+                    <!-- About Us Dropdown -->
+                    <li class="relative group">
+                        <button class="text-white focus:outline-none flex items-center">
+                            About Us <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="mission.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Mission</a></li>
+                            <li><a href="History.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">History</a></li>
+                            <li><a href="faculty.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Academics <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="curriculum.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Curriculum</a></li>
+                            <li><a href="programs.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="relative group">
+                        <button class="text-gray-300 hover:text-white focus:outline-none flex items-center">
+                            Admissions <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <li><a href="process.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Process</a></li>
+                            <li><a href="fees.html" class="block px-4 py-2 text-gray-800 hover:bg-sricblue hover:text-white">Fees</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="contact.html" class="text-gray-300 hover:text-white hover:underline">Contact</a></li>
+                </ul>
+
+                <!-- CTA Button (Desktop) -->
+                <a href="admission_form.html" class="hidden md:block bg-sricgold text-sricblue px-4 py-2 rounded-md font-semibold hover:bg-yellow-600 transition">Apply Now</a>
+
+                <!-- Mobile Hamburger Menu -->
+                <button id="menu-toggle" class="md:hidden text-white focus:outline-none" aria-expanded="false" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu (Hidden by default) -->
+            <div id="mobile-menu" class="md:hidden hidden bg-sricblue pb-4 px-4">
+                <ul class="flex flex-col space-y-2">
+                    <li><a href="index.html" class="block text-gray-300 hover:text-white py-2">Home</a></li>
+                    
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            About Us <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="mission.html" class="block text-gray-400 hover:text-white py-1 text-sm">Mission</a></li>
+                            <li><a href="History.html" class="block text-gray-400 hover:text-white py-1 text-sm">History</a></li>
+                            <li><a href="faculty.html" class="block text-gray-400 hover:text-white py-1 text-sm">Faculty</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Academics <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="curriculum.html" class="block text-gray-400 hover:text-white py-1 text-sm">Curriculum</a></li>
+                            <li><a href="programs.html" class="block text-gray-400 hover:text-white py-1 text-sm">Programs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="dropdown-container">
+                        <button class="dropdown-btn w-full text-left text-gray-300 hover:text-white py-2 flex justify-between items-center">
+                            Admissions <svg class="dropdown-icon w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <ul class="dropdown-content pl-4 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+                            <li><a href="process.html" class="block text-gray-400 hover:text-white py-1 text-sm">Process</a></li>
+                            <li><a href="fees.html" class="block text-gray-400 hover:text-white py-1 text-sm">Fees</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="contact.html" class="block text-gray-300 hover:text-white py-2">Contact</a></li>
+                    <li><a href="admission_form.html" class="block bg-sricgold text-sricblue px-4 py-2 rounded-md text-center font-semibold mt-2">Apply Now</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero text-white py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-playfair fade-in">Our Esteemed Faculty</h1>
+            <p class="text-xl max-w-3xl mx-auto mb-8 fade-in" style="transition-delay: 0.2s">Dedicated educators shaping futures since 2002</p>
+            
+            <!-- Decorative divider -->
+            <div class="mt-10 flex justify-center space-x-2 fade-in" style="transition-delay: 0.4s">
+                <div class="w-16 h-1 bg-sricgold"></div>
+                <div class="w-8 h-1 bg-sricgold opacity-70"></div>
+                <div class="w-4 h-1 bg-sricgold opacity-40"></div>
+            </div>
+        </div>
+        
+        <!-- Wave decoration -->
+        <div class="wave-shape">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Faculty Content -->
+    <main class="relative z-10 -mt-16">
+        <section class="container mx-auto px-4 pb-20">
+            <!-- Department Tabs -->
+            <div class="flex justify-center mb-12 fade-in">
+                <div class="bg-white rounded-full shadow-lg p-1 inline-flex flex-wrap justify-center">
+                    <button class="department-tab px-4 sm:px-6 py-2 active" data-dept="all">
+                        All Faculty
+                    </button>
+                    <button class="department-tab px-4 sm:px-6 py-2" data-dept="science">
+                        Science
+                    </button>
+                    <button class="department-tab px-4 sm:px-6 py-2" data-dept="humanities">
+                        Humanities
+                    </button>
+                    <button class="department-tab px-4 sm:px-6 py-2" data-dept="language">
+                        Languages
+                    </button>
+                    <button class="department-tab px-4 sm:px-6 py-2" data-dept="english">
+                        English
+                    </button>
+                    <button class="department-tab px-4 sm:px-6 py-2" data-dept="urdu">
+                        Urdu
+                    </button>
+                    <button class="department-tab px-4 sm:px-6 py-2" data-dept="math">
+                        Mathematics
+                    </button>
+                    <button class="department-tab px-4 sm:px-6 py-2" data-dept="arts">
+                        Arts
+                    </button>
+                </div>
+            </div>
+
+            <!-- Faculty Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Science Faculty -->
+                <div class="faculty-card fade-in" data-dept="science">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden h-full flex flex-col">
+                        <div class="relative h-64 overflow-hidden faculty-image dept-science">
+                            <img src="assets/faculty/renu-saini.jpg" alt="Mrs. Renu Saini" class="w-full h-full object-cover">
+                            <div class="absolute bottom-4 left-4 bg-sricblue text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                Science
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-sricblue font-playfair">Mrs. Renu Saini</h3>
+                            <p class="text-sricgold font-medium mb-2">Senior science Teacher</p>
+                            <p class="text-gray-600 text-sm mb-4">M.Sc (Physics), B.Ed | 12 Years Experience</p>
+                            <p class="text-gray-500 text-sm">Dedicated science educator with expertise in experimental physics and science pedagogy. She inspires curiosity through hands-on learning and is passionate about making science engaging and accessible for every student.</p>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button class="text-sricblue text-sm font-medium hover:underline flex items-center">
+                                View Profile 
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Humanities Faculty -->
+                <div class="faculty-card fade-in" data-dept="humanities" style="transition-delay: 0.1s">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden h-full flex flex-col">
+                        <div class="relative h-64 overflow-hidden faculty-image dept-humanities">
+                            <img src="assets/kiran.png" alt="Mrs. Kiran" class="w-full h-full object-cover">
+                            <div class="absolute bottom-4 left-4 bg-sricblue text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                Humanities
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-sricblue font-playfair">Mrs. Kiran</h3>
+                            <p class="text-sricgold font-medium mb-2">Senior History Teacher</p>
+                            <p class="text-gray-600 text-sm mb-4">M.A. (History), B.Ed | 15 Years Experience</p>
+                            <p class="text-gray-500 text-sm">A specialist in Indian history and cultural studies, she connects the past with the present to help students understand contemporary issues. She believes in nurturing critical thinking through historical perspectives</p>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button class="text-sricblue text-sm font-medium hover:underline flex items-center">
+                                View Profile 
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Home Science Faculty -->
+
+               <div class="faculty-card fade-in" data-dept="home-science" style="transition-delay: 0.1s">
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden h-full flex flex-col">
+        
+        <div class="relative h-64 overflow-hidden faculty-image dept-home-science">
+            <img src="assets/placeholder-female-avatar.png" alt="Mrs. Kamlesh - Image Placeholder" class="w-full h-full object-cover">
+            <div class="absolute bottom-4 left-4 bg-sricblue text-white px-3 py-1 rounded-full text-xs font-semibold">
+                Home Science
+            </div>
+        </div>
+        
+        <div class="p-6 flex-grow">
+            <h3 class="text-xl font-bold text-sricblue font-playfair">Mrs. Kamlesh</h3>
+            <p class="text-sricgold font-medium mb-2">Senior Home Science Teacher</p>
+            <p class="text-gray-600 text-sm mb-4">M.Sc. (Home Science), B.Ed | 10+ Years Experience</p>
+            <p class="text-gray-500 text-sm">A specialist in nutritional sciences and human development, she teaches students essential life skills, blending theory with practical application in areas like **dietetics, textile design, and resource management**. She believes in nurturing independent, well-rounded individuals.</p>
+        </div>
+        
+        <div class="px-6 pb-6">
+            <button class="text-sricblue text-sm font-medium hover:underline flex items-center">
+                View Profile 
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+                <!-- Languages Faculty -->
+                <div class="faculty-card fade-in" data-dept="language" style="transition-delay: 0.2s">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden h-full flex flex-col">
+                        <div class="relative h-64 overflow-hidden faculty-image dept-language">
+                            <img src="assets/khempal singh.jpg" alt="Mr. Khempal Singh" class="w-full h-full object-cover">
+                            <div class="absolute bottom-4 left-4 bg-sricblue text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                Languages
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-sricblue font-playfair">Mr. Khempal Singh</h3>
+                            <p class="text-sricgold font-medium mb-2">Senior Hindi Teacher</p>
+                            <p class="text-gray-600 text-sm mb-4">M.A. (Hindi), B.Ed | 20 Years Experience</p>
+                            <p class="text-gray-500 text-sm">With deep expertise in Hindi literature and pedagogy, he focuses on strengthening students’ language proficiency and communication skills. His teaching combines tradition with modern methods of learning.</p>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button class="text-sricblue text-sm font-medium hover:underline flex items-center">
+                                View Profile 
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- English Faculty -->
+                <div class="faculty-card fade-in" data-dept="english" style="transition-delay: 0.3s">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden h-full flex flex-col">
+                        <div class="relative h-64 overflow-hidden faculty-image dept-english">
+                            <img src="assets/Ammar Haider.jpeg" alt="Mrs.Ammar Haider " class="w-full h-full object-cover">
+                            <div class="absolute bottom-4 left-4 bg-sricblue text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                English
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-sricblue font-playfair">Mr. Ammar Haider</h3>
+                            <p class="text-sricgold font-medium mb-2">Senior English Teacher</p>
+                            <p class="text-gray-600 text-sm mb-4">M.A. (English), B.Ed | 11 Years Experience</p>
+                            <p class="text-gray-500 text-sm">An expert in British literature and creative writing, he encourages students to express themselves confidently while enhancing critical and analytical skills through literature and language learning.</p>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button class="text-sricblue text-sm font-medium hover:underline flex items-center">
+                                View Profile 
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Urdu Faculty -->
+                <div class="faculty-card fade-in" data-dept="urdu" style="transition-delay: 0.4s">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden h-full flex flex-col">
+                        <div class="relative h-64 overflow-hidden faculty-image dept-urdu">
+                            <img src="assets/Narotam singh.png" alt="Mr. NAROTAM SINGH" class="w-full h-full object-cover">
+                            <div class="absolute bottom-4 left-4 bg-sricblue text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                Urdu Language Teacher
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-sricblue font-playfair">Mr. Narotam Singh</h3>
+                            <p class="text-sricgold font-medium mb-2">Urdu Language Teacher</p>
+                            <p class="text-gray-600 text-sm mb-4">M.A. (Urdu), B.Ed | 14 Years Experience</p>
+                            <p class="text-gray-500 text-sm">Passionate about Urdu literature and poetry, he works to preserve the beauty of the language while helping students develop strong reading, writing, and interpretative skills in Urdu.</p>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button class="text-sricblue text-sm font-medium hover:underline flex items-center">
+                                View Profile 
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mathematics Faculty -->
+                <div class="faculty-card fade-in" data-dept="math" style="transition-delay: 0.5s">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden h-full flex flex-col">
+                        <div class="relative h-64 overflow-hidden faculty-image dept-math">
+                            <img src="assets/chandarpal singh.jpeg" alt="Mr. Chanderpal Singh" class="w-full h-full object-cover">
+                            <div class="absolute bottom-4 left-4 bg-sricblue text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                 Mathematics 
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-sricblue font-playfair">Mr. Chanderpal Singh</h3>
+                            <p class="text-sricgold font-medium mb-2">Senior Mathematics Teacher</p>
+                            <p class="text-gray-600 text-sm mb-4">M.Sc (Mathematics), B.Ed | 15 Years Experience</p>
+                            <p class="text-gray-500 text-sm">A specialist in applied mathematics, he emphasizes logical thinking and problem-solving. His innovative methods make mathematics practical, engaging, and enjoyable for learners.</p>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button class="text-sricblue text-sm font-medium hover:underline flex items-center">
+                                View Profile 
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chemistry Faculty -->
+                <div class="faculty-card fade-in" data-dept="science" style="transition-delay: 0.6s">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden h-full flex flex-col">
+                        <div class="relative h-64 overflow-hidden faculty-image dept-computer">
+                            <img src="assets/faculty/Bablu Saini" alt="Mr. Bablu Saini" class="w-full h-full object-cover">
+                            <div class="absolute bottom-4 left-4 bg-sricblue text-white px-3 py-1 rounded-full text-xs font-semibold">
+                               Chemistry
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-sricblue font-playfair">Mr.Bablu Saini</h3>
+                            <p class="text-sricgold font-medium mb-2">Chemistry Teacher</p>
+                            <p class="text-gray-600 text-sm mb-4">M.Sc (Chemistry), B.Ed | 10 Years Experience</p>
+                            <p class="text-gray-500 text-sm">Expert in Physical and Organic Chemistry, he focuses on practical applications of chemical concepts. His teaching bridges theoretical knowledge with real-life experiments, sparking curiosity in learners.</p>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button class="text-sricblue text-sm font-medium hover:underline flex items-center">
+                                View Profile 
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Biology Faculty -->
+                <div class="faculty-card fade-in" data-dept="physical" style="transition-delay: 0.7s">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden h-full flex flex-col">
+                        <div class="relative h-64 overflow-hidden faculty-image dept-physical">
+                            <img src="assets/rajpal singh.jpeg" alt="Mr. Rajpal Singh" class="w-full h-full object-cover">
+                            <div class="absolute bottom-4 left-4 bg-sricblue text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                Biology
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-sricblue font-playfair">Mr.Rajpal Singh</h3>
+                            <p class="text-sricgold font-medium mb-2">Senior Biology Teacher</p>
+                            <p class="text-gray-600 text-sm mb-4">M.Sc (Biology), B.Ed | 8 Years Experience</p>
+                            <p class="text-gray-500 text-sm">Specializes in life sciences and holistic development. He blends biological knowledge with fitness education, ensuring students understand both the science of life and healthy living.</p>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button class="text-sricblue text-sm font-medium hover:underline flex items-center">
+                                View Profile 
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Arts Faculty -->
+                <div class="faculty-card fade-in" data-dept="arts" style="transition-delay: 0.8s">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden h-full flex flex-col">
+                        <div class="relative h-64 overflow-hidden faculty-image dept-arts">
+                            <img src="assets/faculty/keshav-kumar.jpg" alt="Mr. Keshav Kumar" class="w-full h-full object-cover">
+                            <div class="absolute bottom-4 left-4 bg-sricblue text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                Arts
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-sricblue font-playfair">Mr. Keshav Kumar</h3>
+                            <p class="text-sricgold font-medium mb-2">Art Teacher</p>
+                            <p class="text-gray-600 text-sm mb-4">B.F.A | 5 Years Experience</p>
+                            <p class="text-gray-500 text-sm">A creative professional specializing in traditional Indian art forms, he motivates students to express their imagination freely. His classes encourage artistic skills, innovation, and appreciation of cultural heritage.</p>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button class="text-sricblue text-sm font-medium hover:underline flex items-center">
+                                View Profile 
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Studies Faculty -->
+                <div class="faculty-card fade-in" data-dept="humanities" style="transition-delay: 0.9s">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden h-full flex flex-col">
+                        <div class="relative h-64 overflow-hidden faculty-image dept-humanities">
+                            <img src="assets/kapil kumar staff.jpeg" alt="Mrs.Kapil Kumar" class="w-full h-full object-cover">
+                            <div class="absolute bottom-4 left-4 bg-sricblue text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                Social Studies
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-sricblue font-playfair">Mrs. Kapil Kumar</h3>
+                            <p class="text-sricgold font-medium mb-2">Social Studies Teacher</p>
+                            <p class="text-gray-600 text-sm mb-4">M.A. (Political Science), B.Ed | 12 Years Experience</p>
+                            <p class="text-gray-500 text-sm">An expert in civics and political science, she guides students in understanding society, governance, and global perspectives. Her teaching emphasizes responsibility, awareness, and active citizenship.</p>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button class="text-sricblue text-sm font-medium hover:underline flex items-center">
+                                View Profile 
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Faculty Excellence Section -->
+            <div class="mt-20 bg-white rounded-xl shadow-xl overflow-hidden fade-in" style="transition-delay: 1s">
+                <div class="grid md:grid-cols-2">
+                    <div class="p-10 bg-gradient-to-br from-sricblue to-blue-900 text-white">
+                        <h2 class="text-2xl font-bold mb-6 font-playfair">Our Teaching Philosophy</h2>
+                        <p class="mb-6">At SRIC, we believe in holistic education that nurtures both academic excellence and character development through our dedicated faculty.</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1 text-sricgold">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <p class="ml-3">Student-centered learning approaches tailored to individual needs</p>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1 text-sricgold">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <p class="ml-3">Regular professional development programs for faculty</p>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1 text-sricgold">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <p class="ml-3">Innovative teaching methodologies for better engagement</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-0 border-t md:border-t-0 md:border-l border-gray-100">
+                        <div class="p-8 text-center border-b border-r border-gray-100">
+                            <div class="text-4xl font-bold text-sricblue mb-2">20+</div>
+                            <div class="text-gray-600">Qualified Teachers</div>
+                        </div>
+                        <div class="p-8 text-center border-b border-gray-100">
+                            <div class="text-4xl font-bold text-sricblue mb-2">15</div>
+                            <div class="text-gray-600">Avg. Years Experience</div>
+                        </div>
+                        <div class="p-8 text-center border-r border-gray-100">
+                            <div class="text-4xl font-bold text-sricblue mb-2">100%</div>
+                            <div class="text-gray-600">B.Ed Qualified</div>
+                        </div>
+                        <div class="p-8 text-center">
+                            <div class="text-4xl font-bold text-sricblue mb-2">7</div>
+                            <div class="text-gray-600">Departments</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-br from-sricblue to-blue-900 w-12 h-12 rounded-xl flex items-center justify-center">
+                            <span class="text-white text-xl font-bold">SRIC</span>
+                        </div>
+                        <h3 class="text-xl font-bold ml-3">SRIC</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">Preparing students for board success since 2002.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="mission.html" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="curriculum.html" class="text-gray-400 hover:text-white">Academics</a></li>
+                        <li><a href="admission_form.html" class="text-gray-400 hover:text-white">Admissions</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Academic Streams</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Science (PCMB)</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Humanities</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">Sabdalpur Sharki, Mathana Road Hasanpur, Amroha 244242</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">+91 9756517750</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">sitaramintercollege1205@gmail</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-400">
+                <p>© 2025 SRIC Senior Secondary School. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', function() {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Mobile dropdown functionality
+        document.querySelectorAll('.dropdown-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const dropdown = button.nextElementSibling;
+                const icon = button.querySelector('.dropdown-icon');
+                
+                // Toggle dropdown
+                if (dropdown.style.maxHeight) {
+                    dropdown.style.maxHeight = null;
+                    icon.classList.remove('rotate-180');
+                } else {
+                    dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
+
+        // Department Tab Functionality
+        const tabs = document.querySelectorAll('.department-tab');
+        const facultyCards = document.querySelectorAll('.faculty-card');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update active tab
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Filter faculty
+                const dept = tab.dataset.dept;
+                facultyCards.forEach(card => {
+                    if (dept === 'all' || card.dataset.dept === dept) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Animation for when elements come into view
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            const animatedElements = document.querySelectorAll('.fade-in');
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
